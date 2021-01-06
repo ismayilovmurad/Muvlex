@@ -1,0 +1,22 @@
+Home - You can see, like, comment the posts published by the users you follow.
+
+Search - You can see, like, comment the posts published by all the users in the app and 
+you can search by username, movie name, series & tv shows name, actor name.
+
+Notification - You can see the activities like follows, likes, unfollows, comments.
+
+Profile - You can see your profile picture, your username, your bio, number of your followers, 
+number of the users you follow, number of your posts, your posts and saved posts.
+
+About -
+I like watching movies, tv shows almost every day. 
+But unfortunately, I feel something deficiency every time when I finish watching. 
+I think we like to discuss something, give ratings, and take other people's opinions about that particular field. 
+I've searched and found no app or website about social media for cinephiles. (If there's one don't hesitate and suggest me in the comments section) 
+Yes, there's a lot of Facebook, Telegram groups about movies but I think it's not enough. So I decided to build a social media app for Cinephiles like me.
+It's not a perfect app but we can improve the app if you keep helping, suggesting new features, or reporting me bugs. 
+You can rate a movie and tell your thoughts about a movie, comment&like other people's ratings, keep collect your watched movies, 
+tv shows in your profile section so you can find the movie or tv shows you watched.
+I hope you'll find the app useful. Don't forget to review the app after using it so I can improve. You can download the app from the link in the bio.
+
+You can find your soulmate here.

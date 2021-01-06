@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "463852344058",
+    "project_id": "muvlex",
+    "storage_bucket": "muvlex.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463852344058:android:e800336416f52469b96f43",
+        "android_client_info": {
+          "package_name": "com.martiandeveloper.muvlex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463852344058-6gcsej7p3klhr0aslfr713o13efgsvi5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.martiandeveloper.muvlex",
+            "certificate_hash": "3110311532b8f780298f5739370f46469c1bb0c0"
+          }
+        },
+        {
+          "client_id": "463852344058-0cqgqj22iegbb4qfvlp8scc6qbt90c5t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpd_qp810_0ZiYfMaRKS5VdkDioozaK3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463852344058-0cqgqj22iegbb4qfvlp8scc6qbt90c5t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
