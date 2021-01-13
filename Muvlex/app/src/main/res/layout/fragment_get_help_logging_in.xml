@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="getHelpLoggingInViewModel"
+            type="com.martiandeveloper.muvlex.viewmodel.GetHelpLoggingInViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        tools:context=".view.GetHelpLoggingInFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeTextView"
+                    android:text="@string/find_your_account" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularTextView"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/enter_your_username_or_the_email_linked_to_your_account"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_supreme_text_seventy_percent"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/fragment_get_help_logging_in_emailOrUsernameET"
+                    style="@style/StyleRegularEditText"
+                    android:layout_marginTop="32dp"
+                    android:digits="qwertyuiopasdfghjklzxcvbnm1234567890,./?;:'\|[{]}=+-_)(*^%$#@!~"
+                    android:hint="@string/email_or_username"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:longClickable="false"
+                    android:singleLine="true"
+                    android:text="@={getHelpLoggingInViewModel.emailOrUsernameETContent}"
+                    tools:ignore="Autofill" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fragment_get_help_logging_in_continueMBTN"
+                    style="@style/StyleSupremeButton"
+                    android:layout_marginTop="24dp"
+                    android:onClick="@{()->getHelpLoggingInViewModel.onContinueButtonClick()}"
+                    android:text="@string/_continue" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="signUpViewModel"
+            type="com.martiandeveloper.muvlex.viewmodel.SignUpViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        tools:context=".view.LogInFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="24dp"
+                app:layout_constraintBottom_toTopOf="@id/fragment_sign_up_logInLL"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeTextView"
+                    android:text="@string/sign_up" />
+
+                <EditText
+                    android:id="@+id/fragment_sign_up_emailET"
+                    style="@style/StyleRegularEditText"
+                    android:layout_marginTop="24dp"
+                    android:hint="@string/email_address"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:text="@={signUpViewModel.emailETContent}"
+                    tools:ignore="Autofill" />
+
+                <EditText
+                    android:id="@+id/fragment_sign_up_passwordET"
+                    style="@style/StyleRegularEditText"
+                    android:layout_marginTop="16dp"
+                    android:drawableEnd="@drawable/ic_visibility_off"
+                    android:drawablePadding="8dp"
+                    android:hint="@string/password"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword"
+                    android:longClickable="false"
+                    android:text="@={signUpViewModel.passwordETContent}"
+                    tools:ignore="Autofill" />
+
+                <EditText
+                    android:id="@+id/fragment_sign_up_confirmPasswordET"
+                    style="@style/StyleRegularEditText"
+                    android:layout_marginTop="16dp"
+                    android:drawableEnd="@drawable/ic_visibility_off"
+                    android:drawablePadding="8dp"
+                    android:hint="@string/confirm_password"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:longClickable="false"
+                    android:text="@={signUpViewModel.confirmPasswordETContent}"
+                    tools:ignore="Autofill" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fragment_sign_up_nextMBTN"
+                    style="@style/StyleSupremeButton"
+                    android:layout_marginTop="24dp"
+                    android:onClick="@{()->signUpViewModel.onNextButtonClick()}"
+                    android:text="@string/next" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragment_sign_up_logInLL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularTextView"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@string/already_have_an_account"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/fragment_sign_up_logInMTV"
+                    style="@style/StyleActionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->signUpViewModel.onLogInTextViewClick()}"
+                    android:padding="8dp"
+                    android:text="@string/log_in"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

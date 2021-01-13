@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/StyleRegularTextView"
+        android:text="@string/active_language" />
+
+    <ImageView
+        style="@style/StyleRegularImageView"
+        android:layout_marginStart="4dp"
+        android:contentDescription="@string/change_language"
+        android:src="@drawable/ic_next" />
+
+</merge>

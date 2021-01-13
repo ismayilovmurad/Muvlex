@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="signUpUsernameViewModel"
+            type="com.martiandeveloper.muvlex.viewmodel.SignUpUsernameViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        tools:context=".view.SignUpFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="24dp"
+                app:layout_constraintBottom_toTopOf="@id/fragment_sign_up_username_privacyPolicyMTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeTextView"
+                    android:text="@string/welcome_to_muvlex"
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularTextView"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/pick_a_username_for_your_account_you_can_always_change_it_later"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/rubik"
+                    android:text="@{signUpUsernameViewModel.usernameErrorText}"
+                    android:textColor="@color/color_error"
+                    android:visibility="@{signUpUsernameViewModel.isUsernameErrorGone() ? View.INVISIBLE : View.VISIBLE}" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <EditText
+                        android:id="@+id/fragment_sign_up_username_usernameET"
+                        style="@style/StyleRegularEditText"
+                        android:digits="qwertyuiopasdfghjklzxcvbnm1234567890,./?;:'\|[{]}=+-_)(*^%$#@!~"
+                        android:hint="@string/username"
+                        android:imeOptions="actionDone"
+                        android:inputType="textEmailAddress"
+                        android:longClickable="false"
+                        android:singleLine="true"
+                        android:text="@={signUpUsernameViewModel.usernameETContent}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="Autofill" />
+
+                    <ProgressBar
+                        style="@style/StyleSupremeProgressbar"
+                        android:layout_marginEnd="8dp"
+                        android:visibility="@{signUpUsernameViewModel.isUsernameProgressGone() ? View.INVISIBLE : View.VISIBLE}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fragment_sign_up_username_nextMBTN"
+                    style="@style/StyleSupremeButton"
+                    android:layout_marginTop="24dp"
+                    android:onClick="@{()->signUpUsernameViewModel.onNextButtonClick()}"
+                    android:text="@string/next" />
+
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_sign_up_username_privacyPolicyMTV"
+                style="@style/StyleRegularTextView"
+                android:onClick="@{()->signUpUsernameViewModel.onPrivacyPolicyTextViewClick()}"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:text="@string/by_clicking_next_you_agree_to_our_privacy_policy_terms_conditions"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

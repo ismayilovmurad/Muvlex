@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="logInViewModel"
+            type="com.martiandeveloper.muvlex.viewmodel.LogInViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        tools:context=".view.LogInFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="24dp"
+                app:layout_constraintBottom_toTopOf="@id/fragment_log_in_signUpLL"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeTextView"
+                    android:text="@string/log_in" />
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/fragment_log_in_emailOrUsernameACT"
+                    style="@style/StyleRegularEditText"
+                    android:layout_marginTop="24dp"
+                    android:digits="qwertyuiopasdfghjklzxcvbnm1234567890,./?;:'\|[{]}=+-_)(*^%$#@!~"
+                    android:hint="@string/email_or_username"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:text="@={logInViewModel.emailOrUsernameACTContent}" />
+
+                <EditText
+                    android:id="@+id/fragment_log_in_passwordET"
+                    style="@style/StyleRegularEditText"
+                    android:layout_marginTop="16dp"
+                    android:drawableEnd="@drawable/ic_visibility_off"
+                    android:drawablePadding="8dp"
+                    android:hint="@string/password"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:longClickable="false"
+                    android:text="@={logInViewModel.passwordETContent}"
+                    tools:ignore="Autofill" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fragment_log_in_logInMBTN"
+                    style="@style/StyleSupremeButton"
+                    android:layout_marginTop="24dp"
+                    android:onClick="@{()->logInViewModel.onLogInButtonClick()}"
+                    android:text="@string/log_in" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/StyleRegularTextView"
+                        android:fontFamily="@font/rubik_light"
+                        android:text="@string/forgot_password"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/fragment_login_getHelpLoggingInMTV"
+                        style="@style/StyleActionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{()->logInViewModel.onGetHelpTextViewClick()}"
+                        android:padding="8dp"
+                        android:text="@string/get_help"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragment_log_in_signUpLL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularTextView"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@string/don_t_have_an_account"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/fragment_log_in_signUpMTV"
+                    style="@style/StyleActionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->logInViewModel.onSignUpTextViewClick()}"
+                    android:padding="8dp"
+                    android:text="@string/sign_up"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>
