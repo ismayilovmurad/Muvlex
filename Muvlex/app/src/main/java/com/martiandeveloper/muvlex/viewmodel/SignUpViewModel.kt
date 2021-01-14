@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.utils.Event
+import com.martiandeveloper.muvlex.utils.appLanguage
 
 class SignUpViewModel : ViewModel() {
 
@@ -119,6 +120,8 @@ class SignUpViewModel : ViewModel() {
         if (user != null) {
 
             if (!user.isEmailVerified) {
+
+                Firebase.auth.setLanguageCode(appLanguage)
 
                 user.sendEmailVerification().addOnCompleteListener {
 

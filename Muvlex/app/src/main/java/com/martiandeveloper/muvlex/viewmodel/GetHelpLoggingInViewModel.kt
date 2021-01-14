@@ -7,6 +7,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.utils.Event
+import com.martiandeveloper.muvlex.utils.appLanguage
 
 class GetHelpLoggingInViewModel : ViewModel() {
 
@@ -49,6 +50,8 @@ class GetHelpLoggingInViewModel : ViewModel() {
 
         _progressTextDecider.value = "send"
         _isProgressDialogOpen.value = true
+
+        Firebase.auth.setLanguageCode(appLanguage)
 
         Firebase.auth.sendPasswordResetEmail(
             emailOrUsernameETContent.value!!
@@ -215,6 +218,8 @@ class GetHelpLoggingInViewModel : ViewModel() {
 
         _progressTextDecider.value = "send"
         _isProgressDialogOpen.value = true
+
+        Firebase.auth.setLanguageCode(appLanguage)
 
         Firebase.auth.sendPasswordResetEmail(
             email

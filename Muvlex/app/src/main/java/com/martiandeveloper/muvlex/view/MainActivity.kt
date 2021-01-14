@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
         if (languageCode != null) {
 
             if (languageCode != "nope") {
+                appLanguage = languageCode
                 changeLanguage(languageCode)
             }
 
