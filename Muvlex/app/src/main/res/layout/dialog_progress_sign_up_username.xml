@@ -5,7 +5,7 @@
 
         <variable
             name="signUpUsernameViewModel"
-            type="com.martiandeveloper.muvlex.viewmodel.SignUpUsernameViewModel" />
+            type="com.martiandeveloper.muvlex.viewmodel.authentication.SignUpUsernameViewModel" />
 
     </data>
 

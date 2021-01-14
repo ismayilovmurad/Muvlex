@@ -1,4 +1,4 @@
-package com.martiandeveloper.muvlex.view
+package com.martiandeveloper.muvlex.view.main
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -21,7 +21,7 @@ import com.martiandeveloper.muvlex.databinding.ActivityMainBinding
 import com.martiandeveloper.muvlex.databinding.DialogLanguageBinding
 import com.martiandeveloper.muvlex.model.Language
 import com.martiandeveloper.muvlex.utils.*
-import com.martiandeveloper.muvlex.viewmodel.MainViewModel
+import com.martiandeveloper.muvlex.viewmodel.main.MainViewModel
 import java.util.*
 
 class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.martiandeveloper.muvlex.view.SplashFragment"
+        android:name="com.martiandeveloper.muvlex.view.main.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
 
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/logInFragment"
-        android:name="com.martiandeveloper.muvlex.view.LogInFragment"
+        android:name="com.martiandeveloper.muvlex.view.authentication.LogInFragment"
         android:label="LogInFragment"
         tools:layout="@layout/fragment_log_in">
 
@@ -55,13 +55,13 @@
 
     <fragment
         android:id="@+id/feedFragment"
-        android:name="com.martiandeveloper.muvlex.view.FeedFragment"
+        android:name="com.martiandeveloper.muvlex.view.feed.FeedFragment"
         android:label="FeedFragment"
         tools:layout="@layout/fragment_feed" />
 
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.martiandeveloper.muvlex.view.SignUpFragment"
+        android:name="com.martiandeveloper.muvlex.view.authentication.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up">
 
@@ -81,7 +81,7 @@
 
     <fragment
         android:id="@+id/getHelpLoggingInFragment"
-        android:name="com.martiandeveloper.muvlex.view.GetHelpLoggingInFragment"
+        android:name="com.martiandeveloper.muvlex.view.authentication.GetHelpLoggingInFragment"
         android:label="GetHelpLoggingInFragment"
         tools:layout="@layout/fragment_get_help_logging_in">
 
@@ -95,7 +95,7 @@
 
     <fragment
         android:id="@+id/signUpUsernameFragment"
-        android:name="com.martiandeveloper.muvlex.view.SignUpUsernameFragment"
+        android:name="com.martiandeveloper.muvlex.view.authentication.SignUpUsernameFragment"
         android:label="SignUpUsernameFragment"
         tools:layout="@layout/fragment_sign_up_username">
 

@@ -18,7 +18,7 @@
         android:theme="@style/Theme.Muvlex"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.martiandeveloper.muvlex.view.MainActivity"
+            android:name="com.martiandeveloper.muvlex.view.main.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
             <intent-filter>

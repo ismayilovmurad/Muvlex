@@ -1,4 +1,4 @@
-package com.martiandeveloper.muvlex.view
+package com.martiandeveloper.muvlex.view.main
 
 import android.os.Bundle
 import android.os.Handler
@@ -16,7 +16,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.utils.isNetworkAvailable
-import com.martiandeveloper.muvlex.viewmodel.SplashViewModel
+import com.martiandeveloper.muvlex.viewmodel.main.SplashViewModel
 
 
 class SplashFragment : Fragment() {

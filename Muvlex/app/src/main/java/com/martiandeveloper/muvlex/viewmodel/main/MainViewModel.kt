@@ -1,4 +1,4 @@
-package com.martiandeveloper.muvlex.viewmodel
+package com.martiandeveloper.muvlex.viewmodel.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

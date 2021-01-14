@@ -9,7 +9,7 @@
 
         <variable
             name="signUpUsernameViewModel"
-            type="com.martiandeveloper.muvlex.viewmodel.SignUpUsernameViewModel" />
+            type="com.martiandeveloper.muvlex.viewmodel.authentication.SignUpUsernameViewModel" />
 
     </data>
 
@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none"
-        tools:context=".view.SignUpFragment">
+        tools:context=".view.authentication.SignUpFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

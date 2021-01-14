@@ -7,7 +7,7 @@
 
         <variable
             name="logInViewModel"
-            type="com.martiandeveloper.muvlex.viewmodel.LogInViewModel" />
+            type="com.martiandeveloper.muvlex.viewmodel.authentication.LogInViewModel" />
 
     </data>
 
@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none"
-        tools:context=".view.LogInFragment">
+        tools:context=".view.authentication.LogInFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

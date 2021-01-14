@@ -8,7 +8,7 @@
 
         <variable
             name="logInViewModel"
-            type="com.martiandeveloper.muvlex.viewmodel.LogInViewModel" />
+            type="com.martiandeveloper.muvlex.viewmodel.authentication.LogInViewModel" />
 
     </data>
 

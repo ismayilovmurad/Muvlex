@@ -5,7 +5,7 @@
 
         <variable
             name="getHelpLoggingInViewModel"
-            type="com.martiandeveloper.muvlex.viewmodel.GetHelpLoggingInViewModel" />
+            type="com.martiandeveloper.muvlex.viewmodel.authentication.GetHelpLoggingInViewModel" />
 
     </data>
 

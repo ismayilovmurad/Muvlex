@@ -1,4 +1,4 @@
-package com.martiandeveloper.muvlex.view
+package com.martiandeveloper.muvlex.view.authentication
 
 import android.content.Intent
 import android.net.Uri
@@ -21,7 +21,7 @@ import com.martiandeveloper.muvlex.databinding.FragmentSignUpUsernameBinding
 import com.martiandeveloper.muvlex.utils.EventObserver
 import com.martiandeveloper.muvlex.utils.PRIVACY_POLICY_URL
 import com.martiandeveloper.muvlex.utils.isNetworkAvailable
-import com.martiandeveloper.muvlex.viewmodel.SignUpUsernameViewModel
+import com.martiandeveloper.muvlex.viewmodel.authentication.SignUpUsernameViewModel
 import java.util.regex.Pattern
 
 class SignUpUsernameFragment : Fragment() {

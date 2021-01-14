@@ -7,7 +7,7 @@
 
         <variable
             name="getHelpLoggingInViewModel"
-            type="com.martiandeveloper.muvlex.viewmodel.GetHelpLoggingInViewModel" />
+            type="com.martiandeveloper.muvlex.viewmodel.authentication.GetHelpLoggingInViewModel" />
 
     </data>
 
@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none"
-        tools:context=".view.GetHelpLoggingInFragment">
+        tools:context=".view.authentication.GetHelpLoggingInFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

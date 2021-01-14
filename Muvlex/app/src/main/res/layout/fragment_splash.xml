@@ -5,4 +5,4 @@
     style="@style/StyleSupremeImageView"
     android:contentDescription="@string/logo"
     android:src="@drawable/muvlex_original_logo"
-    tools:context=".view.SplashFragment" />
+    tools:context=".view.main.SplashFragment" />

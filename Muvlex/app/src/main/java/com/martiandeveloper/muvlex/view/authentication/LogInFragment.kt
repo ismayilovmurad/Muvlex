@@ -1,4 +1,4 @@
-package com.martiandeveloper.muvlex.view
+package com.martiandeveloper.muvlex.view.authentication
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -26,7 +26,7 @@ import com.martiandeveloper.muvlex.databinding.DialogEmailNotVerifiedBinding
 import com.martiandeveloper.muvlex.databinding.DialogProgressLogInBinding
 import com.martiandeveloper.muvlex.databinding.FragmentLogInBinding
 import com.martiandeveloper.muvlex.utils.isNetworkAvailable
-import com.martiandeveloper.muvlex.viewmodel.LogInViewModel
+import com.martiandeveloper.muvlex.viewmodel.authentication.LogInViewModel
 
 class LogInFragment : Fragment() {
 
@@ -268,7 +268,7 @@ class LogInFragment : Fragment() {
 
             })
 
-            isResendSuccessful.observe(viewLifecycleOwner, {
+            isResendSuccessful.observe(viewLifecycleOwner, EventObserver {
 
                 setIsResendAndOkayButtonsEnable(true)
 

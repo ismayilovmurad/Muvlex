@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.textview.MaterialTextView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/StyleSupremeTextView"
-    android:text="@string/app_name"
-    tools:context=".view.FeedFragment" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.feed.FeedFragment">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_feed_feedFCV"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/fragment_feed_mainBNV"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/navigation_feed" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/fragment_feed_mainBNV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_background"
+        app:elevation="0dp"
+        app:itemHorizontalTranslationEnabled="false"
+        app:itemIconTint="@color/bottom_navigation_view_item_background"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_bottom_navigation" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

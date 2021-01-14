@@ -1,4 +1,4 @@
-package com.martiandeveloper.muvlex.view
+package com.martiandeveloper.muvlex.view.authentication
 
 import android.os.Bundle
 import android.util.Patterns
@@ -20,7 +20,7 @@ import com.martiandeveloper.muvlex.databinding.DialogProgressGetHelpLoggingInBin
 import com.martiandeveloper.muvlex.databinding.FragmentGetHelpLoggingInBinding
 import com.martiandeveloper.muvlex.utils.EventObserver
 import com.martiandeveloper.muvlex.utils.isNetworkAvailable
-import com.martiandeveloper.muvlex.viewmodel.GetHelpLoggingInViewModel
+import com.martiandeveloper.muvlex.viewmodel.authentication.GetHelpLoggingInViewModel
 
 class GetHelpLoggingInFragment : Fragment() {
 

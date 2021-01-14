@@ -8,7 +8,7 @@
 
         <variable
             name="signUpViewModel"
-            type="com.martiandeveloper.muvlex.viewmodel.SignUpViewModel" />
+            type="com.martiandeveloper.muvlex.viewmodel.authentication.SignUpViewModel" />
 
     </data>
 

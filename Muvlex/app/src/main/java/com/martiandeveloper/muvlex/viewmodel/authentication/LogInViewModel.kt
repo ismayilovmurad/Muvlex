@@ -1,4 +1,4 @@
-package com.martiandeveloper.muvlex.viewmodel
+package com.martiandeveloper.muvlex.viewmodel.authentication
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -415,10 +415,10 @@ class LogInViewModel : ViewModel() {
                     _isErrorDialogProgressGone.value = true
 
                     if (it.isSuccessful) {
-                        _isResendSuccessful.value = true
+                        _isResendSuccessful.value = Event(true)
                     } else {
 
-                        _isResendSuccessful.value = false
+                        _isResendSuccessful.value = Event(false)
 
                         if (it.exception != null) {
 
@@ -441,7 +441,7 @@ class LogInViewModel : ViewModel() {
                 _isErrorDialogImageGone.value = false
                 _isErrorDialogProgressGone.value = true
 
-                _isResendSuccessful.value = false
+                _isResendSuccessful.value = Event(false)
                 _errorMessage.value = Event("already_verified")
             }
 
@@ -449,15 +449,15 @@ class LogInViewModel : ViewModel() {
             _isErrorDialogImageGone.value = false
             _isErrorDialogProgressGone.value = true
 
-            _isResendSuccessful.value = false
+            _isResendSuccessful.value = Event(false)
             _errorMessage.value = Event("")
         }
 
     }
 
     //########## Is resend successful
-    private var _isResendSuccessful = MutableLiveData<Boolean>()
-    val isResendSuccessful: LiveData<Boolean>
+    private var _isResendSuccessful = MutableLiveData<Event<Boolean>>()
+    val isResendSuccessful: LiveData<Event<Boolean>>
         get() = _isResendSuccessful
 
 

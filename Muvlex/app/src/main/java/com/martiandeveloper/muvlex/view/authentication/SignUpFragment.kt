@@ -1,4 +1,4 @@
-package com.martiandeveloper.muvlex.view
+package com.martiandeveloper.muvlex.view.authentication
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -25,7 +25,7 @@ import com.martiandeveloper.muvlex.databinding.DialogSignUpVerificationBinding
 import com.martiandeveloper.muvlex.databinding.FragmentSignUpBinding
 import com.martiandeveloper.muvlex.utils.EventObserver
 import com.martiandeveloper.muvlex.utils.isNetworkAvailable
-import com.martiandeveloper.muvlex.viewmodel.SignUpViewModel
+import com.martiandeveloper.muvlex.viewmodel.authentication.SignUpViewModel
 
 class SignUpFragment : Fragment() {
 

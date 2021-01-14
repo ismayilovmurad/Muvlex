@@ -38,6 +38,9 @@
     </string>
     <string name="okay">Tamam</string>
     <string name="resend">Yeniden gönder</string>
+    <string name="home">Ev</string>
+    <string name="notification">Bildirim</string>
+    <string name="profile">Profil</string>
 
     <!--Alert texts-->
     <string name="creating_user">Kullanıcı oluşturuluyor</string>
