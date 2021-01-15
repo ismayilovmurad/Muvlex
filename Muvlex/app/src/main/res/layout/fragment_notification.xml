@@ -8,6 +8,6 @@
     <TextView
         style="@style/StyleSupremeTextView"
         android:layout_gravity="center"
-        android:text="Notification" />
+        android:text="@string/notification" />
 
 </FrameLayout>

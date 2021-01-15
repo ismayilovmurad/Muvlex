@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.feed.ProfileFragment">
+    tools:context=".view.feed.MovieListFragment">
 
     <TextView
         style="@style/StyleSupremeTextView"
         android:layout_gravity="center"
-        android:text="@string/profile" />
+        android:text="Movie list" />
 
 </FrameLayout>
