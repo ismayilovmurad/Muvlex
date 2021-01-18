@@ -44,6 +44,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/fragment_search_searchET" />
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/fragment_search_mainTL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/color_background"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_search_searchET"
+            app:tabIndicatorColor="@color/color_supreme_text"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/color_supreme_text"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            app:tabTextColor="@color/color_regular_text" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/fragment_search_mainVP"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_search_mainTL" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

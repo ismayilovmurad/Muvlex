@@ -6,6 +6,7 @@
     tools:context=".view.feed.MovieListFragment">
 
     <TextView
+        android:id="@+id/fragment_movie_list_mainTV"
         style="@style/StyleSupremeTextView"
         android:layout_gravity="center"
         android:text="Movie list" />

@@ -42,6 +42,10 @@
     <string name="home">Home</string>
     <string name="notification">Notification</string>
     <string name="profile">Profile</string>
+    <string name="movies">Movies</string>
+    <string name="series">Series</string>
+    <string name="actors">Actors</string>
+    <string name="users">Users</string>
 
     <!--Alert texts-->
     <string name="creating_user">Creating user</string>

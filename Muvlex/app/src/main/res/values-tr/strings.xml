@@ -41,6 +41,10 @@
     <string name="home">Ev</string>
     <string name="notification">Bildirim</string>
     <string name="profile">Profil</string>
+    <string name="movies">Filmler</string>
+    <string name="series">Diziler</string>
+    <string name="actors">Aktörler</string>
+    <string name="users">Kullanıcılar</string>
 
     <!--Alert texts-->
     <string name="creating_user">Kullanıcı oluşturuluyor</string>
