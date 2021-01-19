@@ -9,6 +9,7 @@ Profile - You can see your profile picture, your username, your bio, number of y
 number of the users you follow, number of your posts, your posts and saved posts.
 
 About -
+Okay here's the thing
 Hello there,
 I like watching movies, tv shows almost every day. 
 But unfortunately, I feel something deficiency every time when I finish watching. 
@@ -23,3 +24,5 @@ I hope you'll find the app useful. Don't forget to review the app after using it
 You can find your soulmate here.
 
 Write down all of your thoughts about the movie
+
+Meselcun men bir kinoya baxib qurtardiqdan sonra bu kino haqqinda danismaq ve oz reyimi bildirmek isteyirem.
