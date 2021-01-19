@@ -20,6 +20,7 @@
             android:id="@+id/fragment_search_searchET"
             style="@style/StyleRegularEditText"
             android:layout_width="0dp"
+            android:layout_height="40dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -27,6 +28,7 @@
             android:imeOptions="actionDone"
             android:inputType="text"
             android:text="@={searchViewModel.searchETContent}"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/fragment_search_backIV"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,8 +36,8 @@
 
         <ImageView
             android:id="@+id/fragment_search_backIV"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginStart="8dp"
             android:contentDescription="@string/back"
             android:onClick="@{()->searchViewModel.onBackImageViewClick()}"
@@ -56,6 +58,12 @@
             app:tabSelectedTextColor="@color/color_supreme_text"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
             app:tabTextColor="@color/color_regular_text" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_on_background"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_search_mainTL" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/fragment_search_mainVP"

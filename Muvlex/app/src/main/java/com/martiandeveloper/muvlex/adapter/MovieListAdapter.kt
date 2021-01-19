@@ -11,16 +11,19 @@ import com.bumptech.glide.Glide
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.RecyclerviewMovieItemBinding
 import com.martiandeveloper.muvlex.model.Movie
-import com.martiandeveloper.muvlex.service.POSTER_BASE_URL
+import com.martiandeveloper.muvlex.utils.BASE_URL_POSTER
 
 class MovieListAdapter(
-    private val context: Context,
     private val itemCLickListener: ItemClickListener
 ) : PagingDataAdapter<Movie, RecyclerView.ViewHolder>(MovieDiffCallback()) {
 
+    private lateinit var context: Context
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        context = parent.context
+
         val binding: RecyclerviewMovieItemBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
+            LayoutInflater.from(context),
             R.layout.recyclerview_movie_item,
             parent,
             false
@@ -56,20 +59,30 @@ class MovieListAdapter(
 
             if (movie != null) {
 
-                val title = movie.title + " (" + movie.releaseDate?.split("-")?.get(0) + ")"
-
                 binding.let {
-                    it.title = title
 
-                    it.voteAverage = movie.voteAverage.toString()
+                    if (movie.title != null) {
+                        it.title = movie.title
+                    }
 
-                    Glide.with(context)
-                        .load("${POSTER_BASE_URL}${movie.posterPath}")
-                        .placeholder(R.drawable.muvlex_original_logo)
-                        .centerCrop()
-                        .into(it.recyclerviewMovieItemPosterIV)
+                    if (movie.releaseDate != null) {
+                        it.releaseDate = movie.releaseDate.split("-")[0]
+                    }
+
+                    if (movie.voteAverage != null) {
+                        it.voteAverage = movie.voteAverage.toString()
+                    }
+
+                    if (movie.posterPath != null) {
+                        Glide.with(context)
+                            .load("${BASE_URL_POSTER}${movie.posterPath}")
+                            .placeholder(R.drawable.muvlex_original_logo)
+                            .centerCrop()
+                            .into(it.recyclerviewMovieItemPosterIV)
+                    }
 
                     it.executePendingBindings()
+
                 }
 
                 itemView.setOnClickListener {

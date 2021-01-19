@@ -61,7 +61,7 @@ class MovieListFragment : Fragment(), MovieListAdapter.ItemClickListener {
 
     private fun setRecyclerView() {
 
-        movieListAdapter = MovieListAdapter(requireContext(), this)
+        movieListAdapter = MovieListAdapter(this)
 
         fragmentMovieListBinding.fragmentMovieListMainRV.let {
             it.layoutManager = LinearLayoutManager(context)

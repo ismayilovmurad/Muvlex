@@ -1,5 +1,7 @@
 package com.martiandeveloper.muvlex.service
 
+import com.martiandeveloper.muvlex.utils.API_KEY
+import com.martiandeveloper.muvlex.utils.BASE_URL
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
@@ -8,10 +10,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
-const val API_KEY = "43031406f2e6f3c3fd2dea56c6fe8367"
-const val BASE_URL = "https://api.themoviedb.org/3/"
-
-const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342"
 
 object MovieService {
 
@@ -51,4 +49,5 @@ object MovieService {
             .create(MovieApi::class.java)
 
     }
+
 }

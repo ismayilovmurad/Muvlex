@@ -13,6 +13,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
         tools:context=".view.feed.MovieListFragment">
 
         <androidx.recyclerview.widget.RecyclerView

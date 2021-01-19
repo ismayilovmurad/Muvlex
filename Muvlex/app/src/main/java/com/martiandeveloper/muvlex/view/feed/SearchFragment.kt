@@ -19,7 +19,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.FragmentSearchBinding
 import com.martiandeveloper.muvlex.utils.EventObserver
-import com.martiandeveloper.muvlex.utils.NUM_PAGES
+import com.martiandeveloper.muvlex.utils.VIEWPAGER_PAGES
 import com.martiandeveloper.muvlex.utils.searchResult
 import com.martiandeveloper.muvlex.viewmodel.feed.SearchViewModel
 
@@ -124,7 +124,7 @@ class SearchFragment : Fragment() {
     private inner class ScreenSlidePagerAdapter(fragment: Fragment) :
         FragmentStateAdapter(fragment) {
 
-        override fun getItemCount(): Int = NUM_PAGES
+        override fun getItemCount(): Int = VIEWPAGER_PAGES
 
         override fun createFragment(position: Int): Fragment {
 

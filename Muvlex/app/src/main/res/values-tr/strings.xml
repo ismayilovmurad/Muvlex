@@ -67,6 +67,8 @@
     <!--Image descriptions-->
     <string name="logo">Logo</string>
     <string name="back">Geri</string>
+    <string name="poster">Afiş</string>
+    <string name="star">Yıldız</string>
 
     <!--Toast texts-->
     <string name="something_went_wrong_try_again_later">Bir şeyler ters gitti, daha sonra tekrar dene</string>

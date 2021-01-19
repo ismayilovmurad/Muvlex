@@ -58,9 +58,9 @@ dependencies {
     implementation "com.google.android.material:material:$material_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
     implementation "androidx.legacy:legacy-support-v4:$legacy_version"
-    testImplementation "junit:junit:$junit_version"
-    androidTestImplementation "androidx.test.ext:junit:$ext_junit_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    testImplementation "junit:junit-ktx:$junit_version"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$ext_junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core-ktx:$espresso_version"
     // Firebase BoM
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
     // Firebase analytics

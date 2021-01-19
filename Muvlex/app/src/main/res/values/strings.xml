@@ -68,6 +68,8 @@
     <!--Image descriptions-->
     <string name="logo">Logo</string>
     <string name="back">Back</string>
+    <string name="poster">Poster</string>
+    <string name="star">Star</string>
 
     <!--Toast texts-->
     <string name="something_went_wrong_try_again_later">Something went wrong, try again later</string>
