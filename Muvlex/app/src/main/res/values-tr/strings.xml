@@ -45,6 +45,8 @@
     <string name="series">Diziler</string>
     <string name="actors">Aktörler</string>
     <string name="users">Kullanıcılar</string>
+    <string name="searching_for">Aranıyor</string>
+    <string name="no_results_found_for">Sonuç bulunamadı</string>
 
     <!--Alert texts-->
     <string name="creating_user">Kullanıcı oluşturuluyor</string>

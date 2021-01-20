@@ -1,5 +1,6 @@
 package com.martiandeveloper.muvlex
 
+import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.martiandeveloper.muvlex.view.main.MainActivity
@@ -16,6 +17,7 @@ class MyTestSuite {
     @Test
     fun testEvent() {
         val scenario = activityScenarioRule.scenario
+        scenario.moveToState(Lifecycle.State.DESTROYED)
     }
 
 }

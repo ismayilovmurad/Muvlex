@@ -151,6 +151,7 @@ class SearchFragment : Fragment() {
                     if (event.rawX >= fragmentSearchBinding.fragmentSearchSearchET.right - fragmentSearchBinding.fragmentSearchSearchET.compoundDrawables[2].bounds.width()
                     ) {
 
+                        searchResult.value = ""
                         fragmentSearchBinding.fragmentSearchSearchET.text.clear()
 
                         return@OnTouchListener true

@@ -46,6 +46,8 @@
     <string name="series">Series</string>
     <string name="actors">Actors</string>
     <string name="users">Users</string>
+    <string name="searching_for">Searching for</string>
+    <string name="no_results_found_for">No Results Found for</string>
 
     <!--Alert texts-->
     <string name="creating_user">Creating user</string>
