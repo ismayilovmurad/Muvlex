@@ -7,11 +7,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.RecyclerviewMovieItemBinding
 import com.martiandeveloper.muvlex.model.Movie
 import com.martiandeveloper.muvlex.utils.BASE_URL_POSTER
+import com.martiandeveloper.muvlex.utils.loadImage
 
 class MovieListAdapter(
     private val itemCLickListener: ItemClickListener
@@ -61,24 +61,34 @@ class MovieListAdapter(
 
                 binding.let {
 
-                    if (movie.title != null) {
+                    if (movie.title != null && movie.title != "null" && movie.title != "") {
                         it.title = movie.title
+                    } else {
+                        it.title = context.resources.getString(R.string.unknown)
                     }
 
-                    if (movie.releaseDate != null) {
+                    if (movie.releaseDate != null && movie.releaseDate != "null" && movie.releaseDate != "") {
                         it.releaseDate = movie.releaseDate.split("-")[0]
+                    } else {
+                        it.releaseDate = context.resources.getString(R.string.unknown)
                     }
 
                     if (movie.voteAverage != null) {
                         it.voteAverage = movie.voteAverage.toString()
                     }
 
-                    if (movie.posterPath != null) {
-                        Glide.with(context)
-                            .load("${BASE_URL_POSTER}${movie.posterPath}")
-                            .placeholder(R.drawable.muvlex_original_logo)
-                            .centerCrop()
-                            .into(it.recyclerviewMovieItemPosterIV)
+                    if (movie.posterPath != null && movie.posterPath != "null" && movie.posterPath != "") {
+                        loadImage(
+                            context,
+                            "${BASE_URL_POSTER}${movie.posterPath}",
+                            it.recyclerviewMovieItemPosterIV
+                        )
+                    } else {
+                        loadImage(
+                            context,
+                            null,
+                            it.recyclerviewMovieItemPosterIV
+                        )
                     }
 
                     it.executePendingBindings()

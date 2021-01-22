@@ -5,11 +5,11 @@
     <data>
 
         <variable
-            name="title"
+            name="name"
             type="String" />
 
         <variable
-            name="releaseDate"
+            name="firstAirDate"
             type="String" />
 
         <variable
@@ -33,7 +33,7 @@
             app:cardElevation="0dp">
 
             <ImageView
-                android:id="@+id/recyclerview_movie_item_posterIV"
+                android:id="@+id/recyclerview_series_item_posterIV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/poster" />
@@ -50,7 +50,7 @@
                 style="@style/StyleRegularTextView"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{title}"
+                android:text="@{name}"
                 android:textColor="@color/color_supreme_text"
                 android:textSize="15sp" />
 
@@ -63,7 +63,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/StyleRegularTextView"
                     android:layout_marginStart="2dp"
-                    android:text="@{releaseDate}"
+                    android:text="@{firstAirDate}"
                     android:textSize="13sp" />
 
                 <ImageView

@@ -53,9 +53,9 @@ class SignUpUsernameFragment : Fragment() {
         observe()
 
         with(signUpUsernameViewModel) {
-            setIsUsernameErrorGone(true)
-            setIsUsernameProgressGone(true)
-            setUsernameErrorText("")
+            isUsernameErrorMTVGone(true)
+            isUsernamePBGone(true)
+            setUsernameErrorMTVText("")
         }
 
         progressDialog = MaterialAlertDialogBuilder(requireContext(), R.style.StyleDialog).create()
@@ -71,7 +71,7 @@ class SignUpUsernameFragment : Fragment() {
 
         with(signUpUsernameViewModel) {
 
-            isNextButtonEnable.observe(viewLifecycleOwner, {
+            nextMBTNEnable.observe(viewLifecycleOwner, {
 
                 if (it) {
 
@@ -93,51 +93,51 @@ class SignUpUsernameFragment : Fragment() {
 
             })
 
-            usernameETContent.observe(viewLifecycleOwner, {
+            usernameETText.observe(viewLifecycleOwner, {
 
                 if (it.isNullOrEmpty()) {
-                    setUsernameErrorText(getString(R.string.username_cannot_be_empty))
-                    setIsUsernameErrorGone(false)
+                    setUsernameErrorMTVText(getString(R.string.username_cannot_be_empty))
+                    isUsernameErrorMTVGone(false)
                 } else {
 
-                    if (usernameETContent.value!!.length < 15) {
+                    if (usernameETText.value!!.length < 15) {
 
                         if (pattern.matcher(it).matches()) {
 
                             if (isNetworkAvailable) {
-                                checkUsername()
+                                isUsernameAvailable()
                             } else {
-                                setUsernameErrorText(getString(R.string.no_internet_connection))
-                                setIsUsernameErrorGone(false)
+                                setUsernameErrorMTVText(getString(R.string.no_internet_connection))
+                                isUsernameErrorMTVGone(false)
                             }
 
                         } else {
-                            setUsernameErrorText(getString(R.string.username_can_only_use_letters_numbers_underscores_and_periods))
-                            setIsUsernameErrorGone(false)
+                            setUsernameErrorMTVText(getString(R.string.username_can_only_use_letters_numbers_underscores_and_periods))
+                            isUsernameErrorMTVGone(false)
                         }
 
                     } else {
-                        setUsernameErrorText(getString(R.string.username_not_available))
-                        setIsUsernameErrorGone(false)
+                        setUsernameErrorMTVText(getString(R.string.username_not_available))
+                        isUsernameErrorMTVGone(false)
                     }
 
                 }
 
             })
 
-            onNextButtonClick.observe(viewLifecycleOwner, EventObserver {
+            nextMBTNClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
 
                     if (isNetworkAvailable) {
 
-                        if (isUsernameErrorGone.value == true) {
+                        if (usernameErrorMTVGone.value == true) {
 
-                            if (isUsernameAvailable.value == true) {
+                            if (usernameAvailable.value == true) {
 
-                                if (usernameETContent.value.isNullOrEmpty()) {
-                                    setUsernameErrorText(getString(R.string.username_cannot_be_empty))
-                                    setIsUsernameErrorGone(false)
+                                if (usernameETText.value.isNullOrEmpty()) {
+                                    setUsernameErrorMTVText(getString(R.string.username_cannot_be_empty))
+                                    isUsernameErrorMTVGone(false)
                                 } else {
                                     saveUsernameAndEmail()
                                 }
@@ -154,7 +154,7 @@ class SignUpUsernameFragment : Fragment() {
 
             })
 
-            isProgressDialogOpen.observe(viewLifecycleOwner, {
+            progressADOpen.observe(viewLifecycleOwner, {
 
                 if (it) {
                     setProgress(true)
@@ -164,7 +164,7 @@ class SignUpUsernameFragment : Fragment() {
 
             })
 
-            onPrivacyPolicyTextViewClick.observe(viewLifecycleOwner, EventObserver {
+            privacyPolicyMTVClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)))
@@ -172,17 +172,17 @@ class SignUpUsernameFragment : Fragment() {
 
             })
 
-            isUsernameErrorGone.observe(viewLifecycleOwner, {
+            usernameErrorMTVGone.observe(viewLifecycleOwner, {
 
                 if (it) {
-                    setNextButtonEnable(true)
+                    isNextMBTNEnable(true)
                 } else {
-                    setNextButtonEnable(false)
+                    isNextMBTNEnable(false)
                 }
 
             })
 
-            isSaveSuccessful.observe(viewLifecycleOwner, {
+            saveSuccessful.observe(viewLifecycleOwner, {
 
                 if (it) {
                     navigate(SignUpUsernameFragmentDirections.actionSignUpUsernameFragmentToFeedFragment())
@@ -194,23 +194,23 @@ class SignUpUsernameFragment : Fragment() {
                 showToast(R.string.something_went_wrong_try_again_later)
             })
 
-            isUsernameAvailable.observe(viewLifecycleOwner, {
+            usernameAvailable.observe(viewLifecycleOwner, {
 
                 if (it) {
-                    setIsUsernameErrorGone(true)
+                    isUsernameErrorMTVGone(true)
                 } else {
-                    setUsernameErrorText(getString(R.string.username_not_available))
-                    setIsUsernameErrorGone(false)
+                    setUsernameErrorMTVText(getString(R.string.username_not_available))
+                    isUsernameErrorMTVGone(false)
                 }
 
             })
 
-            progressTextDecider.observe(viewLifecycleOwner, {
+            progressMTVTextDecider.observe(viewLifecycleOwner, {
 
                 when (it) {
-                    "check" -> setProgressText(getString(R.string.checking_username))
-                    "save" -> setProgressText(getString(R.string.saving))
-                    else -> setProgressText("")
+                    "check" -> setProgressMTVText(getString(R.string.checking_username))
+                    "save" -> setProgressMTVText(getString(R.string.saving))
+                    else -> setProgressMTVText("")
                 }
 
             })
@@ -222,7 +222,7 @@ class SignUpUsernameFragment : Fragment() {
     private fun setProgress(progress: Boolean) {
 
         if (progress) {
-            signUpUsernameViewModel.setNextButtonEnable(false)
+            signUpUsernameViewModel.isNextMBTNEnable(false)
             openProgressDialog()
         } else {
             progressDialog.dismiss()

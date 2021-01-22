@@ -27,7 +27,7 @@
             android:focusable="false"
             android:hint="@string/search"
             android:longClickable="false"
-            android:onClick="@{()->exploreViewModel.onSearchEditTextClick()}"
+            android:onClick="@{()->exploreViewModel.onSearchETClick()}"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

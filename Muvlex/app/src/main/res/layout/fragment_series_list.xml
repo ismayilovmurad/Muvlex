@@ -1,25 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--<data>
+    <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="seriesListViewModel"
             type="com.martiandeveloper.muvlex.viewmodel.feed.SeriesListViewModel" />
 
-    </data>-->
+    </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
         tools:context=".view.feed.SeriesListFragment">
+
+        <LinearLayout
+            android:id="@+id/fragment_series_list_searchingForLL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:visibility="@{seriesListViewModel.searchingForLLGone ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar style="@style/StyleSupremeProgressbar" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/StyleRegularTextView"
+                android:layout_marginStart="4dp"
+                android:text="@{seriesListViewModel.searchingForMTVText}" />
+
+        </LinearLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/StyleRegularTextView"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/no_internet_connection"
+            android:visibility="@{seriesListViewModel.noInternetConnectionMTVGone ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/StyleRegularTextView"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@{seriesListViewModel.noResultsFoundForMTVText}"
+            android:visibility="@{seriesListViewModel.noResultsFoundForMTVGone ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_series_list_mainRV"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:visibility="@{seriesListViewModel.seriesRVGone ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_series_list_searchingForLL_2"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_series_list_searchingForLL" />
 
-    </FrameLayout>
+        <LinearLayout
+            android:id="@+id/fragment_series_list_searchingForLL_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:visibility="@{seriesListViewModel.searchingForLL2Gone ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ProgressBar style="@style/StyleSupremeProgressbar" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/StyleRegularTextView"
+                android:layout_marginStart="4dp"
+                android:text="@{seriesListViewModel.searchingForMTVText}" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".view.feed.ProfileFragment">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         style="@style/StyleSupremeTextView"
         android:layout_gravity="center"
         android:text="@string/profile" />

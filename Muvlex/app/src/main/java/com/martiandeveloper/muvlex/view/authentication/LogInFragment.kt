@@ -57,9 +57,9 @@ class LogInFragment : Fragment() {
         observe()
 
         with(logInViewModel) {
-            setLogInButtonEnable(false)
-            setIsErrorDialogImageGone(false)
-            setIsErrorDialogProgressGone(true)
+            isLogInMBTNEnable(false)
+            isErrorADIVGone(false)
+            isErrorADPBGone(true)
         }
 
         setPasswordToggle()
@@ -77,7 +77,7 @@ class LogInFragment : Fragment() {
 
         with(logInViewModel) {
 
-            isLogInButtonEnable.observe(viewLifecycleOwner, {
+            logInMBTNEnable.observe(viewLifecycleOwner, {
 
                 if (it) {
 
@@ -99,45 +99,45 @@ class LogInFragment : Fragment() {
 
             })
 
-            emailOrUsernameACTContent.observe(viewLifecycleOwner, {
+            emailOrUsernameACTText.observe(viewLifecycleOwner, {
 
                 if (it.isNullOrEmpty()) {
-                    setLogInButtonEnable(false)
+                    isLogInMBTNEnable(false)
                 } else {
 
-                    if (passwordETContent.value.isNullOrEmpty()) {
-                        setLogInButtonEnable(false)
+                    if (passwordETText.value.isNullOrEmpty()) {
+                        isLogInMBTNEnable(false)
                     } else {
-                        setLogInButtonEnable(true)
+                        isLogInMBTNEnable(true)
                     }
 
                 }
 
             })
 
-            passwordETContent.observe(viewLifecycleOwner, {
+            passwordETText.observe(viewLifecycleOwner, {
 
                 if (it.isNullOrEmpty()) {
-                    setLogInButtonEnable(false)
+                    isLogInMBTNEnable(false)
                 } else {
 
-                    if (emailOrUsernameACTContent.value.isNullOrEmpty()) {
-                        setLogInButtonEnable(false)
+                    if (emailOrUsernameACTText.value.isNullOrEmpty()) {
+                        isLogInMBTNEnable(false)
                     } else {
-                        setLogInButtonEnable(true)
+                        isLogInMBTNEnable(true)
                     }
 
                 }
 
             })
 
-            onLogInButtonClick.observe(viewLifecycleOwner, EventObserver {
+            logInMBTNClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
 
                     with(this) {
 
-                        if (Patterns.EMAIL_ADDRESS.matcher(emailOrUsernameACTContent.value!!)
+                        if (Patterns.EMAIL_ADDRESS.matcher(emailOrUsernameACTText.value!!)
                                 .matches()
                         ) {
 
@@ -148,7 +148,7 @@ class LogInFragment : Fragment() {
                             }
 
                         } else {
-                            checkIfUsernameExists()
+                            isUsernameExists()
                         }
 
                     }
@@ -157,7 +157,7 @@ class LogInFragment : Fragment() {
 
             })
 
-            isProgressDialogOpen.observe(viewLifecycleOwner, {
+            progressADOpen.observe(viewLifecycleOwner, {
 
                 if (it) {
                     setProgress(true)
@@ -167,7 +167,7 @@ class LogInFragment : Fragment() {
 
             })
 
-            onSignUpTextViewClick.observe(viewLifecycleOwner, EventObserver {
+            signUpMTVClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
                     navigate(LogInFragmentDirections.actionLogInFragmentToSignUpFragment())
@@ -175,7 +175,7 @@ class LogInFragment : Fragment() {
 
             })
 
-            onGetHelpTextViewClick.observe(viewLifecycleOwner, EventObserver {
+            getHelpMTVClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
                     navigate(LogInFragmentDirections.actionLogInFragmentToGetHelpLoggingInFragment())
@@ -183,7 +183,7 @@ class LogInFragment : Fragment() {
 
             })
 
-            isLogInSuccessful.observe(viewLifecycleOwner, {
+            logInSuccessful.observe(viewLifecycleOwner, {
 
                 if (it) {
                     navigate(LogInFragmentDirections.actionLogInFragmentToFeedFragment())
@@ -203,7 +203,7 @@ class LogInFragment : Fragment() {
 
                     "The email address is already in use by another account." -> showToast(R.string.email_address_is_already_in_use_by_another_account)
 
-                    "Email is not verified" -> setErrorDialogOpen(true)
+                    "Email is not verified" -> isErrorADOpen(true)
 
                     "There is no user record corresponding to this identifier. The user may have been deleted." -> showToast(
                         R.string.we_couldnt_find_info_for_this_account
@@ -223,18 +223,18 @@ class LogInFragment : Fragment() {
 
             })
 
-            progressTextDecider.observe(viewLifecycleOwner, {
+            progressMTVTextDecider.observe(viewLifecycleOwner, {
 
                 when (it) {
-                    "login" -> setProgressText(getString(R.string.logging_in))
-                    "load" -> setProgressText(getString(R.string.loading_user_data))
-                    "check_username" -> setProgressText(getString(R.string.checking_username))
-                    else -> setProgressText("")
+                    "login" -> setProgressMTVText(getString(R.string.logging_in))
+                    "load" -> setProgressMTVText(getString(R.string.loading_user_data))
+                    "check_username" -> setProgressMTVText(getString(R.string.checking_username))
+                    else -> setProgressMTVText("")
                 }
 
             })
 
-            isErrorDialogOpen.observe(viewLifecycleOwner, {
+            errorADOpen.observe(viewLifecycleOwner, {
 
                 if (it) {
                     openErrorDialog()
@@ -244,22 +244,22 @@ class LogInFragment : Fragment() {
 
             })
 
-            onOkayButtonClick.observe(viewLifecycleOwner, EventObserver {
+            okayMBTNClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
-                    setErrorDialogOpen(false)
+                    isErrorADOpen(false)
                     Firebase.auth.signOut()
                 }
 
             })
 
-            onResendButtonClick.observe(viewLifecycleOwner, EventObserver {
+            resendMBTNClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
 
                     if (isNetworkAvailable) {
-                        setIsResendAndOkayButtonsEnable(false)
-                        resendVerification()
+                        isResendAndOkayMBTNSEnable(false)
+                        resendEmailVerification()
                     } else {
                         showToast(R.string.no_internet_connection)
                     }
@@ -268,13 +268,13 @@ class LogInFragment : Fragment() {
 
             })
 
-            isResendSuccessful.observe(viewLifecycleOwner, EventObserver {
+            resendSuccessful.observe(viewLifecycleOwner, EventObserver {
 
-                setIsResendAndOkayButtonsEnable(true)
+                isResendAndOkayMBTNSEnable(true)
 
                 if (it) {
                     showToast(R.string.check_your_email_to_verify_your_muvlex_account)
-                    setErrorDialogOpen(false)
+                    isErrorADOpen(false)
                     Firebase.auth.signOut()
                 }
 
@@ -346,7 +346,7 @@ class LogInFragment : Fragment() {
     private fun setProgress(progress: Boolean) {
 
         if (progress) {
-            logInViewModel.setLogInButtonEnable(false)
+            logInViewModel.isLogInMBTNEnable(false)
             openProgressDialog()
         } else {
             progressDialog.dismiss()
@@ -394,7 +394,7 @@ class LogInFragment : Fragment() {
 
         with(logInViewModel) {
 
-            isResendAndOkayButtonsEnable.observe(viewLifecycleOwner, {
+            resendAndOkayMBTNSEnable.observe(viewLifecycleOwner, {
 
                 if (it) {
 

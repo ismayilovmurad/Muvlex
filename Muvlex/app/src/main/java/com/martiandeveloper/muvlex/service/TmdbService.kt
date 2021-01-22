@@ -11,9 +11,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-object MovieService {
+object TmdbService {
 
-    fun getClient(): MovieApi {
+    fun getClient(): TmdbApi {
 
         val requestInterceptor = Interceptor { chain ->
             // Interceptor take only one argument which is a lambda function so parenthesis can be omitted
@@ -46,7 +46,7 @@ object MovieService {
             .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
-            .create(MovieApi::class.java)
+            .create(TmdbApi::class.java)
 
     }
 

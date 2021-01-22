@@ -1,19 +1,19 @@
 package com.martiandeveloper.muvlex.repository
 
 import androidx.paging.PagingSource
-import com.martiandeveloper.muvlex.model.Movie
+import com.martiandeveloper.muvlex.model.Series
 import com.martiandeveloper.muvlex.service.TmdbApi
 
-class MovieDataSource(private val movie: String, private val apiService: TmdbApi) :
-    PagingSource<Int, Movie>() {
+class SeriesDataSource(private val series: String, private val apiService: TmdbApi) :
+    PagingSource<Int, Series>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Series> {
 
         return try {
             val currentLoadingPageKey = params.key ?: 1
-            val responseData = mutableListOf<Movie>()
+            val responseData = mutableListOf<Series>()
             responseData.addAll(
-                apiService.getMovie(movie, currentLoadingPageKey).body()?.results ?: emptyList()
+                apiService.getSeries(series, currentLoadingPageKey).body()?.results ?: emptyList()
             )
             val prevKey = if (currentLoadingPageKey == 1) null else currentLoadingPageKey - 1
 

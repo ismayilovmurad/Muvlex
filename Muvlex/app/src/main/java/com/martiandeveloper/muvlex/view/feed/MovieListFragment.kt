@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.martiandeveloper.muvlex.R
@@ -17,7 +17,7 @@ import com.martiandeveloper.muvlex.model.Movie
 import com.martiandeveloper.muvlex.utils.isNetworkAvailable
 import com.martiandeveloper.muvlex.utils.searchResult
 import com.martiandeveloper.muvlex.viewmodel.feed.MovieListViewModel
-import timber.log.Timber
+import kotlinx.coroutines.launch
 
 class MovieListFragment : Fragment(), MovieListAdapter.ItemClickListener {
 
@@ -45,10 +45,10 @@ class MovieListFragment : Fragment(), MovieListAdapter.ItemClickListener {
         observe()
 
         with(movieListViewModel) {
-            setNoInternetTVGone(true)
-            setSearchingForLayoutGone(true)
-            setSearchingForLayoutGone2(true)
-            setNoResultsFoundGone(true)
+            isNoInternetConnectionMTVGone(true)
+            isSearchingForLLGone(true)
+            isSearchingForLL2Gone(true)
+            isNoResultsFoundForMTVGone(true)
         }
 
         setRecyclerView()
@@ -63,21 +63,27 @@ class MovieListFragment : Fragment(), MovieListAdapter.ItemClickListener {
 
             searchResult.observe(viewLifecycleOwner, {
 
-                if (!it.isNullOrEmpty()) {
+                viewLifecycleOwner.lifecycleScope.launch {
 
-                    if (isNetworkAvailable) {
-                        setNoInternetTVGone(true)
-                        setMovieListGone(false)
-                        setSearchingForText("${getString(R.string.searching_for)} \"$it\"...")
-                        getData(it, movieListAdapter)
+                    if (!it.isNullOrEmpty()) {
+
+                        isSearchingForLLGone(false)
+
+                        if (isNetworkAvailable) {
+                            isNoInternetConnectionMTVGone(true)
+                            isMovieRVGone(false)
+                            setSearchingForMTVText("${getString(R.string.searching_for)} \"$it\"...")
+                            getData(it, movieListAdapter)
+                        } else {
+                            isNoInternetConnectionMTVGone(false)
+                            isMovieRVGone(true)
+                        }
+
                     } else {
-                        setNoInternetTVGone(false)
-                        setMovieListGone(true)
+                        isMovieRVGone(true)
+                        isNoResultsFoundForMTVGone(true)
                     }
 
-                } else {
-                    setMovieListGone(true)
-                    setNoResultsFoundGone(true)
                 }
 
             })
@@ -92,72 +98,66 @@ class MovieListFragment : Fragment(), MovieListAdapter.ItemClickListener {
 
         movieListAdapter = MovieListAdapter(this)
 
-        movieListAdapter.addLoadStateListener {
+        with(movieListViewModel) {
 
-            when (it.append) {
+            movieListAdapter.addLoadStateListener {
 
-                is LoadState.Loading -> {
+                when (it.append) {
 
-                    if (isFirstAppend) {
-                        Timber.d("Show top refresh")
-                        movieListViewModel.setSearchingForLayoutGone(false)
-                        isFirstAppend = false
-                    } else {
-                        Timber.d("Show bottom refresh")
-                        movieListViewModel.setSearchingForLayoutGone2(false)
-                    }
+                    is LoadState.Loading -> {
 
-                }
-
-                is LoadState.NotLoading -> {
-                    Timber.e("Hide top refresh")
-                    Timber.e("Hide bottom refresh")
-                    movieListViewModel.setSearchingForLayoutGone(true)
-                    movieListViewModel.setSearchingForLayoutGone2(true)
-                }
-
-                is LoadState.Error -> {
-                    Timber.e("Hide top refresh")
-                    Timber.e("Hide bottom refresh")
-                    movieListViewModel.setSearchingForLayoutGone(true)
-                    movieListViewModel.setSearchingForLayoutGone2(true)
-                }
-
-            }
-
-            when (it.refresh) {
-
-                is LoadState.Loading -> {
-                    isFirstAppend = true
-                }
-
-                is LoadState.NotLoading -> {
-
-                    Timber.e("Hide top refresh")
-                    Timber.e("Hide bottom refresh")
-                    movieListViewModel.setSearchingForLayoutGone(true)
-                    movieListViewModel.setSearchingForLayoutGone2(true)
-
-                    if (movieListAdapter.itemCount == 0) {
-
-                        if (searchResult.value != null) {
-                            movieListViewModel.setNoResultsFoundText("${getString(R.string.no_results_found_for)} \"${searchResult.value}\"")
-                            movieListViewModel.setNoResultsFoundGone(false)
+                        if (isFirstAppend) {
+                            isSearchingForLLGone(false)
+                            isFirstAppend = false
                         } else {
-                            movieListViewModel.setNoResultsFoundGone(true)
+                            isSearchingForLL2Gone(false)
                         }
 
-                    } else {
-                        movieListViewModel.setNoResultsFoundGone(true)
+                    }
+
+                    is LoadState.NotLoading -> {
+                        isSearchingForLLGone(true)
+                        isSearchingForLL2Gone(true)
+                    }
+
+                    is LoadState.Error -> {
+                        isSearchingForLLGone(true)
+                        isSearchingForLL2Gone(true)
                     }
 
                 }
 
-                is LoadState.Error -> {
-                    Timber.e("Hide top refresh")
-                    Timber.e("Hide bottom refresh")
-                    movieListViewModel.setSearchingForLayoutGone(true)
-                    movieListViewModel.setSearchingForLayoutGone2(true)
+                when (it.refresh) {
+
+                    is LoadState.Loading -> {
+                        isFirstAppend = true
+                    }
+
+                    is LoadState.NotLoading -> {
+
+                        isSearchingForLLGone(true)
+                        isSearchingForLL2Gone(true)
+
+                        if (movieListAdapter.itemCount == 0) {
+
+                            if (searchResult.value != null) {
+                                setNoResultsFoundForMTVText("${getString(R.string.no_results_found_for)} \"${searchResult.value}\"")
+                                isNoResultsFoundForMTVGone(false)
+                            } else {
+                                isNoResultsFoundForMTVGone(true)
+                            }
+
+                        } else {
+                            isNoResultsFoundForMTVGone(true)
+                        }
+
+                    }
+
+                    is LoadState.Error -> {
+                        isSearchingForLLGone(true)
+                        isSearchingForLL2Gone(true)
+                    }
+
                 }
 
             }
@@ -172,7 +172,7 @@ class MovieListFragment : Fragment(), MovieListAdapter.ItemClickListener {
     }
 
     override fun onItemClick(movie: Movie) {
-        Toast.makeText(context, movie.title, Toast.LENGTH_SHORT).show()
+        TODO()
     }
 
 }

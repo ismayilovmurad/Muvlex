@@ -55,9 +55,9 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/rubik"
-                    android:text="@{signUpUsernameViewModel.usernameErrorText}"
+                    android:text="@{signUpUsernameViewModel.usernameErrorMTVText}"
                     android:textColor="@color/color_error"
-                    android:visibility="@{signUpUsernameViewModel.isUsernameErrorGone() ? View.INVISIBLE : View.VISIBLE}" />
+                    android:visibility="@{signUpUsernameViewModel.usernameErrorMTVGone ? View.INVISIBLE : View.VISIBLE}" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                         android:inputType="textEmailAddress"
                         android:longClickable="false"
                         android:singleLine="true"
-                        android:text="@={signUpUsernameViewModel.usernameETContent}"
+                        android:text="@={signUpUsernameViewModel.usernameETText}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +83,7 @@
                     <ProgressBar
                         style="@style/StyleSupremeProgressbar"
                         android:layout_marginEnd="8dp"
-                        android:visibility="@{signUpUsernameViewModel.isUsernameProgressGone() ? View.INVISIBLE : View.VISIBLE}"
+                        android:visibility="@{signUpUsernameViewModel.usernamePBGone ? View.INVISIBLE : View.VISIBLE}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -94,7 +94,7 @@
                     android:id="@+id/fragment_sign_up_username_nextMBTN"
                     style="@style/StyleSupremeButton"
                     android:layout_marginTop="24dp"
-                    android:onClick="@{()->signUpUsernameViewModel.onNextButtonClick()}"
+                    android:onClick="@{()->signUpUsernameViewModel.onNextMBTNClick()}"
                     android:text="@string/next" />
 
             </LinearLayout>
@@ -102,7 +102,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/fragment_sign_up_username_privacyPolicyMTV"
                 style="@style/StyleRegularTextView"
-                android:onClick="@{()->signUpUsernameViewModel.onPrivacyPolicyTextViewClick()}"
+                android:onClick="@{()->signUpUsernameViewModel.onPrivacyPolicyMTVClick()}"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"

@@ -23,7 +23,7 @@ class FeedFragment : Fragment() {
 
         NavigationUI.setupWithNavController(
             view.findViewById<BottomNavigationView>(R.id.fragment_feed_mainBNV),
-            (childFragmentManager.findFragmentById(R.id.fragment_feed_feedFCV) as NavHostFragment).navController
+            (childFragmentManager.findFragmentById(R.id.fragment_feed_mainFCV) as NavHostFragment).navController
         )
 
         return view

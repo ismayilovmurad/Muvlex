@@ -8,28 +8,28 @@ import com.martiandeveloper.muvlex.utils.Event
 
 class MainViewModel : ViewModel() {
 
-    //########## On layout language click
-    private var _onLayoutLanguageClick = MutableLiveData<Event<Boolean>>()
-    val onLayoutLanguageClick: LiveData<Event<Boolean>>
-        get() = _onLayoutLanguageClick
+    //########## Language LinearLayout click
+    private var _languageLLClick = MutableLiveData<Event<Boolean>>()
+    val languageLLClick: LiveData<Event<Boolean>>
+        get() = _languageLLClick
 
-    fun onLayoutLanguageClick() {
-        _onLayoutLanguageClick.value = Event(true)
+    fun onLanguageLLClick() {
+        _languageLLClick.value = Event(true)
     }
 
 
-    //########## Is layout language gone
-    private var _isLayoutLanguageGone = MutableLiveData<Boolean>()
-    val isLayoutLanguageGone: LiveData<Boolean>
-        get() = _isLayoutLanguageGone
+    //########## Language LinearLayout gone
+    private var _languageLLGone = MutableLiveData<Boolean>()
+    val languageLLGone: LiveData<Boolean>
+        get() = _languageLLGone
 
-    fun setLayoutLanguageGone(gone: Boolean) {
-        _isLayoutLanguageGone.value = gone
+    fun isLanguageLLGone(gone: Boolean) {
+        _languageLLGone.value = gone
     }
 
 
-    //########## Search EditText content
-    val searchETContent: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    //########## Search EditText text
+    val searchETText: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
 
     //########## Language list
@@ -37,7 +37,7 @@ class MainViewModel : ViewModel() {
     val languageList: LiveData<ArrayList<Language>>
         get() = _languageList
 
-    fun fillTheLanguageList(list: ArrayList<Language>) {
+    fun fillLanguageList(list: ArrayList<Language>) {
         _languageList.value = list
     }
 

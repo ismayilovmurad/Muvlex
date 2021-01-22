@@ -7,14 +7,14 @@
     tools:context=".view.feed.FeedFragment">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_feed_feedFCV"
+        android:id="@+id/fragment_feed_mainFCV"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/fragment_feed_mainBNV"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/navigation_feed" />
+        app:navGraph="@navigation/feed_navigation" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/fragment_feed_mainBNV"
@@ -26,7 +26,7 @@
         app:itemIconTint="@color/bottom_navigation_view_item_background"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/menu_bottom_navigation" />
+        app:menu="@menu/bottom_navigation_view_menu" />
 
     <View
         android:layout_width="match_parent"

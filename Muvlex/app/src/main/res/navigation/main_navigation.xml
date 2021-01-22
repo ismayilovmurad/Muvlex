@@ -49,7 +49,7 @@
 
         <action
             android:id="@+id/action_logInFragment_to_getHelpLoggingInFragment"
-            app:destination="@id/getHelpLoggingInFragment" />
+            app:destination="@id/getHelpFragment" />
 
     </fragment>
 
@@ -80,13 +80,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/getHelpLoggingInFragment"
-        android:name="com.martiandeveloper.muvlex.view.authentication.GetHelpLoggingInFragment"
-        android:label="GetHelpLoggingInFragment"
-        tools:layout="@layout/fragment_get_help_logging_in">
+        android:id="@+id/getHelpFragment"
+        android:name="com.martiandeveloper.muvlex.view.authentication.GetHelpFragment"
+        android:label="GetHelpFragment"
+        tools:layout="@layout/fragment_get_help">
 
         <action
-            android:id="@+id/action_getHelpLoggingInFragment_to_logInFragment"
+            android:id="@+id/action_getHelpFragment_to_logInFragment"
             app:destination="@id/logInFragment"
             app:popUpTo="@id/logInFragment"
             app:popUpToInclusive="true" />

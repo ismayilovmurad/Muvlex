@@ -23,13 +23,13 @@
             style="@style/StyleSupremeProgressbar"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:visibility="@{signUpViewModel.isSuccessDialogProgressGone() ? View.GONE : View.VISIBLE}" />
+            android:visibility="@{signUpViewModel.successADPBGone ? View.GONE : View.VISIBLE}" />
 
         <ImageView
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:contentDescription="@string/success"
-            android:visibility="@{signUpViewModel.isSuccessDialogImageGone() ? View.GONE : View.VISIBLE}"
+            android:visibility="@{signUpViewModel.successADIVGone ? View.GONE : View.VISIBLE}"
             app:srcCompat="@drawable/ic_success" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -44,7 +44,7 @@
             android:id="@+id/dialog_sign_up_verification_continueMBTN"
             style="@style/StyleSupremeButton"
             android:layout_marginTop="24dp"
-            android:onClick="@{()->signUpViewModel.onContinueButtonClick()}"
+            android:onClick="@{()->signUpViewModel.onContinueMBTNClick()}"
             android:text="@string/_continue" />
 
     </LinearLayout>

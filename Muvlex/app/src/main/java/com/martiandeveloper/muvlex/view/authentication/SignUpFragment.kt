@@ -58,9 +58,9 @@ class SignUpFragment : Fragment() {
         observe()
 
         with(signUpViewModel) {
-            setNextButtonEnable(false)
-            setIsSuccessDialogImageGone(false)
-            setIsSuccessDialogProgressGone(true)
+            isNextMBTNEnable(false)
+            isSuccessADIVGone(false)
+            isSuccessADPBGone(true)
         }
 
         successDialog = MaterialAlertDialogBuilder(requireContext(), R.style.StyleDialog).create()
@@ -76,7 +76,7 @@ class SignUpFragment : Fragment() {
 
         with(signUpViewModel) {
 
-            isNextButtonEnable.observe(viewLifecycleOwner, {
+            nextMBTNEnable.observe(viewLifecycleOwner, {
 
                 if (it) {
 
@@ -98,62 +98,62 @@ class SignUpFragment : Fragment() {
 
             })
 
-            emailETContent.observe(viewLifecycleOwner, {
+            emailETText.observe(viewLifecycleOwner, {
 
                 if (it.isNullOrEmpty()) {
-                    setNextButtonEnable(false)
+                    isNextMBTNEnable(false)
                 } else {
 
-                    if (Patterns.EMAIL_ADDRESS.matcher(emailETContent.value!!)
+                    if (Patterns.EMAIL_ADDRESS.matcher(emailETText.value!!)
                             .matches()
                     ) {
 
-                        if (passwordETContent.value.isNullOrEmpty()) {
+                        if (passwordETText.value.isNullOrEmpty()) {
 
-                            setNextButtonEnable(false)
+                            isNextMBTNEnable(false)
 
                         } else {
 
-                            if (confirmPasswordETContent.value.isNullOrEmpty()) {
-                                setNextButtonEnable(false)
+                            if (confirmPasswordETText.value.isNullOrEmpty()) {
+                                isNextMBTNEnable(false)
                             } else {
-                                setNextButtonEnable(true)
+                                isNextMBTNEnable(true)
                             }
 
                         }
 
                     } else {
-                        setNextButtonEnable(false)
+                        isNextMBTNEnable(false)
                     }
 
                 }
 
             })
 
-            passwordETContent.observe(viewLifecycleOwner, {
+            passwordETText.observe(viewLifecycleOwner, {
 
                 if (it.isNullOrEmpty()) {
-                    setNextButtonEnable(false)
+                    isNextMBTNEnable(false)
                 } else {
 
-                    if (emailETContent.value.isNullOrEmpty()) {
+                    if (emailETText.value.isNullOrEmpty()) {
 
-                        setNextButtonEnable(false)
+                        isNextMBTNEnable(false)
 
                     } else {
 
-                        if (Patterns.EMAIL_ADDRESS.matcher(emailETContent.value!!)
+                        if (Patterns.EMAIL_ADDRESS.matcher(emailETText.value!!)
                                 .matches()
                         ) {
 
-                            if (confirmPasswordETContent.value.isNullOrEmpty()) {
-                                setNextButtonEnable(false)
+                            if (confirmPasswordETText.value.isNullOrEmpty()) {
+                                isNextMBTNEnable(false)
                             } else {
-                                setNextButtonEnable(true)
+                                isNextMBTNEnable(true)
                             }
 
                         } else {
-                            setNextButtonEnable(false)
+                            isNextMBTNEnable(false)
                         }
 
                     }
@@ -162,30 +162,30 @@ class SignUpFragment : Fragment() {
 
             })
 
-            confirmPasswordETContent.observe(viewLifecycleOwner, {
+            confirmPasswordETText.observe(viewLifecycleOwner, {
 
                 if (it.isNullOrEmpty()) {
-                    setNextButtonEnable(false)
+                    isNextMBTNEnable(false)
                 } else {
 
-                    if (emailETContent.value.isNullOrEmpty()) {
+                    if (emailETText.value.isNullOrEmpty()) {
 
-                        setNextButtonEnable(false)
+                        isNextMBTNEnable(false)
 
                     } else {
 
-                        if (Patterns.EMAIL_ADDRESS.matcher(emailETContent.value!!)
+                        if (Patterns.EMAIL_ADDRESS.matcher(emailETText.value!!)
                                 .matches()
                         ) {
 
-                            if (passwordETContent.value.isNullOrEmpty()) {
-                                setNextButtonEnable(false)
+                            if (passwordETText.value.isNullOrEmpty()) {
+                                isNextMBTNEnable(false)
                             } else {
-                                setNextButtonEnable(true)
+                                isNextMBTNEnable(true)
                             }
 
                         } else {
-                            setNextButtonEnable(false)
+                            isNextMBTNEnable(false)
                         }
 
                     }
@@ -194,11 +194,11 @@ class SignUpFragment : Fragment() {
 
             })
 
-            onNextButtonClick.observe(viewLifecycleOwner, EventObserver {
+            nextMBTNClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
 
-                    if (passwordETContent.value != confirmPasswordETContent.value) {
+                    if (passwordETText.value != confirmPasswordETText.value) {
                         Toast.makeText(
                             context,
                             getString(R.string.passwords_dont_match),
@@ -218,7 +218,7 @@ class SignUpFragment : Fragment() {
 
             })
 
-            isProgressDialogOpen.observe(viewLifecycleOwner, {
+            progressADOpen.observe(viewLifecycleOwner, {
 
                 if (it) {
                     setProgress(true)
@@ -228,7 +228,7 @@ class SignUpFragment : Fragment() {
 
             })
 
-            onLogInTextViewClick.observe(viewLifecycleOwner, EventObserver {
+            logInMTVClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
                     navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
@@ -236,10 +236,10 @@ class SignUpFragment : Fragment() {
 
             })
 
-            isSignUpSuccessful.observe(viewLifecycleOwner, {
+            signUpSuccessful.observe(viewLifecycleOwner, {
 
                 if (it) {
-                    setSuccessDialogOpen(true)
+                    isSuccessADOpen(true)
                 }
 
             })
@@ -264,13 +264,13 @@ class SignUpFragment : Fragment() {
 
             })
 
-            onContinueButtonClick.observe(viewLifecycleOwner, EventObserver {
+            continueMBTNClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
 
                     if (isNetworkAvailable) {
-                        setIsContinueButtonEnable(false)
-                        checkEmailVerification()
+                        isContinueMBTNEnable(false)
+                        isEmailVerified()
                     } else {
                         showToast(R.string.no_internet_connection)
                     }
@@ -279,7 +279,7 @@ class SignUpFragment : Fragment() {
 
             })
 
-            isSuccessDialogOpen.observe(viewLifecycleOwner, {
+            successADOpen.observe(viewLifecycleOwner, {
 
                 if (it) {
                     openSuccessDialog()
@@ -289,22 +289,22 @@ class SignUpFragment : Fragment() {
 
             })
 
-            progressTextDecider.observe(viewLifecycleOwner, {
+            progressMTVTextDecider.observe(viewLifecycleOwner, {
 
                 when (it) {
-                    "create" -> setProgressText(getString(R.string.creating_user))
-                    "verification" -> setProgressText(getString(R.string.sending_verification_code))
-                    else -> setProgressText("")
+                    "create" -> setProgressMTVText(getString(R.string.creating_user))
+                    "verification" -> setProgressMTVText(getString(R.string.sending_verification_code))
+                    else -> setProgressMTVText("")
                 }
 
             })
 
-            isEmailVerificationSuccessful.observe(viewLifecycleOwner, {
+            emailVerificationSuccessful.observe(viewLifecycleOwner, {
 
-                setIsContinueButtonEnable(true)
+                isContinueMBTNEnable(true)
 
                 if (it) {
-                    setSuccessDialogOpen(false)
+                    isSuccessADOpen(false)
                     navigate(SignUpFragmentDirections.actionSignUpFragmentToSignUpUsernameFragment())
                 }
 
@@ -374,7 +374,7 @@ class SignUpFragment : Fragment() {
     private fun setProgress(progress: Boolean) {
 
         if (progress) {
-            signUpViewModel.setNextButtonEnable(false)
+            signUpViewModel.isNextMBTNEnable(false)
             openProgressDialog()
         } else {
             progressDialog.dismiss()
@@ -403,7 +403,7 @@ class SignUpFragment : Fragment() {
 
         with(signUpViewModel) {
 
-            isContinueButtonEnable.observe(viewLifecycleOwner, {
+            continueMBTNEnable.observe(viewLifecycleOwner, {
 
                 if (it) {
 

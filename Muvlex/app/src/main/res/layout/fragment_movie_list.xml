@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="16dp"
-            android:visibility="@{movieListViewModel.isSearchingForLayoutGone() ? View.GONE : View.VISIBLE}"
+            android:visibility="@{movieListViewModel.searchingForLLGone ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -35,7 +35,7 @@
             <com.google.android.material.textview.MaterialTextView
                 style="@style/StyleRegularTextView"
                 android:layout_marginStart="4dp"
-                android:text="@{movieListViewModel.searchingForText}" />
+                android:text="@{movieListViewModel.searchingForMTVText}" />
 
         </LinearLayout>
 
@@ -44,7 +44,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/no_internet_connection"
-            android:visibility="@{movieListViewModel.isNoInternetTVGone() ? View.GONE : View.VISIBLE}"
+            android:visibility="@{movieListViewModel.noInternetConnectionMTVGone ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,8 +52,8 @@
             style="@style/StyleRegularTextView"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="@{movieListViewModel.noResultsFoundText}"
-            android:visibility="@{movieListViewModel.isNoResultsFoundTVGone() ? View.GONE : View.VISIBLE}"
+            android:text="@{movieListViewModel.noResultsFoundForMTVText}"
+            android:visibility="@{movieListViewModel.noResultsFoundForMTVGone ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -61,7 +61,7 @@
             android:id="@+id/fragment_movie_list_mainRV"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="@{movieListViewModel.isMovieListGone() ? View.GONE : View.VISIBLE}"
+            android:visibility="@{movieListViewModel.movieRVGone ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@+id/fragment_movie_list_searchingForLL_2"
             app:layout_constraintTop_toBottomOf="@+id/fragment_movie_list_searchingForLL" />
 
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="16dp"
-            android:visibility="@{movieListViewModel.isSearchingForLayoutGone2() ? View.GONE : View.VISIBLE}"
+            android:visibility="@{movieListViewModel.searchingForLL2Gone ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -80,7 +80,7 @@
             <com.google.android.material.textview.MaterialTextView
                 style="@style/StyleRegularTextView"
                 android:layout_marginStart="4dp"
-                android:text="@{movieListViewModel.searchingForText}" />
+                android:text="@{movieListViewModel.searchingForMTVText}" />
 
         </LinearLayout>
 

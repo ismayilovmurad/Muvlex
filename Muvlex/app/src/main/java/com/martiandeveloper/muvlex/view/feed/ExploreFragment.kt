@@ -45,7 +45,7 @@ class ExploreFragment : Fragment() {
 
         with(exploreViewModel) {
 
-            onSearchEditTextClick.observe(viewLifecycleOwner, EventObserver {
+            searchETClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
                     navigate(ExploreFragmentDirections.actionExploreFragmentToSearchFragment())

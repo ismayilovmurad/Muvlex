@@ -17,7 +17,7 @@
 
         <gradient
             android:angle="0"
-            android:endColor="@color/color_flamingo"
+            android:endColor="@color/color_regular_action"
             android:startColor="@color/color_supreme_action"
             android:type="sweep"
             android:useLevel="false" />

@@ -43,7 +43,7 @@ class SplashFragment : Fragment() {
             if (Firebase.auth.currentUser != null) {
 
                 if (isNetworkAvailable) {
-                    splashViewModel.checkEmailVerification(Firebase.auth.currentUser!!)
+                    splashViewModel.isEmailVerified(Firebase.auth.currentUser!!)
                 } else {
                     navigate(SplashFragmentDirections.actionSplashFragmentToLogInFragment())
                 }
@@ -60,7 +60,7 @@ class SplashFragment : Fragment() {
 
     private fun observe() {
 
-        splashViewModel.isFeedEnable.observe(viewLifecycleOwner, {
+        splashViewModel.feedEnable.observe(viewLifecycleOwner, {
 
             if (it) {
                 navigate(SplashFragmentDirections.actionSplashFragmentToFeedFragment())

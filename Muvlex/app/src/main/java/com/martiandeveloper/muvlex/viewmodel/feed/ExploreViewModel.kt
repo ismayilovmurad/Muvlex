@@ -7,13 +7,13 @@ import com.martiandeveloper.muvlex.utils.Event
 
 class ExploreViewModel : ViewModel() {
 
-    //########## On search EditTex click
-    private var _onSearchEditTextClick = MutableLiveData<Event<Boolean>>()
-    val onSearchEditTextClick: LiveData<Event<Boolean>>
-        get() = _onSearchEditTextClick
+    //########## Search EditText click
+    private var _searchETClick = MutableLiveData<Event<Boolean>>()
+    val searchETClick: LiveData<Event<Boolean>>
+        get() = _searchETClick
 
-    fun onSearchEditTextClick() {
-        _onSearchEditTextClick.value = Event(true)
+    fun onSearchETClick() {
+        _searchETClick.value = Event(true)
     }
 
 }

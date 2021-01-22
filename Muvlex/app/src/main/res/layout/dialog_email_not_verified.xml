@@ -23,13 +23,13 @@
             style="@style/StyleSupremeProgressbar"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:visibility="@{logInViewModel.isErrorDialogProgressGone() ? View.GONE : View.VISIBLE}" />
+            android:visibility="@{logInViewModel.errorADPBGone ? View.GONE : View.VISIBLE}" />
 
         <ImageView
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:contentDescription="@string/success"
-            android:visibility="@{logInViewModel.isErrorDialogImageGone() ? View.GONE : View.VISIBLE}"
+            android:visibility="@{logInViewModel.errorADIVGone ? View.GONE : View.VISIBLE}"
             app:srcCompat="@drawable/ic_error" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -44,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
             android:weightSum="2">
 
             <com.google.android.material.button.MaterialButton
@@ -52,7 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:onClick="@{()->logInViewModel.onResendButtonClick()}"
+                android:onClick="@{()->logInViewModel.onResendMBTNClick()}"
                 android:text="@string/resend" />
 
             <com.google.android.material.button.MaterialButton
@@ -61,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:onClick="@{()->logInViewModel.onOkayButtonClick()}"
+                android:onClick="@{()->logInViewModel.onOkayMBTNClick()}"
                 android:text="@string/okay" />
 
         </LinearLayout>

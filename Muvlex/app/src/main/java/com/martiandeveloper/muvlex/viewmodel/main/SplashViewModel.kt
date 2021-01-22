@@ -10,27 +10,27 @@ import com.google.firebase.ktx.Firebase
 
 class SplashViewModel : ViewModel() {
 
-    //########## Is feed enable
-    private var _isFeedEnable = MutableLiveData<Boolean>()
-    val isFeedEnable: LiveData<Boolean>
-        get() = _isFeedEnable
+    //########## Feed enable
+    private var _feedEnable = MutableLiveData<Boolean>()
+    val feedEnable: LiveData<Boolean>
+        get() = _feedEnable
 
 
-    //########## Check email verification
-    fun checkEmailVerification(user: FirebaseUser) {
+    //########## Is email verified
+    fun isEmailVerified(user: FirebaseUser) {
 
         if (user.isEmailVerified) {
-            checkIfUserHasUsername(user)
+            hasUserUsername(user)
         } else {
             Firebase.auth.signOut()
-            _isFeedEnable.value = false
+            _feedEnable.value = false
         }
 
     }
 
 
-    //########## Check if the user has username
-    private fun checkIfUserHasUsername(user: FirebaseUser) {
+    //########## Has user username
+    private fun hasUserUsername(user: FirebaseUser) {
 
         Firebase.firestore.collection("users").document(user.uid).get().addOnCompleteListener {
 
@@ -39,20 +39,20 @@ class SplashViewModel : ViewModel() {
                 if (it.result != null) {
 
                     if (it.result!!.get("username") != null) {
-                        _isFeedEnable.value = true
+                        _feedEnable.value = true
                     } else {
                         Firebase.auth.signOut()
-                        _isFeedEnable.value = false
+                        _feedEnable.value = false
                     }
 
                 } else {
                     Firebase.auth.signOut()
-                    _isFeedEnable.value = false
+                    _feedEnable.value = false
                 }
 
             } else {
                 Firebase.auth.signOut()
-                _isFeedEnable.value = false
+                _feedEnable.value = false
             }
 
         }

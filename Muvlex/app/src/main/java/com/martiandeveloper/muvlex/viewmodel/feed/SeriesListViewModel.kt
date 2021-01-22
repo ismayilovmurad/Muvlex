@@ -7,16 +7,16 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.martiandeveloper.muvlex.adapter.MovieListAdapter
-import com.martiandeveloper.muvlex.repository.MovieDataSource
+import com.martiandeveloper.muvlex.adapter.SeriesListAdapter
+import com.martiandeveloper.muvlex.repository.SeriesDataSource
 import com.martiandeveloper.muvlex.service.TmdbApi
 import com.martiandeveloper.muvlex.service.TmdbService
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class MovieListViewModel : ViewModel() {
+class SeriesListViewModel : ViewModel() {
 
-    //########## Movie API
+    //########## Series API
     private val tmdbApi: MutableLiveData<TmdbApi> by lazy { MutableLiveData<TmdbApi>() }
 
     init {
@@ -25,16 +25,16 @@ class MovieListViewModel : ViewModel() {
 
 
     //########## Get data
-    fun getData(movieTitle: String, movieListAdapter: MovieListAdapter) {
+    fun getData(seriesName: String, seriesListAdapter: SeriesListAdapter) {
 
         val listData = Pager(PagingConfig(pageSize = 20)) {
-            MovieDataSource(movieTitle, tmdbApi.value!!)
+            SeriesDataSource(seriesName, tmdbApi.value!!)
         }.flow.cachedIn(viewModelScope)
 
         viewModelScope.launch {
 
             listData.collect {
-                movieListAdapter.submitData(it)
+                seriesListAdapter.submitData(it)
             }
 
         }
@@ -42,13 +42,13 @@ class MovieListViewModel : ViewModel() {
     }
 
 
-    //########## Movie RecyclerView gone
-    private var _movieRVGone = MutableLiveData<Boolean>()
-    val movieRVGone: LiveData<Boolean>
-        get() = _movieRVGone
+    //########## Series RecyclerView gone
+    private var _seriesRVGone = MutableLiveData<Boolean>()
+    val seriesRVGone: LiveData<Boolean>
+        get() = _seriesRVGone
 
-    fun isMovieRVGone(gone: Boolean) {
-        _movieRVGone.value = gone
+    fun isSeriesRVGone(gone: Boolean) {
+        _seriesRVGone.value = gone
     }
 
 

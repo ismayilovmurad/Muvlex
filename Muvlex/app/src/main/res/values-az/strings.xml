@@ -43,10 +43,10 @@
     <string name="profile">Profil</string>
     <string name="movies">Filmlər</string>
     <string name="series">Seriyallar</string>
-    <string name="actors">Aktyorlar</string>
     <string name="users">İstifadəçilər</string>
     <string name="searching_for">Axtarılır</string>
     <string name="no_results_found_for">Nəticə tapılmadı</string>
+    <string name="unknown">Naməlum</string>
 
     <!--Alert texts-->
     <string name="creating_user">İstifadəçi yaradılır</string>

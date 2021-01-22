@@ -17,16 +17,16 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.DialogPasswordResetBinding
 import com.martiandeveloper.muvlex.databinding.DialogProgressGetHelpLoggingInBinding
-import com.martiandeveloper.muvlex.databinding.FragmentGetHelpLoggingInBinding
+import com.martiandeveloper.muvlex.databinding.FragmentGetHelpBinding
 import com.martiandeveloper.muvlex.utils.EventObserver
 import com.martiandeveloper.muvlex.utils.isNetworkAvailable
-import com.martiandeveloper.muvlex.viewmodel.authentication.GetHelpLoggingInViewModel
+import com.martiandeveloper.muvlex.viewmodel.authentication.GetHelpViewModel
 
-class GetHelpLoggingInFragment : Fragment() {
+class GetHelpFragment : Fragment() {
 
-    private lateinit var fragmentGetHelpLoggingInBinding: FragmentGetHelpLoggingInBinding
+    private lateinit var fragmentGetHelpBinding: FragmentGetHelpBinding
 
-    private lateinit var getHelpLoggingInViewModel: GetHelpLoggingInViewModel
+    private lateinit var getHelpViewModel: GetHelpViewModel
 
     private lateinit var progressDialog: AlertDialog
     private lateinit var successDialog: AlertDialog
@@ -36,41 +36,41 @@ class GetHelpLoggingInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        getHelpLoggingInViewModel =
-            ViewModelProviders.of(this).get(GetHelpLoggingInViewModel::class.java)
+        getHelpViewModel =
+            ViewModelProviders.of(this).get(GetHelpViewModel::class.java)
 
-        fragmentGetHelpLoggingInBinding =
+        fragmentGetHelpBinding =
             DataBindingUtil.inflate(
                 inflater,
-                R.layout.fragment_get_help_logging_in,
+                R.layout.fragment_get_help,
                 container,
                 false
             )
 
-        fragmentGetHelpLoggingInBinding.let {
-            it.getHelpLoggingInViewModel = getHelpLoggingInViewModel
+        fragmentGetHelpBinding.let {
+            it.getHelpLoggingInViewModel = getHelpViewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
 
         observe()
 
-        getHelpLoggingInViewModel.setLogInButtonEnable(false)
+        getHelpViewModel.isContinueMBTNEnable(false)
 
         progressDialog = MaterialAlertDialogBuilder(requireContext(), R.style.StyleDialog).create()
         successDialog = MaterialAlertDialogBuilder(requireContext(), R.style.StyleDialog).create()
 
-        return fragmentGetHelpLoggingInBinding.root
+        return fragmentGetHelpBinding.root
 
     }
 
     private fun observe() {
 
         val fragmentGetHelpLoggingInContinueMBTN =
-            fragmentGetHelpLoggingInBinding.fragmentGetHelpLoggingInContinueMBTN
+            fragmentGetHelpBinding.fragmentGetHelpLoggingInContinueMBTN
 
-        with(getHelpLoggingInViewModel) {
+        with(getHelpViewModel) {
 
-            isContinueButtonEnable.observe(viewLifecycleOwner, {
+            continueMBTNEnable.observe(viewLifecycleOwner, {
 
                 if (it) {
 
@@ -92,34 +92,34 @@ class GetHelpLoggingInFragment : Fragment() {
 
             })
 
-            emailOrUsernameETContent.observe(viewLifecycleOwner, {
+            emailOrUsernameETText.observe(viewLifecycleOwner, {
 
                 if (it.isNullOrEmpty()) {
-                    setLogInButtonEnable(false)
+                    isContinueMBTNEnable(false)
                 } else {
-                    setLogInButtonEnable(true)
+                    isContinueMBTNEnable(true)
                 }
 
             })
 
-            onContinueButtonClick.observe(viewLifecycleOwner, EventObserver {
+            continueMBTNClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
 
                     with(this) {
 
-                        if (Patterns.EMAIL_ADDRESS.matcher(emailOrUsernameETContent.value!!)
+                        if (Patterns.EMAIL_ADDRESS.matcher(emailOrUsernameETText.value!!)
                                 .matches()
                         ) {
 
                             if (isNetworkAvailable) {
-                                sendResetPassword()
+                                sendPasswordResetEmailForUsername()
                             } else {
                                 showToast(R.string.no_internet_connection)
                             }
 
                         } else {
-                            checkIfUsernameExists()
+                            isUsernameExists()
                         }
 
                     }
@@ -128,7 +128,7 @@ class GetHelpLoggingInFragment : Fragment() {
 
             })
 
-            isProgressDialogOpen.observe(viewLifecycleOwner, {
+            progressADOpen.observe(viewLifecycleOwner, {
 
                 if (it) {
                     setProgress(true)
@@ -138,10 +138,10 @@ class GetHelpLoggingInFragment : Fragment() {
 
             })
 
-            isSendingSuccessful.observe(viewLifecycleOwner, {
+            sendPasswordResetEmailSuccessful.observe(viewLifecycleOwner, {
 
                 if (it) {
-                    setSuccessDialogOpen(true)
+                    isSuccessADOpen(true)
                 }
 
             })
@@ -160,27 +160,27 @@ class GetHelpLoggingInFragment : Fragment() {
 
             })
 
-            progressTextDecider.observe(viewLifecycleOwner, {
+            progressTVTextDecider.observe(viewLifecycleOwner, {
 
                 when (it) {
-                    "send" -> setProgressText(getString(R.string.sending_password_reset_email))
-                    "load" -> setProgressText(getString(R.string.loading_user_data))
-                    "check_username" -> setProgressText(getString(R.string.checking_username))
-                    else -> setProgressText("")
+                    "send" -> setProgressMTVText(getString(R.string.sending_password_reset_email))
+                    "load" -> setProgressMTVText(getString(R.string.loading_user_data))
+                    "check_username" -> setProgressMTVText(getString(R.string.checking_username))
+                    else -> setProgressMTVText("")
                 }
 
             })
 
-            onOkayButtonClick.observe(viewLifecycleOwner, EventObserver {
+            okayMBTNClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
-                    setSuccessDialogOpen(false)
-                    navigate(GetHelpLoggingInFragmentDirections.actionGetHelpLoggingInFragmentToLogInFragment())
+                    isSuccessADOpen(false)
+                    navigate(GetHelpFragmentDirections.actionGetHelpFragmentToLogInFragment())
                 }
 
             })
 
-            isSuccessDialogOpen.observe(viewLifecycleOwner, {
+            successADOpen.observe(viewLifecycleOwner, {
 
                 if (it) {
                     openSuccessDialog()
@@ -197,7 +197,7 @@ class GetHelpLoggingInFragment : Fragment() {
     private fun setProgress(progress: Boolean) {
 
         if (progress) {
-            getHelpLoggingInViewModel.setLogInButtonEnable(false)
+            getHelpViewModel.isContinueMBTNEnable(false)
             openProgressDialog()
         } else {
             progressDialog.dismiss()
@@ -218,7 +218,7 @@ class GetHelpLoggingInFragment : Fragment() {
         val binding = DialogProgressGetHelpLoggingInBinding.inflate(LayoutInflater.from(context))
 
         binding.let {
-            it.getHelpLoggingInViewModel = getHelpLoggingInViewModel
+            it.getHelpLoggingInViewModel = getHelpViewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
 
@@ -236,7 +236,7 @@ class GetHelpLoggingInFragment : Fragment() {
         val binding = DialogPasswordResetBinding.inflate(LayoutInflater.from(context))
 
         binding.let {
-            it.getHelpLoggingInViewModel = getHelpLoggingInViewModel
+            it.getHelpLoggingInViewModel = getHelpViewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
 

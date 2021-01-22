@@ -66,7 +66,6 @@ class SearchFragment : Fragment() {
             tab.text = when (position) {
                 0 -> getString(R.string.movies)
                 1 -> getString(R.string.series)
-                2 -> getString(R.string.actors)
                 else -> getString(R.string.users)
             }
 
@@ -84,7 +83,7 @@ class SearchFragment : Fragment() {
 
         with(searchViewModel) {
 
-            searchETContent.observe(viewLifecycleOwner, {
+            searchETText.observe(viewLifecycleOwner, {
 
                 if (it.isNullOrEmpty()) {
                     fragmentSearchBinding.fragmentSearchSearchET.setCompoundDrawablesWithIntrinsicBounds(
@@ -105,7 +104,7 @@ class SearchFragment : Fragment() {
 
             })
 
-            onBackImageViewClick.observe(viewLifecycleOwner, EventObserver {
+            backIVClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
                     navigate(SearchFragmentDirections.actionSearchFragmentToExploreFragment())
@@ -131,7 +130,6 @@ class SearchFragment : Fragment() {
             return when (position) {
                 0 -> MovieListFragment()
                 1 -> SeriesListFragment()
-                2 -> ActorListFragment()
                 else -> UserListFragment()
             }
 

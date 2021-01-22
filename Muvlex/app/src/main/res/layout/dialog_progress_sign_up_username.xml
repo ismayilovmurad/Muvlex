@@ -17,7 +17,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             style="@style/StyleRegularTextView"
-            android:text="@{signUpUsernameViewModel.progressText}" />
+            android:text="@{signUpUsernameViewModel.progressMTVText}" />
 
         <ProgressBar
             style="@style/StyleSupremeProgressbar"

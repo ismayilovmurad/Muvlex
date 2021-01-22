@@ -10,87 +10,87 @@ import com.martiandeveloper.muvlex.utils.appLanguage
 
 class SignUpViewModel : ViewModel() {
 
-    //########## Progress text
-    private var _progressText = MutableLiveData<String>()
-    val progressText: LiveData<String>
-        get() = _progressText
+    //########## Progress MaterialTextView text
+    private var _progressMTVText = MutableLiveData<String>()
+    val progressMTVText: LiveData<String>
+        get() = _progressMTVText
 
-    fun setProgressText(text: String) {
-        _progressText.value = text
+    fun setProgressMTVText(text: String) {
+        _progressMTVText.value = text
     }
 
 
-    //########## On continue button click
-    private var _onContinueButtonClick = MutableLiveData<Event<Boolean>>()
-    val onContinueButtonClick: LiveData<Event<Boolean>>
-        get() = _onContinueButtonClick
+    //########## Continue MaterialButton click
+    private var _continueMBTNClick = MutableLiveData<Event<Boolean>>()
+    val continueMBTNClick: LiveData<Event<Boolean>>
+        get() = _continueMBTNClick
 
-    fun onContinueButtonClick() {
-        _onContinueButtonClick.value = Event(true)
+    fun onContinueMBTNClick() {
+        _continueMBTNClick.value = Event(true)
     }
 
 
-    //########## Email EditText content
-    val emailETContent: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    //########## Email EditText text
+    val emailETText: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
 
-    //########## Password EditText content
-    val passwordETContent: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    //########## Password EditText text
+    val passwordETText: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
 
-    //########## Confirm password EditText content
-    val confirmPasswordETContent: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    //########## Confirm password EditText text
+    val confirmPasswordETText: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
 
-    //########## On next button click
-    private var _onNextButtonClick = MutableLiveData<Event<Boolean>>()
-    val onNextButtonClick: LiveData<Event<Boolean>>
-        get() = _onNextButtonClick
+    //########## Next MaterialButton click
+    private var _nextMBTNClick = MutableLiveData<Event<Boolean>>()
+    val nextMBTNClick: LiveData<Event<Boolean>>
+        get() = _nextMBTNClick
 
-    fun onNextButtonClick() {
-        _onNextButtonClick.value = Event(true)
+    fun onNextMBTNClick() {
+        _nextMBTNClick.value = Event(true)
     }
 
 
-    //########## On log in TextView click
-    private var _onLogInTextViewClick = MutableLiveData<Event<Boolean>>()
-    val onLogInTextViewClick: LiveData<Event<Boolean>>
-        get() = _onLogInTextViewClick
+    //########## Log in MaterialTextView click
+    private var _logInMTVClick = MutableLiveData<Event<Boolean>>()
+    val logInMTVClick: LiveData<Event<Boolean>>
+        get() = _logInMTVClick
 
-    fun onLogInTextViewClick() {
-        _onLogInTextViewClick.value = Event(true)
+    fun onLogInMTVClick() {
+        _logInMTVClick.value = Event(true)
     }
 
 
-    //########## Is next button enable
-    private var _isNextButtonEnable = MutableLiveData<Boolean>()
-    val isNextButtonEnable: LiveData<Boolean>
-        get() = _isNextButtonEnable
+    //########## Next MaterialButton enable
+    private var _nextMBTNEnable = MutableLiveData<Boolean>()
+    val nextMBTNEnable: LiveData<Boolean>
+        get() = _nextMBTNEnable
 
-    fun setNextButtonEnable(enable: Boolean) {
-        _isNextButtonEnable.value = enable
+    fun isNextMBTNEnable(enable: Boolean) {
+        _nextMBTNEnable.value = enable
     }
 
 
     //########## Sign up
     fun signUp() {
 
-        _progressTextDecider.value = "create"
-        _isProgressDialogOpen.value = true
+        _progressMTVTextDecider.value = "create"
+        _progressADOpen.value = true
 
         Firebase.auth.createUserWithEmailAndPassword(
-            emailETContent.value!!,
-            passwordETContent.value!!
+            emailETText.value!!,
+            passwordETText.value!!
         ).addOnCompleteListener {
 
-            _progressTextDecider.value = ""
-            _isProgressDialogOpen.value = false
+            _progressMTVTextDecider.value = ""
+            _progressADOpen.value = false
 
             if (it.isSuccessful) {
-                sendVerification()
+                sendEmailVerification()
             } else {
 
-                _isSignUpSuccessful.value = false
+                _signUpSuccessful.value = false
 
                 if (it.exception != null) {
 
@@ -110,10 +110,12 @@ class SignUpViewModel : ViewModel() {
 
     }
 
-    private fun sendVerification() {
 
-        _progressTextDecider.value = "verification"
-        _isProgressDialogOpen.value = true
+    //########## Send email verification
+    private fun sendEmailVerification() {
+
+        _progressMTVTextDecider.value = "verification"
+        _progressADOpen.value = true
 
         val user = Firebase.auth.currentUser
 
@@ -125,14 +127,14 @@ class SignUpViewModel : ViewModel() {
 
                 user.sendEmailVerification().addOnCompleteListener {
 
-                    _progressTextDecider.value = ""
-                    _isProgressDialogOpen.value = false
+                    _progressMTVTextDecider.value = ""
+                    _progressADOpen.value = false
 
                     if (it.isSuccessful) {
-                        _isSignUpSuccessful.value = true
+                        _signUpSuccessful.value = true
                     } else {
 
-                        _isSignUpSuccessful.value = false
+                        _signUpSuccessful.value = false
 
                         if (it.exception != null) {
 
@@ -152,34 +154,34 @@ class SignUpViewModel : ViewModel() {
                 }
 
             } else {
-                _isSignUpSuccessful.value = false
+                _signUpSuccessful.value = false
                 _errorMessage.value = Event("")
             }
 
         } else {
-            _isSignUpSuccessful.value = false
+            _signUpSuccessful.value = false
             _errorMessage.value = Event("")
         }
 
     }
 
 
-    //########## Progress text decider
-    private var _progressTextDecider = MutableLiveData<String>()
-    val progressTextDecider: LiveData<String>
-        get() = _progressTextDecider
+    //########## Progress MaterialTextView text decider
+    private var _progressMTVTextDecider = MutableLiveData<String>()
+    val progressMTVTextDecider: LiveData<String>
+        get() = _progressMTVTextDecider
 
 
-    //########## Is progress dialog open
-    private var _isProgressDialogOpen = MutableLiveData<Boolean>()
-    val isProgressDialogOpen: LiveData<Boolean>
-        get() = _isProgressDialogOpen
+    //########## Progress AlertDialog open
+    private var _progressADOpen = MutableLiveData<Boolean>()
+    val progressADOpen: LiveData<Boolean>
+        get() = _progressADOpen
 
 
-    //########## Is sign up successful
-    private var _isSignUpSuccessful = MutableLiveData<Boolean>()
-    val isSignUpSuccessful: LiveData<Boolean>
-        get() = _isSignUpSuccessful
+    //########## Sign up successful
+    private var _signUpSuccessful = MutableLiveData<Boolean>()
+    val signUpSuccessful: LiveData<Boolean>
+        get() = _signUpSuccessful
 
 
     //########## Error message
@@ -188,21 +190,21 @@ class SignUpViewModel : ViewModel() {
         get() = _errorMessage
 
 
-    //########## Is success dialog open
-    private var _isSuccessDialogOpen = MutableLiveData<Boolean>()
-    val isSuccessDialogOpen: LiveData<Boolean>
-        get() = _isSuccessDialogOpen
+    //########## Success AlertDialog open
+    private var _successADOpen = MutableLiveData<Boolean>()
+    val successADOpen: LiveData<Boolean>
+        get() = _successADOpen
 
-    fun setSuccessDialogOpen(open: Boolean) {
-        _isSuccessDialogOpen.value = open
+    fun isSuccessADOpen(open: Boolean) {
+        _successADOpen.value = open
     }
 
 
-    //########## Check email verification
-    fun checkEmailVerification() {
+    //########## Is email verified
+    fun isEmailVerified() {
 
-        _isSuccessDialogImageGone.value = true
-        _isSuccessDialogProgressGone.value = false
+        _successADIVGone.value = true
+        _successADPBGone.value = false
 
         val user = Firebase.auth.currentUser
 
@@ -213,12 +215,12 @@ class SignUpViewModel : ViewModel() {
             Firebase.auth.signOut()
 
             Firebase.auth.signInWithEmailAndPassword(
-                emailETContent.value!!,
-                passwordETContent.value!!
+                emailETText.value!!,
+                passwordETText.value!!
             ).addOnCompleteListener {
 
-                _isSuccessDialogImageGone.value = false
-                _isSuccessDialogProgressGone.value = true
+                _successADIVGone.value = false
+                _successADPBGone.value = true
 
                 if (it.isSuccessful) {
 
@@ -227,25 +229,25 @@ class SignUpViewModel : ViewModel() {
                         if (it.result!!.user != null) {
 
                             if (it.result!!.user!!.isEmailVerified) {
-                                _isEmailVerificationSuccessful.value = true
+                                _emailVerificationSuccessful.value = true
                             } else {
-                                _isEmailVerificationSuccessful.value = false
+                                _emailVerificationSuccessful.value = false
                                 _errorMessage.value = Event("unverified")
                             }
 
                         } else {
-                            _isEmailVerificationSuccessful.value = false
+                            _emailVerificationSuccessful.value = false
                             _errorMessage.value = Event("")
                         }
 
                     } else {
-                        _isEmailVerificationSuccessful.value = false
+                        _emailVerificationSuccessful.value = false
                         _errorMessage.value = Event("")
                     }
 
                 } else {
 
-                    _isEmailVerificationSuccessful.value = false
+                    _emailVerificationSuccessful.value = false
 
                     if (it.exception != null) {
 
@@ -265,49 +267,49 @@ class SignUpViewModel : ViewModel() {
             }
 
         } else {
-            _isSuccessDialogImageGone.value = false
-            _isSuccessDialogProgressGone.value = true
+            _successADIVGone.value = false
+            _successADPBGone.value = true
 
-            _isEmailVerificationSuccessful.value = false
+            _emailVerificationSuccessful.value = false
             _errorMessage.value = Event("")
         }
 
     }
 
 
-    //########## Is email verification successful
-    private var _isEmailVerificationSuccessful = MutableLiveData<Boolean>()
-    val isEmailVerificationSuccessful: LiveData<Boolean>
-        get() = _isEmailVerificationSuccessful
+    //########## Email verification successful
+    private var _emailVerificationSuccessful = MutableLiveData<Boolean>()
+    val emailVerificationSuccessful: LiveData<Boolean>
+        get() = _emailVerificationSuccessful
 
 
-    //########## Is success dialog progress gone
-    private var _isSuccessDialogProgressGone = MutableLiveData<Boolean>()
-    val isSuccessDialogProgressGone: LiveData<Boolean>
-        get() = _isSuccessDialogProgressGone
+    //########## Success AlertDialog ProgressBar gone
+    private var _successADPBGone = MutableLiveData<Boolean>()
+    val successADPBGone: LiveData<Boolean>
+        get() = _successADPBGone
 
-    fun setIsSuccessDialogProgressGone(gone: Boolean) {
-        _isSuccessDialogProgressGone.value = gone
+    fun isSuccessADPBGone(gone: Boolean) {
+        _successADPBGone.value = gone
     }
 
 
-    //########## Is success dialog image gone
-    private var _isSuccessDialogImageGone = MutableLiveData<Boolean>()
-    val isSuccessDialogImageGone: LiveData<Boolean>
-        get() = _isSuccessDialogImageGone
+    //########## Success AlertDialog ImageView gone
+    private var _successADIVGone = MutableLiveData<Boolean>()
+    val successADIVGone: LiveData<Boolean>
+        get() = _successADIVGone
 
-    fun setIsSuccessDialogImageGone(gone: Boolean) {
-        _isSuccessDialogImageGone.value = gone
+    fun isSuccessADIVGone(gone: Boolean) {
+        _successADIVGone.value = gone
     }
 
 
-    //########## Is continue button enable
-    private var _isContinueButtonEnable = MutableLiveData<Boolean>()
-    val isContinueButtonEnable: LiveData<Boolean>
-        get() = _isContinueButtonEnable
+    //########## Continue MaterialButton enable
+    private var _continueMBTNEnable = MutableLiveData<Boolean>()
+    val continueMBTNEnable: LiveData<Boolean>
+        get() = _continueMBTNEnable
 
-    fun setIsContinueButtonEnable(enable: Boolean) {
-        _isContinueButtonEnable.value = enable
+    fun isContinueMBTNEnable(enable: Boolean) {
+        _continueMBTNEnable.value = enable
     }
 
 }

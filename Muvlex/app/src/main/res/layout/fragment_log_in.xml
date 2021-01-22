@@ -46,7 +46,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
-                    android:text="@={logInViewModel.emailOrUsernameACTContent}" />
+                    android:text="@={logInViewModel.emailOrUsernameACTText}" />
 
                 <EditText
                     android:id="@+id/fragment_log_in_passwordET"
@@ -58,14 +58,14 @@
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:longClickable="false"
-                    android:text="@={logInViewModel.passwordETContent}"
+                    android:text="@={logInViewModel.passwordETText}"
                     tools:ignore="Autofill" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/fragment_log_in_logInMBTN"
                     style="@style/StyleSupremeButton"
                     android:layout_marginTop="24dp"
-                    android:onClick="@{()->logInViewModel.onLogInButtonClick()}"
+                    android:onClick="@{()->logInViewModel.onLogInMBTNClick()}"
                     android:text="@string/log_in" />
 
                 <LinearLayout
@@ -88,7 +88,7 @@
                         style="@style/StyleActionTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="@{()->logInViewModel.onGetHelpTextViewClick()}"
+                        android:onClick="@{()->logInViewModel.onGetHelpMTVClick()}"
                         android:padding="8dp"
                         android:text="@string/get_help"
                         android:textSize="13sp" />
@@ -117,7 +117,7 @@
                     style="@style/StyleActionTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->logInViewModel.onSignUpTextViewClick()}"
+                    android:onClick="@{()->logInViewModel.onSignUpMTVClick()}"
                     android:padding="8dp"
                     android:text="@string/sign_up"
                     android:textSize="13sp" />

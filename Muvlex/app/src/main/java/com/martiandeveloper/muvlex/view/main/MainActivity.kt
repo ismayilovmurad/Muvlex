@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
         navController =
             (supportFragmentManager.findFragmentById(R.id.activity_main_mainFCV) as NavHostFragment).navController
 
-        mainViewModel.setLayoutLanguageGone(true)
+        mainViewModel.isLanguageLLGone(true)
 
         NetworkAvailability(applicationContext).registerNetworkCallback()
 
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
 
         with(mainViewModel) {
 
-            onLayoutLanguageClick.observe(this@MainActivity, EventObserver {
+            languageLLClick.observe(this@MainActivity, EventObserver {
 
                 if (it) {
                     openLanguageDialog()
@@ -152,7 +152,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
 
         }
 
-        mainViewModel.fillTheLanguageList(languageList)
+        mainViewModel.fillLanguageList(languageList)
 
         adapter = mainViewModel.languageList.value?.let { LanguageAdapter(it, this) }!!
 
@@ -161,7 +161,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
             it.adapter = adapter
         }
 
-        mainViewModel.searchETContent.observe(this, {
+        mainViewModel.searchETText.observe(this, {
 
             if (it.isNullOrEmpty()) {
                 binding.dialogLanguageMainET.setCompoundDrawablesWithIntrinsicBounds(
@@ -253,12 +253,12 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
     ) {
 
         when (destination.label.toString()) {
-            "SplashFragment" -> mainViewModel.setLayoutLanguageGone(true)
-            "LogInFragment" -> mainViewModel.setLayoutLanguageGone(false)
-            "SignUpFragment" -> mainViewModel.setLayoutLanguageGone(false)
-            "SignUpUsernameFragment" -> mainViewModel.setLayoutLanguageGone(true)
-            "FeedFragment" -> mainViewModel.setLayoutLanguageGone(true)
-            "GetHelpLoggingInFragment" -> mainViewModel.setLayoutLanguageGone(true)
+            "SplashFragment" -> mainViewModel.isLanguageLLGone(true)
+            "LogInFragment" -> mainViewModel.isLanguageLLGone(false)
+            "SignUpFragment" -> mainViewModel.isLanguageLLGone(false)
+            "SignUpUsernameFragment" -> mainViewModel.isLanguageLLGone(true)
+            "FeedFragment" -> mainViewModel.isLanguageLLGone(true)
+            "GetHelpLoggingInFragment" -> mainViewModel.isLanguageLLGone(true)
         }
 
     }

@@ -7,17 +7,17 @@ import com.martiandeveloper.muvlex.utils.Event
 
 class SearchViewModel : ViewModel() {
 
-    //########## Search EditText content
-    val searchETContent: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    //########## Search EditText text
+    val searchETText: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
 
-    //########## On back ImageView click
-    private var _onBackImageViewClick = MutableLiveData<Event<Boolean>>()
-    val onBackImageViewClick: LiveData<Event<Boolean>>
-        get() = _onBackImageViewClick
+    //########## Back ImageView click
+    private var _backIVClick = MutableLiveData<Event<Boolean>>()
+    val backIVClick: LiveData<Event<Boolean>>
+        get() = _backIVClick
 
-    fun onBackImageViewClick() {
-        _onBackImageViewClick.value = Event(true)
+    fun onBackIVClick() {
+        _backIVClick.value = Event(true)
     }
 
 }
