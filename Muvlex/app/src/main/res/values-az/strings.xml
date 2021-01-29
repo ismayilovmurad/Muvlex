@@ -47,6 +47,10 @@
     <string name="searching_for">Axtarılır</string>
     <string name="no_results_found_for">Nəticə tapılmadı</string>
     <string name="unknown">Naməlum</string>
+    <string name="rate_this_movie">Bu filmə səs ver</string>
+    <string name="share_your_thoughts_with_other">Düşüncələrini başqalarıyla bölüş</string>
+    <string name="write_a_review">Bir rəy yaz</string>
+    <string name="overview">Ümumi baxış</string>
 
     <!--Alert texts-->
     <string name="creating_user">İstifadəçi yaradılır</string>
@@ -71,6 +75,10 @@
     <string name="back">Geri</string>
     <string name="poster">Afişa</string>
     <string name="star">Ulduz</string>
+    <string name="calendar">Təqvim</string>
+    <string name="vote_average">Orta səs</string>
+    <string name="genre">Janr</string>
+    <string name="language">Dil</string>
 
     <!--Toast texts-->
     <string name="something_went_wrong_try_again_later">Bir xəta baş verdi, daha sonra yenidən cəhd et</string>

@@ -14,7 +14,7 @@ import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.adapter.SeriesListAdapter
 import com.martiandeveloper.muvlex.databinding.FragmentSeriesListBinding
 import com.martiandeveloper.muvlex.model.Series
-import com.martiandeveloper.muvlex.utils.isNetworkAvailable
+import com.martiandeveloper.muvlex.utils.networkAvailable
 import com.martiandeveloper.muvlex.utils.searchResult
 import com.martiandeveloper.muvlex.viewmodel.feed.SeriesListViewModel
 import kotlinx.coroutines.launch
@@ -68,8 +68,9 @@ class SeriesListFragment : Fragment(), SeriesListAdapter.ItemClickListener {
                     if (!it.isNullOrEmpty()) {
 
                         isSearchingForLLGone(false)
+                        isNoResultsFoundForMTVGone(true)
 
-                        if (isNetworkAvailable) {
+                        if (networkAvailable) {
                             isNoInternetConnectionMTVGone(true)
                             isSeriesRVGone(false)
                             setSearchingForMTVText("${getString(R.string.searching_for)} \"$it\"...")

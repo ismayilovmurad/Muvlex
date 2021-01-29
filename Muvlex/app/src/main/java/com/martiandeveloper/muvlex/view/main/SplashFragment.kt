@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.R
-import com.martiandeveloper.muvlex.utils.isNetworkAvailable
+import com.martiandeveloper.muvlex.utils.networkAvailable
 import com.martiandeveloper.muvlex.viewmodel.main.SplashViewModel
 
 
@@ -42,7 +42,7 @@ class SplashFragment : Fragment() {
 
             if (Firebase.auth.currentUser != null) {
 
-                if (isNetworkAvailable) {
+                if (networkAvailable) {
                     splashViewModel.isEmailVerified(Firebase.auth.currentUser!!)
                 } else {
                     navigate(SplashFragmentDirections.actionSplashFragmentToLogInFragment())

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.FragmentExploreBinding
 import com.martiandeveloper.muvlex.utils.EventObserver
+import com.martiandeveloper.muvlex.utils.openKeyboardForSearchET
 import com.martiandeveloper.muvlex.viewmodel.feed.ExploreViewModel
 
 class ExploreFragment : Fragment() {
@@ -48,6 +49,7 @@ class ExploreFragment : Fragment() {
             searchETClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
+                    openKeyboardForSearchET = true
                     navigate(ExploreFragmentDirections.actionExploreFragmentToSearchFragment())
                 }
 

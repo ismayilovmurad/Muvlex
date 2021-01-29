@@ -15,11 +15,10 @@ class MovieDataSource(private val movie: String, private val apiService: TmdbApi
             responseData.addAll(
                 apiService.getMovie(movie, currentLoadingPageKey).body()?.results ?: emptyList()
             )
-            val prevKey = if (currentLoadingPageKey == 1) null else currentLoadingPageKey - 1
 
             LoadResult.Page(
                 data = responseData,
-                prevKey = prevKey,
+                prevKey = if (currentLoadingPageKey == 1) null else currentLoadingPageKey - 1,
                 nextKey = currentLoadingPageKey.plus(1)
             )
         } catch (e: Exception) {

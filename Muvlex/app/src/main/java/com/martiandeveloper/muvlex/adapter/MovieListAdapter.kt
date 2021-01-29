@@ -11,7 +11,8 @@ import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.RecyclerviewMovieItemBinding
 import com.martiandeveloper.muvlex.model.Movie
 import com.martiandeveloper.muvlex.utils.BASE_URL_POSTER
-import com.martiandeveloper.muvlex.utils.loadImage
+import com.martiandeveloper.muvlex.utils.check
+import com.martiandeveloper.muvlex.utils.load
 
 class MovieListAdapter(
     private val itemCLickListener: ItemClickListener
@@ -22,18 +23,18 @@ class MovieListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
 
-        val binding: RecyclerviewMovieItemBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(context),
-            R.layout.recyclerview_movie_item,
-            parent,
-            false
+        return MovieListViewHolder(
+            DataBindingUtil.inflate(
+                LayoutInflater.from(context),
+                R.layout.recyclerview_movie_item,
+                parent,
+                false
+            )
         )
-
-        return MovieListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as MovieListViewHolder).bind(getItem(position), context, itemCLickListener)
+        (holder as MovieListViewHolder).bind(context, getItem(position), itemCLickListener)
     }
 
     class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
@@ -52,54 +53,42 @@ class MovieListAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
-            movie: Movie?,
             context: Context,
+            movie: Movie?,
             itemClickListener: ItemClickListener
         ) {
-
-            if (movie != null) {
+            if (movie != null)
 
                 binding.let {
 
-                    if (movie.title != null && movie.title != "null" && movie.title != "") {
-                        it.title = movie.title
-                    } else {
-                        it.title = context.resources.getString(R.string.unknown)
-                    }
+                    with(movie) {
 
-                    if (movie.releaseDate != null && movie.releaseDate != "null" && movie.releaseDate != "") {
-                        it.releaseDate = movie.releaseDate.split("-")[0]
-                    } else {
-                        it.releaseDate = context.resources.getString(R.string.unknown)
-                    }
+                        it.title =
+                            if (title.check()) title else context.resources.getString(
+                                R.string.unknown
+                            )
 
-                    if (movie.voteAverage != null) {
-                        it.voteAverage = movie.voteAverage.toString()
-                    }
+                        it.releaseDate =
+                            if (releaseDate.check()) releaseDate!!.split(
+                                "-"
+                            )[0] else context.resources.getString(R.string.unknown)
 
-                    if (movie.posterPath != null && movie.posterPath != "null" && movie.posterPath != "") {
-                        loadImage(
+                        it.voteAverage =
+                            voteAverage?.toString() ?: context.resources.getString(R.string.unknown)
+
+                        it.recyclerviewMovieItemPosterIV.load(
                             context,
-                            "${BASE_URL_POSTER}${movie.posterPath}",
-                            it.recyclerviewMovieItemPosterIV
+                            if (posterPath.check()) "${BASE_URL_POSTER}${posterPath}" else null
                         )
-                    } else {
-                        loadImage(
-                            context,
-                            null,
-                            it.recyclerviewMovieItemPosterIV
-                        )
+
+                        itemView.setOnClickListener {
+                            itemClickListener.onItemClick(this)
+                        }
+
                     }
 
                     it.executePendingBindings()
-
                 }
-
-                itemView.setOnClickListener {
-                    itemClickListener.onItemClick(movie)
-                }
-
-            }
 
         }
 

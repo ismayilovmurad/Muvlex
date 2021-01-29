@@ -1,6 +1,7 @@
 package com.martiandeveloper.muvlex.view.authentication
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -9,29 +10,25 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.DialogProgressSignUpBinding
 import com.martiandeveloper.muvlex.databinding.DialogSignUpVerificationBinding
 import com.martiandeveloper.muvlex.databinding.FragmentSignUpBinding
-import com.martiandeveloper.muvlex.utils.EventObserver
-import com.martiandeveloper.muvlex.utils.isNetworkAvailable
+import com.martiandeveloper.muvlex.utils.*
 import com.martiandeveloper.muvlex.viewmodel.authentication.SignUpViewModel
 
 class SignUpFragment : Fragment() {
 
-    private lateinit var fragmentSignUpBinding: FragmentSignUpBinding
-
     private lateinit var signUpViewModel: SignUpViewModel
+
+    private lateinit var fragmentSignUpBinding: FragmentSignUpBinding
 
     private var isPasswordVisible = false
 
@@ -72,231 +69,102 @@ class SignUpFragment : Fragment() {
 
     private fun observe() {
 
-        val fragmentSignUpNextMBTN = fragmentSignUpBinding.fragmentSignUpNextMBTN
-
         with(signUpViewModel) {
 
             nextMBTNEnable.observe(viewLifecycleOwner, {
 
-                if (it) {
-
-                    with(fragmentSignUpNextMBTN) {
-                        isEnabled = true
-                        alpha = 1F
-                        setTextColor(ContextCompat.getColor(context, R.color.color_supreme_text))
-                    }
-
-                } else {
-
-                    with(fragmentSignUpNextMBTN) {
-                        isEnabled = false
-                        alpha = .5F
-                        setTextColor(ContextCompat.getColor(context, R.color.color_regular_text))
-                    }
-
+                with(fragmentSignUpBinding.fragmentSignUpNextMBTN) {
+                    if (it) enable(context) else disable(context)
                 }
 
             })
 
             emailETText.observe(viewLifecycleOwner, {
-
-                if (it.isNullOrEmpty()) {
-                    isNextMBTNEnable(false)
-                } else {
-
-                    if (Patterns.EMAIL_ADDRESS.matcher(emailETText.value!!)
-                            .matches()
-                    ) {
-
-                        if (passwordETText.value.isNullOrEmpty()) {
-
-                            isNextMBTNEnable(false)
-
-                        } else {
-
-                            if (confirmPasswordETText.value.isNullOrEmpty()) {
-                                isNextMBTNEnable(false)
-                            } else {
-                                isNextMBTNEnable(true)
-                            }
-
-                        }
-
-                    } else {
-                        isNextMBTNEnable(false)
-                    }
-
-                }
-
+                isNextMBTNEnable(
+                    !it.isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailETText.value!!)
+                        .matches() && !passwordETText.value.isNullOrEmpty() && !confirmPasswordETText.value.isNullOrEmpty()
+                )
             })
 
             passwordETText.observe(viewLifecycleOwner, {
-
-                if (it.isNullOrEmpty()) {
-                    isNextMBTNEnable(false)
-                } else {
-
-                    if (emailETText.value.isNullOrEmpty()) {
-
-                        isNextMBTNEnable(false)
-
-                    } else {
-
-                        if (Patterns.EMAIL_ADDRESS.matcher(emailETText.value!!)
-                                .matches()
-                        ) {
-
-                            if (confirmPasswordETText.value.isNullOrEmpty()) {
-                                isNextMBTNEnable(false)
-                            } else {
-                                isNextMBTNEnable(true)
-                            }
-
-                        } else {
-                            isNextMBTNEnable(false)
-                        }
-
-                    }
-
-                }
-
+                isNextMBTNEnable(
+                    !it.isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailETText.value!!)
+                        .matches() && !emailETText.value.isNullOrEmpty() && !confirmPasswordETText.value.isNullOrEmpty()
+                )
             })
 
             confirmPasswordETText.observe(viewLifecycleOwner, {
-
-                if (it.isNullOrEmpty()) {
-                    isNextMBTNEnable(false)
-                } else {
-
-                    if (emailETText.value.isNullOrEmpty()) {
-
-                        isNextMBTNEnable(false)
-
-                    } else {
-
-                        if (Patterns.EMAIL_ADDRESS.matcher(emailETText.value!!)
-                                .matches()
-                        ) {
-
-                            if (passwordETText.value.isNullOrEmpty()) {
-                                isNextMBTNEnable(false)
-                            } else {
-                                isNextMBTNEnable(true)
-                            }
-
-                        } else {
-                            isNextMBTNEnable(false)
-                        }
-
-                    }
-
-                }
-
+                isNextMBTNEnable(
+                    !it.isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailETText.value!!)
+                        .matches() && !passwordETText.value.isNullOrEmpty() && !emailETText.value.isNullOrEmpty()
+                )
             })
 
             nextMBTNClick.observe(viewLifecycleOwner, EventObserver {
-
-                if (it) {
-
-                    if (passwordETText.value != confirmPasswordETText.value) {
-                        Toast.makeText(
-                            context,
-                            getString(R.string.passwords_dont_match),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-
-                        if (isNetworkAvailable) {
+                if (it)
+                    if (networkAvailable)
+                        if (passwordETText.value != confirmPasswordETText.value)
+                            R.string.passwords_dont_match.showToast(requireContext())
+                        else
                             signUp()
-                        } else {
-                            showToast(R.string.no_internet_connection)
-                        }
-
-                    }
-
-                }
+                    else
+                        R.string.no_internet_connection.showToast(requireContext())
 
             })
 
             progressADOpen.observe(viewLifecycleOwner, {
-
-                if (it) {
-                    setProgress(true)
-                } else {
-                    setProgress(false)
-                }
-
+                setProgress(it)
             })
 
             logInMTVClick.observe(viewLifecycleOwner, EventObserver {
-
-                if (it) {
-                    navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
-                }
-
+                if (it) view.navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
             })
 
             signUpSuccessful.observe(viewLifecycleOwner, {
-
-                if (it) {
-                    isSuccessADOpen(true)
-                }
-
+                isSuccessADOpen(it)
             })
 
             errorMessage.observe(viewLifecycleOwner, EventObserver {
 
                 when (it) {
-
-                    "The email address is badly formatted." -> showToast(R.string.enter_a_valid_email_address)
-
-                    "The given password is invalid. [ Password should be at least 6 characters ]" -> showToast(
-                        R.string.password_should_be_at_least_6_characters
-                    )
-
-                    "The email address is already in use by another account." -> showToast(R.string.email_address_is_already_in_use_by_another_account)
-
-                    "unverified" -> showToast(R.string.verify_your_email_address_to_continue)
-
-                    else -> showToast(R.string.something_went_wrong_try_again_later)
-
-                }
+                    "The email address is badly formatted." -> R.string.enter_a_valid_email_address
+                    "The given password is invalid. [ Password should be at least 6 characters ]" -> R.string.password_should_be_at_least_6_characters
+                    "The email address is already in use by another account." -> R.string.email_address_is_already_in_use_by_another_account
+                    "unverified" -> R.string.verify_your_email_address_to_continue
+                    else -> R.string.something_went_wrong_try_again_later
+                }.showToast(requireContext())
 
             })
 
             continueMBTNClick.observe(viewLifecycleOwner, EventObserver {
+                if (it)
 
-                if (it) {
-
-                    if (isNetworkAvailable) {
+                    if (networkAvailable) {
                         isContinueMBTNEnable(false)
                         isEmailVerified()
-                    } else {
-                        showToast(R.string.no_internet_connection)
-                    }
-
-                }
+                    } else R.string.no_internet_connection.showToast(requireContext())
 
             })
 
             successADOpen.observe(viewLifecycleOwner, {
 
                 if (it) {
+                    hideKeyboard()
                     openSuccessDialog()
-                } else {
-                    successDialog.dismiss()
-                }
+                } else successDialog.dismiss()
 
             })
 
             progressMTVTextDecider.observe(viewLifecycleOwner, {
+                setProgressMTVText(
 
-                when (it) {
-                    "create" -> setProgressMTVText(getString(R.string.creating_user))
-                    "verification" -> setProgressMTVText(getString(R.string.sending_verification_code))
-                    else -> setProgressMTVText("")
-                }
+                    when (it) {
+                        "create" -> getString(R.string.creating_user)
+                        "verification" -> getString(R.string.sending_verification_code)
+                        else -> ""
+                    }
 
+                )
             })
 
             emailVerificationSuccessful.observe(viewLifecycleOwner, {
@@ -305,12 +173,27 @@ class SignUpFragment : Fragment() {
 
                 if (it) {
                     isSuccessADOpen(false)
-                    navigate(SignUpFragmentDirections.actionSignUpFragmentToSignUpUsernameFragment())
+                    view.navigate(SignUpFragmentDirections.actionSignUpFragmentToSignUpUsernameFragment())
                 }
 
             })
 
         }
+
+    }
+
+    private fun hideKeyboard() {
+
+        var view = activity?.currentFocus
+
+        if (view == null) {
+            view = View(activity)
+        }
+
+        (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+            view.windowToken,
+            0
+        )
 
     }
 
@@ -324,7 +207,6 @@ class SignUpFragment : Fragment() {
                 if (event.rawX >= editText.right - editText.compoundDrawables[2].bounds.width()
                 ) {
 
-                    val selection: Int = editText.selectionEnd
                     isPasswordVisible = if (isPasswordVisible) {
 
                         with(editText) {
@@ -357,7 +239,7 @@ class SignUpFragment : Fragment() {
 
                     }
 
-                    editText.setSelection(selection)
+                    editText.setSelection(editText.selectionEnd)
 
                     return@OnTouchListener true
 
@@ -376,18 +258,8 @@ class SignUpFragment : Fragment() {
         if (progress) {
             signUpViewModel.isNextMBTNEnable(false)
             openProgressDialog()
-        } else {
-            progressDialog.dismiss()
-        }
+        } else progressDialog.dismiss()
 
-    }
-
-    private fun navigate(direction: NavDirections) {
-        findNavController().navigate(direction)
-    }
-
-    private fun showToast(message: Int) {
-        Toast.makeText(context, getString(message), Toast.LENGTH_SHORT).show()
     }
 
     private fun openSuccessDialog() {
@@ -399,40 +271,19 @@ class SignUpFragment : Fragment() {
             it.lifecycleOwner = viewLifecycleOwner
         }
 
-        val dialogSignUpVerificationContinueMBTN = binding.dialogSignUpVerificationContinueMBTN
-
         with(signUpViewModel) {
 
             continueMBTNEnable.observe(viewLifecycleOwner, {
 
-                if (it) {
-
-                    with(dialogSignUpVerificationContinueMBTN) {
-                        isEnabled = true
-                        alpha = 1F
-                        setTextColor(ContextCompat.getColor(context, R.color.color_supreme_text))
-                    }
-
-                } else {
-
-                    with(dialogSignUpVerificationContinueMBTN) {
-                        isEnabled = false
-                        alpha = .5F
-                        setTextColor(ContextCompat.getColor(context, R.color.color_regular_text))
-                    }
-
+                with(binding.dialogSignUpVerificationContinueMBTN) {
+                    if (it) enable(requireContext()) else disable(requireContext())
                 }
 
             })
 
         }
 
-        with(successDialog) {
-            setView(binding.root)
-            setCanceledOnTouchOutside(false)
-            setCancelable(false)
-            show()
-        }
+        successDialog.show(binding.root)
 
     }
 
@@ -445,12 +296,7 @@ class SignUpFragment : Fragment() {
             it.lifecycleOwner = viewLifecycleOwner
         }
 
-        with(progressDialog) {
-            setView(binding.root)
-            setCanceledOnTouchOutside(false)
-            setCancelable(false)
-            show()
-        }
+        progressDialog.show(binding.root)
 
     }
 

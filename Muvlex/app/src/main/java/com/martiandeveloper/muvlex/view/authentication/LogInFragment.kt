@@ -9,30 +9,25 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.martiandeveloper.muvlex.utils.EventObserver
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.DialogEmailNotVerifiedBinding
 import com.martiandeveloper.muvlex.databinding.DialogProgressLogInBinding
 import com.martiandeveloper.muvlex.databinding.FragmentLogInBinding
-import com.martiandeveloper.muvlex.utils.isNetworkAvailable
+import com.martiandeveloper.muvlex.utils.*
 import com.martiandeveloper.muvlex.viewmodel.authentication.LogInViewModel
 
 class LogInFragment : Fragment() {
 
-    private lateinit var fragmentLogInBinding: FragmentLogInBinding
-
     private lateinit var logInViewModel: LogInViewModel
+
+    private lateinit var fragmentLogInBinding: FragmentLogInBinding
 
     private var isPasswordVisible = false
 
@@ -73,175 +68,105 @@ class LogInFragment : Fragment() {
 
     private fun observe() {
 
-        val fragmentLogInLogInMBTN = fragmentLogInBinding.fragmentLogInLogInMBTN
-
         with(logInViewModel) {
 
             logInMBTNEnable.observe(viewLifecycleOwner, {
 
-                if (it) {
-
-                    with(fragmentLogInLogInMBTN) {
-                        isEnabled = true
-                        alpha = 1F
-                        setTextColor(ContextCompat.getColor(context, R.color.color_supreme_text))
-                    }
-
-                } else {
-
-                    with(fragmentLogInLogInMBTN) {
-                        isEnabled = false
-                        alpha = .5F
-                        setTextColor(ContextCompat.getColor(context, R.color.color_regular_text))
-                    }
-
+                with(fragmentLogInBinding.fragmentLogInLogInMBTN) {
+                    if (it) enable(context) else disable(context)
                 }
 
             })
 
             emailOrUsernameACTText.observe(viewLifecycleOwner, {
-
-                if (it.isNullOrEmpty()) {
-                    isLogInMBTNEnable(false)
-                } else {
-
-                    if (passwordETText.value.isNullOrEmpty()) {
-                        isLogInMBTNEnable(false)
-                    } else {
-                        isLogInMBTNEnable(true)
-                    }
-
-                }
-
+                isLogInMBTNEnable(!it.isNullOrEmpty() && !passwordETText.value.isNullOrEmpty())
             })
 
             passwordETText.observe(viewLifecycleOwner, {
-
-                if (it.isNullOrEmpty()) {
-                    isLogInMBTNEnable(false)
-                } else {
-
-                    if (emailOrUsernameACTText.value.isNullOrEmpty()) {
-                        isLogInMBTNEnable(false)
-                    } else {
-                        isLogInMBTNEnable(true)
-                    }
-
-                }
-
+                isLogInMBTNEnable(!it.isNullOrEmpty() && !emailOrUsernameACTText.value.isNullOrEmpty())
             })
 
             logInMBTNClick.observe(viewLifecycleOwner, EventObserver {
-
-                if (it) {
-
-                    with(this) {
-
+                if (it)
+                    if (networkAvailable)
                         if (Patterns.EMAIL_ADDRESS.matcher(emailOrUsernameACTText.value!!)
                                 .matches()
-                        ) {
-
-                            if (isNetworkAvailable) {
-                                logIn()
-                            } else {
-                                showToast(R.string.no_internet_connection)
-                            }
-
-                        } else {
+                        )
+                            logIn()
+                        else
                             isUsernameExists()
-                        }
-
-                    }
-
-                }
-
+                    else R.string.no_internet_connection.showToast(requireContext())
             })
 
             progressADOpen.observe(viewLifecycleOwner, {
-
-                if (it) {
-                    setProgress(true)
-                } else {
-                    setProgress(false)
-                }
-
+                setProgress(it)
             })
 
             signUpMTVClick.observe(viewLifecycleOwner, EventObserver {
-
-                if (it) {
-                    navigate(LogInFragmentDirections.actionLogInFragmentToSignUpFragment())
-                }
-
+                if (it) view.navigate(LogInFragmentDirections.actionLogInFragmentToSignUpFragment())
             })
 
             getHelpMTVClick.observe(viewLifecycleOwner, EventObserver {
-
-                if (it) {
-                    navigate(LogInFragmentDirections.actionLogInFragmentToGetHelpLoggingInFragment())
-                }
-
+                if (it) view.navigate(LogInFragmentDirections.actionLogInFragmentToGetHelpLoggingInFragment())
             })
 
             logInSuccessful.observe(viewLifecycleOwner, {
-
-                if (it) {
-                    navigate(LogInFragmentDirections.actionLogInFragmentToFeedFragment())
-                }
-
+                if (it) view.navigate(LogInFragmentDirections.actionLogInFragmentToFeedFragment())
             })
 
             errorMessage.observe(viewLifecycleOwner, EventObserver {
 
-                when (it) {
+                with(requireContext()) {
 
-                    "The email address is badly formatted." -> showToast(R.string.enter_a_valid_email_address)
+                    when (it) {
+                        "The email address is badly formatted." -> R.string.enter_a_valid_email_address.showToast(
+                            this
+                        )
+                        "The given password is invalid. [ Password should be at least 6 characters ]" -> R.string.password_should_be_at_least_6_characters.showToast(
+                            this
+                        )
+                        "The email address is already in use by another account." -> R.string.email_address_is_already_in_use_by_another_account.showToast(
+                            this
+                        )
+                        "Email is not verified" -> isErrorADOpen(true)
 
-                    "The given password is invalid. [ Password should be at least 6 characters ]" -> showToast(
-                        R.string.password_should_be_at_least_6_characters
-                    )
-
-                    "The email address is already in use by another account." -> showToast(R.string.email_address_is_already_in_use_by_another_account)
-
-                    "Email is not verified" -> isErrorADOpen(true)
-
-                    "There is no user record corresponding to this identifier. The user may have been deleted." -> showToast(
-                        R.string.we_couldnt_find_info_for_this_account
-                    )
-
-                    "The password is invalid or the user does not have a password." -> showToast(R.string.invalid_password)
-
-                    "Username not found" -> navigate(LogInFragmentDirections.actionLogInFragmentToSignUpUsernameFragment())
-
-                    "no_account" -> showToast(R.string.we_couldnt_find_info_for_this_account)
-
-                    "already_verified" -> showToast(R.string.email_address_is_already_verified)
-
-                    else -> showToast(R.string.something_went_wrong_try_again_later)
+                        "There is no user record corresponding to this identifier. The user may have been deleted." -> R.string.we_couldnt_find_info_for_this_account.showToast(
+                            this
+                        )
+                        "The password is invalid or the user does not have a password." -> R.string.invalid_password.showToast(
+                            this
+                        )
+                        "Username not found" -> view.navigate(LogInFragmentDirections.actionLogInFragmentToSignUpUsernameFragment())
+                        "no_account" -> R.string.we_couldnt_find_info_for_this_account.showToast(
+                            this
+                        )
+                        "already_verified" -> R.string.email_address_is_already_verified.showToast(
+                            this
+                        )
+                        else -> R.string.something_went_wrong_try_again_later.showToast(
+                            this
+                        )
+                    }
 
                 }
 
             })
 
             progressMTVTextDecider.observe(viewLifecycleOwner, {
+                setProgressMTVText(
 
-                when (it) {
-                    "login" -> setProgressMTVText(getString(R.string.logging_in))
-                    "load" -> setProgressMTVText(getString(R.string.loading_user_data))
-                    "check_username" -> setProgressMTVText(getString(R.string.checking_username))
-                    else -> setProgressMTVText("")
-                }
+                    when (it) {
+                        "login" -> getString(R.string.logging_in)
+                        "load" -> getString(R.string.loading_user_data)
+                        "check_username" -> getString(R.string.checking_username)
+                        else -> ""
+                    }
 
+                )
             })
 
             errorADOpen.observe(viewLifecycleOwner, {
-
-                if (it) {
-                    openErrorDialog()
-                } else {
-                    errorDialog.dismiss()
-                }
-
+                if (it) openErrorDialog() else errorDialog.dismiss()
             })
 
             okayMBTNClick.observe(viewLifecycleOwner, EventObserver {
@@ -254,18 +179,11 @@ class LogInFragment : Fragment() {
             })
 
             resendMBTNClick.observe(viewLifecycleOwner, EventObserver {
-
-                if (it) {
-
-                    if (isNetworkAvailable) {
+                if (it)
+                    if (networkAvailable) {
                         isResendAndOkayMBTNSEnable(false)
                         resendEmailVerification()
-                    } else {
-                        showToast(R.string.no_internet_connection)
-                    }
-
-                }
-
+                    } else R.string.no_internet_connection.showToast(requireContext())
             })
 
             resendSuccessful.observe(viewLifecycleOwner, EventObserver {
@@ -273,7 +191,7 @@ class LogInFragment : Fragment() {
                 isResendAndOkayMBTNSEnable(true)
 
                 if (it) {
-                    showToast(R.string.check_your_email_to_verify_your_muvlex_account)
+                    R.string.check_your_email_to_verify_your_muvlex_account.showToast(requireContext())
                     isErrorADOpen(false)
                     Firebase.auth.signOut()
                 }
@@ -290,13 +208,11 @@ class LogInFragment : Fragment() {
         val fragmentLogInPasswordET = fragmentLogInBinding.fragmentLogInPasswordET
 
         fragmentLogInPasswordET.setOnTouchListener(View.OnTouchListener { _, event ->
-
-            if (event.action == MotionEvent.ACTION_UP) {
+            if (event.action == MotionEvent.ACTION_UP)
 
                 if (event.rawX >= fragmentLogInPasswordET.right - fragmentLogInPasswordET.compoundDrawables[2].bounds.width()
                 ) {
 
-                    val selection: Int = fragmentLogInPasswordET.selectionEnd
                     isPasswordVisible = if (isPasswordVisible) {
 
                         with(fragmentLogInPasswordET) {
@@ -329,16 +245,13 @@ class LogInFragment : Fragment() {
 
                     }
 
-                    fragmentLogInPasswordET.setSelection(selection)
+                    fragmentLogInPasswordET.setSelection(fragmentLogInPasswordET.selectionEnd)
 
                     return@OnTouchListener true
 
                 }
 
-            }
-
             false
-
         })
 
     }
@@ -348,18 +261,8 @@ class LogInFragment : Fragment() {
         if (progress) {
             logInViewModel.isLogInMBTNEnable(false)
             openProgressDialog()
-        } else {
-            progressDialog.dismiss()
-        }
+        } else progressDialog.dismiss()
 
-    }
-
-    private fun navigate(direction: NavDirections) {
-        findNavController().navigate(direction)
-    }
-
-    private fun showToast(message: Int) {
-        Toast.makeText(context, getString(message), Toast.LENGTH_SHORT).show()
     }
 
     private fun openProgressDialog() {
@@ -371,12 +274,7 @@ class LogInFragment : Fragment() {
             it.lifecycleOwner = viewLifecycleOwner
         }
 
-        with(progressDialog) {
-            setView(binding.root)
-            setCanceledOnTouchOutside(false)
-            setCancelable(false)
-            show()
-        }
+        progressDialog.show(binding.root)
 
     }
 
@@ -397,45 +295,18 @@ class LogInFragment : Fragment() {
             resendAndOkayMBTNSEnable.observe(viewLifecycleOwner, {
 
                 if (it) {
-
-                    with(dialogEmailNotVerifiedResendMBTN) {
-                        isEnabled = true
-                        alpha = 1F
-                        setTextColor(ContextCompat.getColor(context, R.color.color_supreme_text))
-                    }
-
-                    with(dialogEmailNotVerifiedOkayMBTN) {
-                        isEnabled = true
-                        alpha = 1F
-                        setTextColor(ContextCompat.getColor(context, R.color.color_supreme_text))
-                    }
-
+                    dialogEmailNotVerifiedResendMBTN.enable(requireContext())
+                    dialogEmailNotVerifiedOkayMBTN.enable(requireContext())
                 } else {
-
-                    with(dialogEmailNotVerifiedResendMBTN) {
-                        isEnabled = false
-                        alpha = .5F
-                        setTextColor(ContextCompat.getColor(context, R.color.color_regular_text))
-                    }
-
-                    with(dialogEmailNotVerifiedOkayMBTN) {
-                        isEnabled = false
-                        alpha = .5F
-                        setTextColor(ContextCompat.getColor(context, R.color.color_regular_text))
-                    }
-
+                    dialogEmailNotVerifiedResendMBTN.disable(requireContext())
+                    dialogEmailNotVerifiedOkayMBTN.disable(requireContext())
                 }
 
             })
 
         }
 
-        with(errorDialog) {
-            setView(binding.root)
-            setCanceledOnTouchOutside(false)
-            setCancelable(false)
-            show()
-        }
+        errorDialog.show(binding.root)
 
     }
 

@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -20,6 +19,7 @@ import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.FragmentSearchBinding
 import com.martiandeveloper.muvlex.utils.EventObserver
 import com.martiandeveloper.muvlex.utils.VIEWPAGER_PAGES
+import com.martiandeveloper.muvlex.utils.openKeyboardForSearchET
 import com.martiandeveloper.muvlex.utils.searchResult
 import com.martiandeveloper.muvlex.viewmodel.feed.SearchViewModel
 
@@ -71,11 +71,13 @@ class SearchFragment : Fragment() {
 
         }.attach()
 
-        val fragmentSearchSearchET = fragmentSearchBinding.fragmentSearchSearchET
-        fragmentSearchSearchET.requestFocus()
+        if (openKeyboardForSearchET) {
+            val fragmentSearchSearchET = fragmentSearchBinding.fragmentSearchSearchET
+            fragmentSearchSearchET.requestFocus()
 
-        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(fragmentSearchSearchET, InputMethodManager.SHOW_IMPLICIT)
+            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(fragmentSearchSearchET, InputMethodManager.SHOW_IMPLICIT)
+        }
 
     }
 
@@ -107,17 +109,13 @@ class SearchFragment : Fragment() {
             backIVClick.observe(viewLifecycleOwner, EventObserver {
 
                 if (it) {
-                    navigate(SearchFragmentDirections.actionSearchFragmentToExploreFragment())
+                    findNavController().navigateUp()
                 }
 
             })
 
         }
 
-    }
-
-    private fun navigate(direction: NavDirections) {
-        findNavController().navigate(direction)
     }
 
     private inner class ScreenSlidePagerAdapter(fragment: Fragment) :

@@ -47,6 +47,10 @@
     <string name="searching_for">Aranıyor</string>
     <string name="no_results_found_for">Sonuç bulunamadı</string>
     <string name="unknown">Bilinmiyor</string>
+    <string name="rate_this_movie">Bu filme oy ver</string>
+    <string name="share_your_thoughts_with_other">Düşüncelerini başkalarıyla paylaş</string>
+    <string name="write_a_review">Bir inceleme yaz</string>
+    <string name="overview">Genel bakış</string>
 
     <!--Alert texts-->
     <string name="creating_user">Kullanıcı oluşturuluyor</string>
@@ -71,6 +75,10 @@
     <string name="back">Geri</string>
     <string name="poster">Afiş</string>
     <string name="star">Yıldız</string>
+    <string name="calendar">Takvim</string>
+    <string name="vote_average">Ortalama oy</string>
+    <string name="genre">Tür</string>
+    <string name="language">Dil</string>
 
     <!--Toast texts-->
     <string name="something_went_wrong_try_again_later">Bir şeyler ters gitti, daha sonra tekrar dene</string>

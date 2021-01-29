@@ -16,25 +16,28 @@ class NetworkAvailability(val context: Context) : NetworkCallback() {
             val connectivityManager =
                 context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                connectivityManager.registerDefaultNetworkCallback(this)
-            } else {
-                val builder = NetworkRequest.Builder()
-                connectivityManager.registerNetworkCallback(builder.build(), this)
+            with(connectivityManager) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    registerDefaultNetworkCallback(this@NetworkAvailability)
+                else
+                    registerNetworkCallback(
+                        NetworkRequest.Builder().build(),
+                        this@NetworkAvailability
+                    )
             }
 
         } catch (e: Exception) {
-            isNetworkAvailable = false
+            networkAvailable = false
         }
 
     }
 
     override fun onAvailable(network: Network) {
-        isNetworkAvailable = true
+        networkAvailable = true
     }
 
     override fun onLost(network: Network) {
-        isNetworkAvailable = false
+        networkAvailable = false
     }
 
 }

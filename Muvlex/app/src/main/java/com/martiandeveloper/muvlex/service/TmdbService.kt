@@ -15,21 +15,19 @@ object TmdbService {
 
     fun getClient(): TmdbApi {
 
-        val requestInterceptor = Interceptor { chain ->
-            // Interceptor take only one argument which is a lambda function so parenthesis can be omitted
-
-            val url = chain.request()
+        val requestInterceptor = Interceptor {
+            val url = it.request()
                 .url()
                 .newBuilder()
                 .addQueryParameter("api_key", API_KEY)
                 .build()
 
-            val request = chain.request()
+            val request = it.request()
                 .newBuilder()
                 .url(url)
                 .build()
 
-            return@Interceptor chain.proceed(request)   //explicitly return a value from whit @ annotation. lambda always returns the value of the last expression implicitly
+            return@Interceptor it.proceed(request)
         }
 
         val okHttpClient = OkHttpClient.Builder()

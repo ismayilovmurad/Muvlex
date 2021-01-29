@@ -11,7 +11,8 @@ import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.RecyclerviewSeriesItemBinding
 import com.martiandeveloper.muvlex.model.Series
 import com.martiandeveloper.muvlex.utils.BASE_URL_POSTER
-import com.martiandeveloper.muvlex.utils.loadImage
+import com.martiandeveloper.muvlex.utils.check
+import com.martiandeveloper.muvlex.utils.load
 
 class SeriesListAdapter(
     private val itemCLickListener: ItemClickListener
@@ -22,18 +23,18 @@ class SeriesListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
 
-        val binding: RecyclerviewSeriesItemBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(context),
-            R.layout.recyclerview_series_item,
-            parent,
-            false
+        return SeriesListViewHolder(
+            DataBindingUtil.inflate(
+                LayoutInflater.from(context),
+                R.layout.recyclerview_series_item,
+                parent,
+                false
+            )
         )
-
-        return SeriesListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as SeriesListViewHolder).bind(getItem(position), context, itemCLickListener)
+        (holder as SeriesListViewHolder).bind(context, getItem(position), itemCLickListener)
     }
 
     class SeriesDiffCallback : DiffUtil.ItemCallback<Series>() {
@@ -52,54 +53,42 @@ class SeriesListAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
-            series: Series?,
             context: Context,
+            series: Series?,
             itemClickListener: ItemClickListener
         ) {
-
-            if (series != null) {
+            if (series != null)
 
                 binding.let {
 
-                    if (series.name != null && series.name != "null" && series.name != "") {
-                        it.name = series.name
-                    } else {
-                        it.name = context.resources.getString(R.string.unknown)
-                    }
+                    with(series) {
 
-                    if (series.firstAirDate != null && series.firstAirDate != "null" && series.firstAirDate != "") {
-                        it.firstAirDate = series.firstAirDate.split("-")[0]
-                    } else {
-                        it.firstAirDate = context.resources.getString(R.string.unknown)
-                    }
+                        it.name =
+                            if (name.check()) name else context.resources.getString(
+                                R.string.unknown
+                            )
 
-                    if (series.voteAverage != null) {
-                        it.voteAverage = series.voteAverage.toString()
-                    }
+                        it.firstAirDate =
+                            if (firstAirDate.check()) firstAirDate!!.split(
+                                "-"
+                            )[0] else context.resources.getString(R.string.unknown)
 
-                    if (series.posterPath != null && series.posterPath != "null" && series.posterPath != "") {
-                        loadImage(
+                        it.voteAverage =
+                            voteAverage?.toString() ?: context.resources.getString(R.string.unknown)
+
+                        it.recyclerviewSeriesItemPosterIV.load(
                             context,
-                            "${BASE_URL_POSTER}${series.posterPath}",
-                            it.recyclerviewSeriesItemPosterIV
+                            if (posterPath.check()) "${BASE_URL_POSTER}${posterPath}" else null
                         )
-                    } else {
-                        loadImage(
-                            context,
-                            null,
-                            it.recyclerviewSeriesItemPosterIV
-                        )
+
+                        itemView.setOnClickListener {
+                            itemClickListener.onItemClick(this)
+                        }
+
                     }
 
                     it.executePendingBindings()
-
                 }
-
-                itemView.setOnClickListener {
-                    itemClickListener.onItemClick(series)
-                }
-
-            }
 
         }
 

@@ -15,24 +15,29 @@ import kotlin.collections.ArrayList
 
 class LanguageAdapter(
     private val languageList: ArrayList<Language>,
-    private val itemClickListener: ItemClickListener,
+    private val itemClickListener: ItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
-    private var languageFilterList = ArrayList<Language>()
+    private var languageListFilter = ArrayList<Language>()
 
     init {
-        languageFilterList = languageList
+        languageListFilter = languageList
     }
 
-    class LanguageViewHolder0(private val binding: RecyclerviewLanguageItemBinding) :
+    class LanguageViewHolder(private val binding: RecyclerviewLanguageItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(language: Language, itemClickListener: ItemClickListener) {
 
             binding.let {
-                it.primaryLanguage = language.primaryLanguage
-                it.secondaryLanguage = language.secondaryLanguage
+
+                with(language) {
+                    it.primaryLanguage = primaryLanguage
+                    it.secondaryLanguage = secondaryLanguage
+                }
+
                 it.executePendingBindings()
+
             }
 
             itemView.setOnClickListener {
@@ -43,7 +48,7 @@ class LanguageAdapter(
 
     }
 
-    class LanguageViewHolder1(private val binding: RecyclerviewLanguageItemCheckedBinding) :
+    class LanguageViewHolderChecked(private val binding: RecyclerviewLanguageItemCheckedBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(language: Language) {
@@ -58,65 +63,38 @@ class LanguageAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-
-        return if (languageFilterList[position].isChecked) {
-            1
-        } else {
-            0
-        }
-
+        return if (languageListFilter[position].checked) 1 else 0
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): RecyclerView.ViewHolder {
-
-        val binding0: RecyclerviewLanguageItemBinding = DataBindingUtil
-            .inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.recyclerview_language_item,
-                parent,
-                false
+        return if (viewType == 0) LanguageViewHolder(
+            DataBindingUtil.inflate(
+                LayoutInflater.from(
+                    parent.context
+                ), R.layout.recyclerview_language_item, parent, false
             )
-
-        val binding1: RecyclerviewLanguageItemCheckedBinding = DataBindingUtil
-            .inflate(
+        ) else LanguageViewHolderChecked(
+            DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.recyclerview_language_item_checked,
                 parent,
                 false
             )
-
-        return when (viewType) {
-            0 -> LanguageViewHolder0(binding0)
-            else -> LanguageViewHolder1(binding1)
-        }
-
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
-        when (holder.itemViewType) {
-
-            0 -> {
-                (holder as LanguageViewHolder0).bind(
-                    languageFilterList[position], itemClickListener
-                )
-            }
-
-            1 -> {
-                (holder as LanguageViewHolder1).bind(
-                    languageFilterList[position]
-                )
-            }
-
-        }
-
+        if (holder.itemViewType == 0) (holder as LanguageViewHolder).bind(
+            languageListFilter[position],
+            itemClickListener
+        ) else (holder as LanguageViewHolderChecked).bind(languageListFilter[position])
     }
 
     override fun getItemCount(): Int {
-        return languageFilterList.count()
+        return languageListFilter.count()
     }
 
     interface ItemClickListener {
@@ -131,21 +109,21 @@ class LanguageAdapter(
 
                 val charSearch = constraint.toString()
 
-                languageFilterList = if (charSearch.isEmpty()) {
-                    languageList
-                } else {
+                languageListFilter = if (charSearch.isEmpty()) languageList else {
 
                     val resultList = ArrayList<Language>()
 
                     for (i in languageList) {
 
-                        if (i.primaryLanguage.toLowerCase(Locale.ROOT)
-                                .contains(charSearch.toLowerCase(Locale.ROOT)) || i.secondaryLanguage
-                                .toLowerCase(
-                                    Locale.ROOT
-                                ).contains(charSearch.toLowerCase(Locale.ROOT))
-                        ) {
-                            resultList.add(i)
+                        with(charSearch) {
+
+                            if (i.primaryLanguage.toLowerCase(Locale.ROOT)
+                                    .contains(toLowerCase(Locale.ROOT)) || i.secondaryLanguage
+                                    .toLowerCase(
+                                        Locale.ROOT
+                                    ).contains(toLowerCase(Locale.ROOT))
+                            ) resultList.add(i)
+
                         }
 
                     }
@@ -155,7 +133,7 @@ class LanguageAdapter(
                 }
 
                 val filterResults = FilterResults()
-                filterResults.values = languageFilterList
+                filterResults.values = languageListFilter
 
                 return filterResults
 
@@ -163,7 +141,7 @@ class LanguageAdapter(
 
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                languageFilterList = results?.values as ArrayList<Language>
+                languageListFilter = results?.values as ArrayList<Language>
                 notifyDataSetChanged()
             }
 

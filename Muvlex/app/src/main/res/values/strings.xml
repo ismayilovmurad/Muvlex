@@ -48,6 +48,10 @@
     <string name="searching_for">Searching for</string>
     <string name="no_results_found_for">No Results Found for</string>
     <string name="unknown">Unknown</string>
+    <string name="rate_this_movie">Rate this movie</string>
+    <string name="share_your_thoughts_with_other">Share your thoughts with others</string>
+    <string name="write_a_review">Write a review</string>
+    <string name="overview">Overview</string>
 
     <!--Alert texts-->
     <string name="creating_user">Creating user</string>
@@ -72,6 +76,10 @@
     <string name="back">Back</string>
     <string name="poster">Poster</string>
     <string name="star">Star</string>
+    <string name="calendar">Calendar</string>
+    <string name="vote_average">Vote average</string>
+    <string name="genre">Genre</string>
+    <string name="language">Language</string>
 
     <!--Toast texts-->
     <string name="something_went_wrong_try_again_later">Something went wrong, try again later</string>
