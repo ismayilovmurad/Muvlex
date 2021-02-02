@@ -7,6 +7,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.utils.Event
+import com.martiandeveloper.muvlex.utils.errorMessageQuery
+import com.martiandeveloper.muvlex.utils.errorMessageVoid
 
 class SignUpUsernameViewModel : ViewModel() {
 
@@ -89,46 +91,28 @@ class SignUpUsernameViewModel : ViewModel() {
 
         _usernamePBGone.value = false
 
-        val query =
-            Firebase.firestore.collection("users").whereEqualTo("username", usernameETText.value)
+        Firebase.firestore.collection("users").whereEqualTo("username", usernameETText.value).get()
+            .addOnCompleteListener {
 
-        query.get().addOnCompleteListener {
+                _usernamePBGone.value = true
 
-            _usernamePBGone.value = true
+                if (it.isSuccessful) {
 
-            if (it.isSuccessful) {
+                    for (i in it.result!!) {
 
-                for (i in it.result!!) {
+                        if (i.getString("username") == usernameETText.value) _usernameAvailable.value =
+                            false
 
-                    if (i.getString("username") == usernameETText.value) {
-                        _usernameAvailable.value = false
                     }
 
-                }
-
-                if (it.result?.size() == 0) {
-                    _usernameAvailable.value = true
-                }
-
-            } else {
-
-                _usernameAvailable.value = false
-
-                if (it.exception != null) {
-
-                    if (it.exception!!.localizedMessage != null) {
-                        _errorMessage.value = Event(it.exception!!.localizedMessage!!.toString())
-                    } else {
-                        _errorMessage.value = Event("")
-                    }
+                    if (it.result?.size() == 0) _usernameAvailable.value = true
 
                 } else {
-                    _errorMessage.value = Event("")
+                    _usernameAvailable.value = false
+                    _errorMessage.value = errorMessageQuery(it)
                 }
 
             }
-
-        }
 
     }
 
@@ -151,105 +135,69 @@ class SignUpUsernameViewModel : ViewModel() {
         _progressMTVTextDecider.value = "check"
         _progressADOpen.value = true
 
-        val query =
-            Firebase.firestore.collection("users").whereEqualTo("username", usernameETText.value)
+        Firebase.firestore.collection("users").whereEqualTo("username", usernameETText.value).get()
+            .addOnCompleteListener {
 
-        query.get().addOnCompleteListener {
+                _progressMTVTextDecider.value = ""
+                _progressADOpen.value = false
 
-            _progressMTVTextDecider.value = ""
-            _progressADOpen.value = false
+                if (it.isSuccessful) {
 
-            if (it.isSuccessful) {
+                    for (i in it.result!!) {
 
-                for (i in it.result!!) {
-
-                    if (i.getString("username") == usernameETText.value) {
-                        _usernameAvailable.value = false
-                    }
-
-                }
-
-                if (it.result != null) {
-
-                    if (it.result?.size() == 0) {
-
-                        _progressMTVTextDecider.value = "save"
-                        _progressADOpen.value = true
-
-                        _usernameAvailable.value = true
-
-                        val user = Firebase.auth.currentUser
-
-                        if (user != null) {
-
-                            val usernameMap = hashMapOf(
-                                "username" to usernameETText.value,
-                                "email" to user.email
-                            )
-
-                            Firebase.firestore.collection("users").document(user.uid)
-                                .set(usernameMap).addOnCompleteListener { result ->
-
-                                    _progressMTVTextDecider.value = ""
-                                    _progressADOpen.value = false
-
-                                    if (result.isSuccessful) {
-                                        _saveSuccessful.value = true
-                                    } else {
-
-                                        _saveSuccessful.value = false
-
-                                        if (result.exception != null) {
-
-                                            if (result.exception!!.localizedMessage != null) {
-                                                _errorMessage.value =
-                                                    Event(result.exception!!.localizedMessage!!.toString())
-                                            } else {
-                                                _errorMessage.value = Event("")
-                                            }
-
-                                        } else {
-                                            _errorMessage.value = Event("")
-                                        }
-
-                                    }
-
-                                }
-
-                        } else {
-                            _saveSuccessful.value = false
-                            _errorMessage.value = Event("")
+                        if (i.getString("username") == usernameETText.value) {
+                            _usernameAvailable.value = false
                         }
 
-                    } else {
+                    }
+
+                    if (it.result != null)
+
+                        if (it.result?.size() == 0) {
+
+                            _progressMTVTextDecider.value = "save"
+                            _progressADOpen.value = true
+                            _usernameAvailable.value = true
+
+                            val user = Firebase.auth.currentUser
+
+                            if (user != null) {
+
+                                val usernameMap = hashMapOf(
+                                    "username" to usernameETText.value,
+                                    "email" to user.email
+                                )
+
+                                Firebase.firestore.collection("users").document(user.uid)
+                                    .set(usernameMap).addOnCompleteListener { result ->
+                                        _progressMTVTextDecider.value = ""
+                                        _progressADOpen.value = false
+
+                                        _saveSuccessful.value = result.isSuccessful
+
+                                        if (!_saveSuccessful.value!!) errorMessageVoid(result)
+                                    }
+
+                            } else {
+                                _saveSuccessful.value = false
+                                _errorMessage.value = Event("")
+                            }
+
+                        } else {
+                            _usernameAvailable.value = false
+                            _errorMessage.value = Event("")
+                        }
+                    else {
                         _usernameAvailable.value = false
                         _errorMessage.value = Event("")
                     }
 
                 } else {
                     _usernameAvailable.value = false
-                    _errorMessage.value = Event("")
-                }
-
-            } else {
-
-                _usernameAvailable.value = false
-
-                if (it.exception != null) {
-
-                    if (it.exception!!.localizedMessage != null) {
-                        _errorMessage.value = Event(it.exception!!.localizedMessage!!.toString())
-                    } else {
-                        _errorMessage.value = Event("")
-                    }
-
-                } else {
-                    _errorMessage.value = Event("")
+                    _errorMessage.value = errorMessageQuery(it)
                 }
 
             }
-
-        }
 
     }
 

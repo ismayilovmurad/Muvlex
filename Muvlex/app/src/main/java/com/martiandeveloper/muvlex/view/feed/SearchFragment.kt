@@ -10,24 +10,22 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.FragmentSearchBinding
-import com.martiandeveloper.muvlex.utils.EventObserver
-import com.martiandeveloper.muvlex.utils.VIEWPAGER_PAGES
-import com.martiandeveloper.muvlex.utils.openKeyboardForSearchET
-import com.martiandeveloper.muvlex.utils.searchResult
+import com.martiandeveloper.muvlex.utils.*
 import com.martiandeveloper.muvlex.viewmodel.feed.SearchViewModel
+import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
 
-    private lateinit var fragmentSearchBinding: FragmentSearchBinding
-
     private lateinit var searchViewModel: SearchViewModel
+
+    private lateinit var fragmentSearchBinding: FragmentSearchBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,8 +41,6 @@ class SearchFragment : Fragment() {
             it.searchViewModel = searchViewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
-
-        searchResult = MutableLiveData()
 
         observe()
 
@@ -75,8 +71,10 @@ class SearchFragment : Fragment() {
             val fragmentSearchSearchET = fragmentSearchBinding.fragmentSearchSearchET
             fragmentSearchSearchET.requestFocus()
 
-            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(fragmentSearchSearchET, InputMethodManager.SHOW_IMPLICIT)
+            (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(
+                fragmentSearchSearchET,
+                InputMethodManager.SHOW_IMPLICIT
+            )
         }
 
     }
@@ -87,31 +85,26 @@ class SearchFragment : Fragment() {
 
             searchETText.observe(viewLifecycleOwner, {
 
-                if (it.isNullOrEmpty()) {
-                    fragmentSearchBinding.fragmentSearchSearchET.setCompoundDrawablesWithIntrinsicBounds(
-                        0, 0, 0, 0
-                    )
+                with(fragmentSearchBinding.fragmentSearchSearchET) {
 
-                    searchResult.value = ""
-                } else {
-                    fragmentSearchBinding.fragmentSearchSearchET.setCompoundDrawablesWithIntrinsicBounds(
-                        0,
-                        0,
-                        R.drawable.ic_close,
-                        0
-                    )
+                    viewLifecycleOwner.lifecycleScope.launch {
 
-                    searchResult.value = it
+                        if (it.isNullOrEmpty()) {
+                            setCompoundDrawables(0)
+                            searchResult.value = ""
+                        } else {
+                            setCompoundDrawables(R.drawable.ic_close)
+                            searchResult.value = it
+                        }
+
+                    }
+
                 }
 
             })
 
             backIVClick.observe(viewLifecycleOwner, EventObserver {
-
-                if (it) {
-                    findNavController().navigateUp()
-                }
-
+                if (it) findNavController().navigateUp()
             })
 
         }
@@ -140,23 +133,16 @@ class SearchFragment : Fragment() {
 
         fragmentSearchBinding.fragmentSearchSearchET.setOnTouchListener(View.OnTouchListener { _, event ->
 
-            if (event.action == MotionEvent.ACTION_UP) {
-
-                if (fragmentSearchBinding.fragmentSearchSearchET.compoundDrawables[2] != null) {
+            if (event.action == MotionEvent.ACTION_UP)
+                if (fragmentSearchBinding.fragmentSearchSearchET.compoundDrawables[2] != null)
 
                     if (event.rawX >= fragmentSearchBinding.fragmentSearchSearchET.right - fragmentSearchBinding.fragmentSearchSearchET.compoundDrawables[2].bounds.width()
                     ) {
-
                         searchResult.value = ""
                         fragmentSearchBinding.fragmentSearchSearchET.text.clear()
 
                         return@OnTouchListener true
-
                     }
-
-                }
-
-            }
 
             false
 

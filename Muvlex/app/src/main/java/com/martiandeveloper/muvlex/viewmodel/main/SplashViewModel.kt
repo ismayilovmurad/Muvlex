@@ -19,9 +19,7 @@ class SplashViewModel : ViewModel() {
     //########## Is email verified
     fun isEmailVerified(user: FirebaseUser) {
 
-        if (user.isEmailVerified) {
-            hasUserUsername(user)
-        } else {
+        if (user.isEmailVerified) hasUserUsername(user) else {
             Firebase.auth.signOut()
             _feedEnable.value = false
         }
@@ -34,23 +32,16 @@ class SplashViewModel : ViewModel() {
 
         Firebase.firestore.collection("users").document(user.uid).get().addOnCompleteListener {
 
-            if (it.isSuccessful) {
+            if (it.isSuccessful)
 
                 if (it.result != null) {
-
-                    if (it.result!!.get("username") != null) {
-                        _feedEnable.value = true
-                    } else {
-                        Firebase.auth.signOut()
-                        _feedEnable.value = false
-                    }
-
+                    _feedEnable.value = it.result!!.get("username") != null
+                    if (!_feedEnable.value!!) Firebase.auth.signOut()
                 } else {
                     Firebase.auth.signOut()
                     _feedEnable.value = false
                 }
-
-            } else {
+            else {
                 Firebase.auth.signOut()
                 _feedEnable.value = false
             }

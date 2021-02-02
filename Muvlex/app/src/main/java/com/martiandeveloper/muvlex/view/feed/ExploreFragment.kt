@@ -7,19 +7,18 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.FragmentExploreBinding
 import com.martiandeveloper.muvlex.utils.EventObserver
+import com.martiandeveloper.muvlex.utils.navigate
 import com.martiandeveloper.muvlex.utils.openKeyboardForSearchET
 import com.martiandeveloper.muvlex.viewmodel.feed.ExploreViewModel
 
 class ExploreFragment : Fragment() {
 
-    private lateinit var fragmentExploreBinding: FragmentExploreBinding
-
     private lateinit var exploreViewModel: ExploreViewModel
+
+    private lateinit var fragmentExploreBinding: FragmentExploreBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,23 +43,11 @@ class ExploreFragment : Fragment() {
 
     private fun observe() {
 
-        with(exploreViewModel) {
+        exploreViewModel.searchETClick.observe(viewLifecycleOwner, EventObserver {
+            openKeyboardForSearchET = it
+            if (it) view.navigate(ExploreFragmentDirections.actionExploreFragmentToSearchFragment())
+        })
 
-            searchETClick.observe(viewLifecycleOwner, EventObserver {
-
-                if (it) {
-                    openKeyboardForSearchET = true
-                    navigate(ExploreFragmentDirections.actionExploreFragmentToSearchFragment())
-                }
-
-            })
-
-        }
-
-    }
-
-    private fun navigate(direction: NavDirections) {
-        findNavController().navigate(direction)
     }
 
 }

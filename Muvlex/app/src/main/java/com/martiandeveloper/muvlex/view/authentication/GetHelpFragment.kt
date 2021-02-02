@@ -51,8 +51,10 @@ class GetHelpFragment : Fragment() {
 
         getHelpViewModel.isContinueMBTNEnable(false)
 
-        progressDialog = MaterialAlertDialogBuilder(requireContext(), R.style.StyleDialog).create()
-        successDialog = MaterialAlertDialogBuilder(requireContext(), R.style.StyleDialog).create()
+        with(requireContext()) {
+            progressDialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
+            successDialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
+        }
 
         return fragmentGetHelpBinding.root
 
@@ -75,13 +77,12 @@ class GetHelpFragment : Fragment() {
             })
 
             continueMBTNClick.observe(viewLifecycleOwner, EventObserver {
-                if (it)
-                    if (networkAvailable)
-                        if (Patterns.EMAIL_ADDRESS.matcher(emailOrUsernameETText.value!!).matches())
-                            sendPasswordResetEmailForUsername()
-                        else
-                            isUsernameExists()
-                    else R.string.no_internet_connection.showToast(requireContext())
+                if (it) if (networkAvailable) if (Patterns.EMAIL_ADDRESS.matcher(
+                        emailOrUsernameETText.value!!
+                    ).matches()
+                ) sendPasswordResetEmailForUsername() else isUsernameExists() else R.string.no_internet_connection.showToast(
+                    requireContext()
+                )
             })
 
             progressADOpen.observe(viewLifecycleOwner, {

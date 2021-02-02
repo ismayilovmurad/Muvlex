@@ -24,23 +24,11 @@
         tools:layout="@layout/fragment_explore">
 
         <action
-            android:id="@+id/action_exploreFragment_to_notificationFragment"
-            app:destination="@id/notificationFragment" />
-
-        <action
             android:id="@+id/action_exploreFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
 
-    </fragment>
-
-    <fragment
-        android:id="@+id/notificationFragment"
-        android:name="com.martiandeveloper.muvlex.view.feed.NotificationFragment"
-        android:label="NotificationFragment"
-        tools:layout="@layout/fragment_notification">
-
         <action
-            android:id="@+id/action_notificationFragment_to_profileFragment"
+            android:id="@+id/action_exploreFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
 
     </fragment>

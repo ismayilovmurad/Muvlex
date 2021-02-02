@@ -39,7 +39,6 @@
     <string name="okay">Tamam</string>
     <string name="resend">Yeniden gönder</string>
     <string name="home">Ev</string>
-    <string name="notification">Bildirim</string>
     <string name="profile">Profil</string>
     <string name="movies">Filmler</string>
     <string name="series">Diziler</string>
@@ -49,8 +48,14 @@
     <string name="unknown">Bilinmiyor</string>
     <string name="rate_this_movie">Bu filme oy ver</string>
     <string name="share_your_thoughts_with_other">Düşüncelerini başkalarıyla paylaş</string>
-    <string name="write_a_review">Bir inceleme yaz</string>
+    <string name="write_a_review">Bir yorum yaz</string>
     <string name="overview">Genel bakış</string>
+    <string name="post">Paylaş</string>
+    <string name="reviews_are_public_and_editable">Yorumlar herkese açıktır ve düzenlenebilir</string>
+    <string name="the_name_and_photo_on_your_muvlex_profile_will_appear_with_your_review_please_do_a_fair_rate_and_write_a_relevant_review_about_the_movie_or_series_so_the_other_users_can_get_benefit_from_it">Muvlex profilinizdeki isim ve fotoğraf yorumunuzla birlikte görünecektir. Lütfen, makul bir oy verin ve film veya dizi hakkında uygun bir yorum yazın ki, diğer kullanıcılar bundan faydalanabilsin.</string>
+    <string name="got_it">Anladım</string>
+    <string name="learn_more">Daha fazla bilgi edin</string>
+    <string name="describe_your_experience_optional">Deneyiminizi anlatın (isteğe bağlı)</string>
 
     <!--Alert texts-->
     <string name="creating_user">Kullanıcı oluşturuluyor</string>

@@ -7,73 +7,67 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
-import android.widget.ImageView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.R
+import com.martiandeveloper.muvlex.databinding.FragmentSplashBinding
+import com.martiandeveloper.muvlex.utils.navigate
 import com.martiandeveloper.muvlex.utils.networkAvailable
 import com.martiandeveloper.muvlex.viewmodel.main.SplashViewModel
-
 
 class SplashFragment : Fragment() {
 
     private lateinit var splashViewModel: SplashViewModel
 
+    private lateinit var fragmentSplashBinding: FragmentSplashBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         splashViewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
 
-        val view = inflater.inflate(R.layout.fragment_splash, container, false)
+        fragmentSplashBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_splash, container, false)
+
+        fragmentSplashBinding.lifecycleOwner = viewLifecycleOwner
 
         observe()
 
-        val alphaAnimation = AlphaAnimation(0.0f, 1.0f)
-        alphaAnimation.duration = 1000
-        view.findViewById<ImageView>(R.id.fragment_splash_logoIV).startAnimation(alphaAnimation)
+        animateLogo()
 
-        Handler(Looper.getMainLooper()).postDelayed({
+        decideWhereToGo()
 
-            if (Firebase.auth.currentUser != null) {
-
-                if (networkAvailable) {
-                    splashViewModel.isEmailVerified(Firebase.auth.currentUser!!)
-                } else {
-                    navigate(SplashFragmentDirections.actionSplashFragmentToLogInFragment())
-                }
-
-            } else {
-                navigate(SplashFragmentDirections.actionSplashFragmentToLogInFragment())
-            }
-
-        }, 2000)
-
-        return view
-
+        return fragmentSplashBinding.root
     }
 
     private fun observe() {
 
         splashViewModel.feedEnable.observe(viewLifecycleOwner, {
-
-            if (it) {
-                navigate(SplashFragmentDirections.actionSplashFragmentToFeedFragment())
-            } else {
-                navigate(SplashFragmentDirections.actionSplashFragmentToLogInFragment())
-            }
-
+            view.navigate(if (it) SplashFragmentDirections.actionSplashFragmentToFeedFragment() else SplashFragmentDirections.actionSplashFragmentToLogInFragment())
         })
 
     }
 
-    private fun navigate(direction: NavDirections) {
-        findNavController().navigate(direction)
+    private fun animateLogo() {
+        val alphaAnimation = AlphaAnimation(0.0f, 1.0f)
+        alphaAnimation.duration = 1000
+        fragmentSplashBinding.fragmentSplashLogoIV.startAnimation(alphaAnimation)
+    }
+
+    private fun decideWhereToGo() {
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (Firebase.auth.currentUser != null)
+                if (networkAvailable) splashViewModel.isEmailVerified(Firebase.auth.currentUser!!) else view.navigate(
+                    SplashFragmentDirections.actionSplashFragmentToLogInFragment()
+                )
+            else view.navigate(SplashFragmentDirections.actionSplashFragmentToLogInFragment())
+        }, 2000)
+
     }
 
 }

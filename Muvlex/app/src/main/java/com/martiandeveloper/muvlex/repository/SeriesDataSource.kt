@@ -1,6 +1,7 @@
 package com.martiandeveloper.muvlex.repository
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.martiandeveloper.muvlex.model.Series
 import com.martiandeveloper.muvlex.service.TmdbApi
 
@@ -25,6 +26,10 @@ class SeriesDataSource(private val series: String, private val apiService: TmdbA
             LoadResult.Error(e)
         }
 
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, Series>): Int? {
+        TODO("Not yet implemented")
     }
 
 }

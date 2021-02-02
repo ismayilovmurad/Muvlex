@@ -71,17 +71,13 @@ class SignUpUsernameFragment : Fragment() {
             usernameETText.observe(viewLifecycleOwner, {
 
                 setUsernameErrorMTVText(
-                    if (it.isNullOrEmpty())
-                        getString(R.string.username_cannot_be_empty)
-                    else if (usernameETText.value!!.length > 15)
-                        getString(R.string.username_not_available)
-                    else if (!Pattern.compile("""^[_.A-Za-z0-9]*((\s)*[_.A-Za-z0-9])*${'$'}""")
+                    if (it.isNullOrEmpty()) getString(R.string.username_cannot_be_empty) else if (usernameETText.value!!.length > 15) getString(
+                        R.string.username_not_available
+                    ) else if (!Pattern.compile("""^[_.A-Za-z0-9]*((\s)*[_.A-Za-z0-9])*${'$'}""")
                             .matcher(it).matches()
-                    )
-                        getString(R.string.username_can_only_use_letters_numbers_underscores_and_periods)
-                    else if (!networkAvailable)
-                        getString(R.string.no_internet_connection)
-                    else "no_error"
+                    ) getString(R.string.username_can_only_use_letters_numbers_underscores_and_periods) else if (!networkAvailable) getString(
+                        R.string.no_internet_connection
+                    ) else "no_error"
                 )
 
                 isUsernameErrorMTVGone(usernameErrorMTVText.value == "no_error")

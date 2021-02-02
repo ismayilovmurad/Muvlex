@@ -7,8 +7,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.martiandeveloper.muvlex.utils.Event
-import com.martiandeveloper.muvlex.utils.appLanguage
+import com.martiandeveloper.muvlex.utils.*
 
 class LogInViewModel : ViewModel() {
 
@@ -84,38 +83,22 @@ class LogInViewModel : ViewModel() {
             _progressMTVTextDecider.value = ""
             _progressADOpen.value = false
 
-            if (it.isSuccessful) {
+            if (it.isSuccessful)
 
-                if (it.result != null) {
+                if (it.result != null)
 
-                    if (it.result!!.user != null) {
-                        checkEmailVerification(it.result!!.user!!)
-                    } else {
+                    if (it.result!!.user != null) checkEmailVerification(it.result!!.user!!)
+                    else {
                         _logInSuccessful.value = false
                         _errorMessage.value = Event("")
                     }
-
-                } else {
+                else {
                     _logInSuccessful.value = false
                     _errorMessage.value = Event("")
                 }
-
-            } else {
-
+            else {
                 _logInSuccessful.value = false
-
-                if (it.exception != null) {
-
-                    if (it.exception!!.localizedMessage != null) {
-                        _errorMessage.value = Event(it.exception!!.localizedMessage!!.toString())
-                    } else {
-                        _errorMessage.value = Event("")
-                    }
-
-                } else {
-                    _errorMessage.value = Event("")
-                }
-
+                _errorMessage.value = errorMessageAuth(it)
             }
 
         }
@@ -126,9 +109,7 @@ class LogInViewModel : ViewModel() {
     //########## Check email verification
     private fun checkEmailVerification(user: FirebaseUser) {
 
-        if (user.isEmailVerified) {
-            hasUserUsername(user)
-        } else {
+        if (user.isEmailVerified) hasUserUsername(user) else {
             _logInSuccessful.value = false
             _errorMessage.value = Event("Email is not verified")
         }
@@ -147,38 +128,21 @@ class LogInViewModel : ViewModel() {
             _progressMTVTextDecider.value = ""
             _progressADOpen.value = false
 
-            if (it.isSuccessful) {
+            if (it.isSuccessful)
 
-                if (it.result != null) {
+                if (it.result != null)
 
-                    if (it.result!!.get("username") != null) {
-                        _logInSuccessful.value = true
-                    } else {
+                    if (it.result!!.get("username") != null) _logInSuccessful.value = true else {
                         _logInSuccessful.value = false
                         _errorMessage.value = Event("Username not found")
                     }
-
-                } else {
+                else {
                     _logInSuccessful.value = false
                     _errorMessage.value = Event("")
                 }
-
-            } else {
-
+            else {
                 _logInSuccessful.value = false
-
-                if (it.exception != null) {
-
-                    if (it.exception!!.localizedMessage != null) {
-                        _errorMessage.value = Event(it.exception!!.localizedMessage!!.toString())
-                    } else {
-                        _errorMessage.value = Event("")
-                    }
-
-                } else {
-                    _errorMessage.value = Event("")
-                }
-
+                _errorMessage.value = errorMessageDocument(it)
             }
 
         }
@@ -216,52 +180,34 @@ class LogInViewModel : ViewModel() {
         _progressMTVTextDecider.value = "check_username"
         _progressADOpen.value = true
 
-        val query =
-            Firebase.firestore.collection("users")
-                .whereEqualTo("username", emailOrUsernameACTText.value)
+        Firebase.firestore.collection("users")
+            .whereEqualTo("username", emailOrUsernameACTText.value).get().addOnCompleteListener {
 
-        query.get().addOnCompleteListener {
+                _progressMTVTextDecider.value = ""
+                _progressADOpen.value = false
 
-            _progressMTVTextDecider.value = ""
-            _progressADOpen.value = false
+                if (it.isSuccessful) {
 
-            if (it.isSuccessful) {
+                    for (i in it.result!!) {
 
-                for (i in it.result!!) {
+                        if (i.getString("username") == emailOrUsernameACTText.value) getUserEmail(it.result!!.documents[0].id) else {
+                            _logInSuccessful.value = false
+                            _errorMessage.value = Event("no_account")
+                        }
 
-                    if (i.getString("username") == emailOrUsernameACTText.value) {
-                        getUserEmail(it.result!!.documents[0].id)
-                    } else {
+                    }
+
+                    if (it.result?.size() == 0) {
                         _logInSuccessful.value = false
                         _errorMessage.value = Event("no_account")
                     }
 
-                }
-
-                if (it.result?.size() == 0) {
-                    _logInSuccessful.value = false
-                    _errorMessage.value = Event("no_account")
-                }
-
-            } else {
-
-                _logInSuccessful.value = false
-
-                if (it.exception != null) {
-
-                    if (it.exception!!.localizedMessage != null) {
-                        _errorMessage.value = Event(it.exception!!.localizedMessage!!.toString())
-                    } else {
-                        _errorMessage.value = Event("")
-                    }
-
                 } else {
-                    _errorMessage.value = Event("")
+                    _logInSuccessful.value = false
+                    _errorMessage.value = errorMessageQuery(it)
                 }
 
             }
-
-        }
 
     }
 
@@ -278,41 +224,23 @@ class LogInViewModel : ViewModel() {
                 _progressMTVTextDecider.value = ""
                 _progressADOpen.value = false
 
-                if (it.isSuccessful) {
+                if (it.isSuccessful)
 
-                    if (it.result != null) {
+                    if (it.result != null)
 
-                        if (it.result != null) {
-                            loginWithUsername(
-                                it.result!!.get("email").toString()
-                            )
-                        } else {
+                        if (it.result != null) loginWithUsername(
+                            it.result!!.get("email").toString()
+                        ) else {
                             _logInSuccessful.value = false
                             _errorMessage.value = Event("")
                         }
-
-                    } else {
+                    else {
                         _logInSuccessful.value = false
                         _errorMessage.value = Event("")
                     }
-
-                } else {
-
+                else {
                     _logInSuccessful.value = false
-
-                    if (it.exception != null) {
-
-                        if (it.exception!!.localizedMessage != null) {
-                            _errorMessage.value =
-                                Event(it.exception!!.localizedMessage!!.toString())
-                        } else {
-                            _errorMessage.value = Event("")
-                        }
-
-                    } else {
-                        _errorMessage.value = Event("")
-                    }
-
+                    _errorMessage.value = errorMessageDocument(it)
                 }
 
             }
@@ -334,38 +262,21 @@ class LogInViewModel : ViewModel() {
             _progressMTVTextDecider.value = ""
             _progressADOpen.value = false
 
-            if (it.isSuccessful) {
+            if (it.isSuccessful)
 
-                if (it.result != null) {
+                if (it.result != null)
 
-                    if (it.result!!.user != null) {
-                        _logInSuccessful.value = true
-                    } else {
+                    if (it.result!!.user != null) _logInSuccessful.value = true else {
                         _logInSuccessful.value = false
                         _errorMessage.value = Event("")
                     }
-
-                } else {
+                else {
                     _logInSuccessful.value = false
                     _errorMessage.value = Event("")
                 }
-
-            } else {
-
+            else {
                 _logInSuccessful.value = false
-
-                if (it.exception != null) {
-
-                    if (it.exception!!.localizedMessage != null) {
-                        _errorMessage.value = Event(it.exception!!.localizedMessage!!.toString())
-                    } else {
-                        _errorMessage.value = Event("")
-                    }
-
-                } else {
-                    _errorMessage.value = Event("")
-                }
-
+                _errorMessage.value = errorMessageAuth(it)
             }
 
         }
@@ -411,38 +322,19 @@ class LogInViewModel : ViewModel() {
 
         val user = Firebase.auth.currentUser
 
-        if (user != null) {
+        if (user != null)
 
             if (!user.isEmailVerified) {
 
                 Firebase.auth.setLanguageCode(appLanguage)
 
                 user.sendEmailVerification().addOnCompleteListener {
-
                     _errorADIVGone.value = false
                     _errorADPBGone.value = true
 
-                    if (it.isSuccessful) {
-                        _resendSuccessful.value = Event(true)
-                    } else {
-
-                        _resendSuccessful.value = Event(false)
-
-                        if (it.exception != null) {
-
-                            if (it.exception!!.localizedMessage != null) {
-                                _errorMessage.value =
-                                    Event(it.exception!!.localizedMessage!!.toString())
-                            } else {
-                                _errorMessage.value = Event("")
-                            }
-
-                        } else {
-                            _errorMessage.value = Event("")
-                        }
-
-                    }
-
+                    _resendSuccessful.value = Event(it.isSuccessful)
+                    if (!_resendSuccessful.value!!.peekContent()) _errorMessage.value =
+                        errorMessageVoid(it)
                 }
 
             } else {
@@ -452,8 +344,7 @@ class LogInViewModel : ViewModel() {
                 _resendSuccessful.value = Event(false)
                 _errorMessage.value = Event("already_verified")
             }
-
-        } else {
+        else {
             _errorADIVGone.value = false
             _errorADPBGone.value = true
 

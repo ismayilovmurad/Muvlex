@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.martiandeveloper.muvlex.utils.Event
-import com.martiandeveloper.muvlex.utils.appLanguage
+import com.martiandeveloper.muvlex.utils.*
 
 class GetHelpViewModel : ViewModel() {
 
@@ -56,30 +55,13 @@ class GetHelpViewModel : ViewModel() {
         Firebase.auth.sendPasswordResetEmail(
             emailOrUsernameETText.value!!
         ).addOnCompleteListener {
-
             _progressTVTextDecider.value = ""
             _progressADOpen.value = false
 
-            if (it.isSuccessful) {
-                _sendPasswordResetEmailSuccessful.value = true
-            } else {
+            _sendPasswordResetEmailSuccessful.value = it.isSuccessful
 
-                _sendPasswordResetEmailSuccessful.value = false
-
-                if (it.exception != null) {
-
-                    if (it.exception!!.localizedMessage != null) {
-                        _errorMessage.value = Event(it.exception!!.localizedMessage!!.toString())
-                    } else {
-                        _errorMessage.value = Event("")
-                    }
-
-                } else {
-                    _errorMessage.value = Event("")
-                }
-
-            }
-
+            if (!_sendPasswordResetEmailSuccessful.value!!) _errorMessage.value =
+                errorMessageVoid(it)
         }
 
     }
@@ -115,52 +97,35 @@ class GetHelpViewModel : ViewModel() {
         _progressTVTextDecider.value = "check_username"
         _progressADOpen.value = true
 
-        val query =
-            Firebase.firestore.collection("users")
-                .whereEqualTo("username", emailOrUsernameETText.value)
+        Firebase.firestore.collection("users")
+            .whereEqualTo("username", emailOrUsernameETText.value).get().addOnCompleteListener {
 
-        query.get().addOnCompleteListener {
+                _progressTVTextDecider.value = ""
+                _progressADOpen.value = false
 
-            _progressTVTextDecider.value = ""
-            _progressADOpen.value = false
+                if (it.isSuccessful) {
 
-            if (it.isSuccessful) {
+                    for (i in it.result!!) {
 
-                for (i in it.result!!) {
+                        if (i.getString("username") == emailOrUsernameETText.value) getUserEmail(it.result!!.documents[0].id)
+                        else {
+                            _sendPasswordResetEmailSuccessful.value = false
+                            _errorMessage.value = Event("no_account")
+                        }
 
-                    if (i.getString("username") == emailOrUsernameETText.value) {
-                        getUserEmail(it.result!!.documents[0].id)
-                    } else {
+                    }
+
+                    if (it.result?.size() == 0) {
                         _sendPasswordResetEmailSuccessful.value = false
                         _errorMessage.value = Event("no_account")
                     }
 
-                }
-
-                if (it.result?.size() == 0) {
-                    _sendPasswordResetEmailSuccessful.value = false
-                    _errorMessage.value = Event("no_account")
-                }
-
-            } else {
-
-                _sendPasswordResetEmailSuccessful.value = false
-
-                if (it.exception != null) {
-
-                    if (it.exception!!.localizedMessage != null) {
-                        _errorMessage.value = Event(it.exception!!.localizedMessage!!.toString())
-                    } else {
-                        _errorMessage.value = Event("")
-                    }
-
                 } else {
-                    _errorMessage.value = Event("")
+                    _sendPasswordResetEmailSuccessful.value = false
+                    _errorMessage.value = errorMessageQuery(it)
                 }
 
             }
-
-        }
 
     }
 
@@ -179,37 +144,23 @@ class GetHelpViewModel : ViewModel() {
 
                 if (it.isSuccessful) {
 
-                    if (it.result != null) {
+                    if (it.result != null)
 
-                        if (it.result != null) {
-                            sendPasswordResetEmailForUsername(it.result!!.get("email").toString())
-                        } else {
+                        if (it.result != null) sendPasswordResetEmailForUsername(
+                            it.result!!.get("email").toString()
+                        )
+                        else {
                             _sendPasswordResetEmailSuccessful.value = false
                             _errorMessage.value = Event("")
                         }
-
-                    } else {
+                    else {
                         _sendPasswordResetEmailSuccessful.value = false
                         _errorMessage.value = Event("")
                     }
 
                 } else {
-
                     _sendPasswordResetEmailSuccessful.value = false
-
-                    if (it.exception != null) {
-
-                        if (it.exception!!.localizedMessage != null) {
-                            _errorMessage.value =
-                                Event(it.exception!!.localizedMessage!!.toString())
-                        } else {
-                            _errorMessage.value = Event("")
-                        }
-
-                    } else {
-                        _errorMessage.value = Event("")
-                    }
-
+                    _errorMessage.value = errorMessageDocument(it)
                 }
 
             }
@@ -228,30 +179,13 @@ class GetHelpViewModel : ViewModel() {
         Firebase.auth.sendPasswordResetEmail(
             email
         ).addOnCompleteListener {
-
             _progressTVTextDecider.value = ""
             _progressADOpen.value = false
 
-            if (it.isSuccessful) {
-                _sendPasswordResetEmailSuccessful.value = true
-            } else {
+            _sendPasswordResetEmailSuccessful.value = it.isSuccessful
 
-                _sendPasswordResetEmailSuccessful.value = false
-
-                if (it.exception != null) {
-
-                    if (it.exception!!.localizedMessage != null) {
-                        _errorMessage.value = Event(it.exception!!.localizedMessage!!.toString())
-                    } else {
-                        _errorMessage.value = Event("")
-                    }
-
-                } else {
-                    _errorMessage.value = Event("")
-                }
-
-            }
-
+            if (!_sendPasswordResetEmailSuccessful.value!!) _errorMessage.value =
+                errorMessageVoid(it)
         }
 
     }

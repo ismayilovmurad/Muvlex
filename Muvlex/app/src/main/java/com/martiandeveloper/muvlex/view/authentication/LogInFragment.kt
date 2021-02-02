@@ -2,8 +2,6 @@ package com.martiandeveloper.muvlex.view.authentication
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -59,8 +57,10 @@ class LogInFragment : Fragment() {
 
         setPasswordToggle()
 
-        progressDialog = MaterialAlertDialogBuilder(requireContext(), R.style.StyleDialog).create()
-        errorDialog = MaterialAlertDialogBuilder(requireContext(), R.style.StyleDialog).create()
+        with(requireContext()) {
+            progressDialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
+            errorDialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
+        }
 
         return fragmentLogInBinding.root
 
@@ -87,15 +87,12 @@ class LogInFragment : Fragment() {
             })
 
             logInMBTNClick.observe(viewLifecycleOwner, EventObserver {
-                if (it)
-                    if (networkAvailable)
-                        if (Patterns.EMAIL_ADDRESS.matcher(emailOrUsernameACTText.value!!)
-                                .matches()
-                        )
-                            logIn()
-                        else
-                            isUsernameExists()
-                    else R.string.no_internet_connection.showToast(requireContext())
+                if (it) if (networkAvailable) if (Patterns.EMAIL_ADDRESS.matcher(
+                        emailOrUsernameACTText.value!!
+                    ).matches()
+                ) logIn() else isUsernameExists() else R.string.no_internet_connection.showToast(
+                    requireContext()
+                )
             })
 
             progressADOpen.observe(viewLifecycleOwner, {
@@ -179,11 +176,10 @@ class LogInFragment : Fragment() {
             })
 
             resendMBTNClick.observe(viewLifecycleOwner, EventObserver {
-                if (it)
-                    if (networkAvailable) {
-                        isResendAndOkayMBTNSEnable(false)
-                        resendEmailVerification()
-                    } else R.string.no_internet_connection.showToast(requireContext())
+                if (it) if (networkAvailable) {
+                    isResendAndOkayMBTNSEnable(false)
+                    resendEmailVerification()
+                } else R.string.no_internet_connection.showToast(requireContext())
             })
 
             resendSuccessful.observe(viewLifecycleOwner, EventObserver {
@@ -214,35 +210,11 @@ class LogInFragment : Fragment() {
                 ) {
 
                     isPasswordVisible = if (isPasswordVisible) {
-
-                        with(fragmentLogInPasswordET) {
-                            setCompoundDrawablesWithIntrinsicBounds(
-                                0,
-                                0,
-                                R.drawable.ic_visibility_off,
-                                0
-                            )
-                            transformationMethod =
-                                PasswordTransformationMethod.getInstance()
-                        }
-
+                        fragmentLogInPasswordET.setCompoundDrawables(R.drawable.ic_visibility_off)
                         false
-
                     } else {
-
-                        with(fragmentLogInPasswordET) {
-                            setCompoundDrawablesWithIntrinsicBounds(
-                                0,
-                                0,
-                                R.drawable.ic_visibility,
-                                0
-                            )
-                            transformationMethod =
-                                HideReturnsTransformationMethod.getInstance()
-                        }
-
+                        fragmentLogInPasswordET.setCompoundDrawables(R.drawable.ic_visibility)
                         true
-
                     }
 
                     fragmentLogInPasswordET.setSelection(fragmentLogInPasswordET.selectionEnd)
@@ -287,19 +259,16 @@ class LogInFragment : Fragment() {
             it.lifecycleOwner = viewLifecycleOwner
         }
 
-        val dialogEmailNotVerifiedResendMBTN = binding.dialogEmailNotVerifiedResendMBTN
-        val dialogEmailNotVerifiedOkayMBTN = binding.dialogEmailNotVerifiedOkayMBTN
-
         with(logInViewModel) {
 
             resendAndOkayMBTNSEnable.observe(viewLifecycleOwner, {
 
-                if (it) {
-                    dialogEmailNotVerifiedResendMBTN.enable(requireContext())
-                    dialogEmailNotVerifiedOkayMBTN.enable(requireContext())
-                } else {
-                    dialogEmailNotVerifiedResendMBTN.disable(requireContext())
-                    dialogEmailNotVerifiedOkayMBTN.disable(requireContext())
+                with(binding.dialogEmailNotVerifiedResendMBTN) {
+                    if (it) enable(requireContext()) else disable(requireContext())
+                }
+
+                with(binding.dialogEmailNotVerifiedOkayMBTN) {
+                    if (it) enable(requireContext()) else disable(requireContext())
                 }
 
             })

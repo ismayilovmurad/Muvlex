@@ -1,6 +1,7 @@
 package com.martiandeveloper.muvlex.repository
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.martiandeveloper.muvlex.model.Movie
 import com.martiandeveloper.muvlex.service.TmdbApi
 
@@ -25,6 +26,10 @@ class MovieDataSource(private val movie: String, private val apiService: TmdbApi
             LoadResult.Error(e)
         }
 
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
+        TODO("Not yet implemented")
     }
 
 }

@@ -3,8 +3,6 @@ package com.martiandeveloper.muvlex.view.authentication
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -60,8 +58,10 @@ class SignUpFragment : Fragment() {
             isSuccessADPBGone(true)
         }
 
-        successDialog = MaterialAlertDialogBuilder(requireContext(), R.style.StyleDialog).create()
-        progressDialog = MaterialAlertDialogBuilder(requireContext(), R.style.StyleDialog).create()
+        with(requireContext()) {
+            successDialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
+            progressDialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
+        }
 
         return fragmentSignUpBinding.root
 
@@ -101,15 +101,9 @@ class SignUpFragment : Fragment() {
             })
 
             nextMBTNClick.observe(viewLifecycleOwner, EventObserver {
-                if (it)
-                    if (networkAvailable)
-                        if (passwordETText.value != confirmPasswordETText.value)
-                            R.string.passwords_dont_match.showToast(requireContext())
-                        else
-                            signUp()
-                    else
-                        R.string.no_internet_connection.showToast(requireContext())
-
+                if (it) if (networkAvailable) if (passwordETText.value != confirmPasswordETText.value) R.string.passwords_dont_match.showToast(
+                    requireContext()
+                ) else signUp() else R.string.no_internet_connection.showToast(requireContext())
             })
 
             progressADOpen.observe(viewLifecycleOwner, {
@@ -137,13 +131,10 @@ class SignUpFragment : Fragment() {
             })
 
             continueMBTNClick.observe(viewLifecycleOwner, EventObserver {
-                if (it)
-
-                    if (networkAvailable) {
-                        isContinueMBTNEnable(false)
-                        isEmailVerified()
-                    } else R.string.no_internet_connection.showToast(requireContext())
-
+                if (it) if (networkAvailable) {
+                    isContinueMBTNEnable(false)
+                    isEmailVerified()
+                } else R.string.no_internet_connection.showToast(requireContext())
             })
 
             successADOpen.observe(viewLifecycleOwner, {
@@ -183,60 +174,31 @@ class SignUpFragment : Fragment() {
     }
 
     private fun hideKeyboard() {
-
         var view = activity?.currentFocus
 
-        if (view == null) {
-            view = View(activity)
-        }
+        if (view == null) view = View(activity)
 
         (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
             view.windowToken,
             0
         )
-
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setPasswordToggle(editText: EditText) {
 
         editText.setOnTouchListener(View.OnTouchListener { _, event ->
-
-            if (event.action == MotionEvent.ACTION_UP) {
+            if (event.action == MotionEvent.ACTION_UP)
 
                 if (event.rawX >= editText.right - editText.compoundDrawables[2].bounds.width()
                 ) {
 
                     isPasswordVisible = if (isPasswordVisible) {
-
-                        with(editText) {
-                            setCompoundDrawablesWithIntrinsicBounds(
-                                0,
-                                0,
-                                R.drawable.ic_visibility_off,
-                                0
-                            )
-                            transformationMethod =
-                                PasswordTransformationMethod.getInstance()
-                        }
-
+                        editText.setCompoundDrawables(R.drawable.ic_visibility_off)
                         false
-
                     } else {
-
-                        with(editText) {
-                            setCompoundDrawablesWithIntrinsicBounds(
-                                0,
-                                0,
-                                R.drawable.ic_visibility,
-                                0
-                            )
-                            transformationMethod =
-                                HideReturnsTransformationMethod.getInstance()
-                        }
-
+                        editText.setCompoundDrawables(R.drawable.ic_visibility)
                         true
-
                     }
 
                     editText.setSelection(editText.selectionEnd)
@@ -245,10 +207,7 @@ class SignUpFragment : Fragment() {
 
                 }
 
-            }
-
             false
-
         })
 
     }

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.martiandeveloper.muvlex.R
@@ -16,14 +15,14 @@ import com.martiandeveloper.muvlex.databinding.FragmentSeriesListBinding
 import com.martiandeveloper.muvlex.model.Series
 import com.martiandeveloper.muvlex.utils.networkAvailable
 import com.martiandeveloper.muvlex.utils.searchResult
+import com.martiandeveloper.muvlex.utils.showToast
 import com.martiandeveloper.muvlex.viewmodel.feed.SeriesListViewModel
-import kotlinx.coroutines.launch
 
 class SeriesListFragment : Fragment(), SeriesListAdapter.ItemClickListener {
 
-    private lateinit var fragmentSeriesListBinding: FragmentSeriesListBinding
-
     private lateinit var seriesListViewModel: SeriesListViewModel
+
+    private lateinit var fragmentSeriesListBinding: FragmentSeriesListBinding
 
     private lateinit var seriesListAdapter: SeriesListAdapter
 
@@ -63,29 +62,23 @@ class SeriesListFragment : Fragment(), SeriesListAdapter.ItemClickListener {
 
             searchResult.observe(viewLifecycleOwner, {
 
-                viewLifecycleOwner.lifecycleScope.launch {
+                if (!it.isNullOrEmpty()) {
 
-                    if (!it.isNullOrEmpty()) {
+                    isNoResultsFoundForMTVGone(true)
 
+                    if (networkAvailable) {
+                        isNoInternetConnectionMTVGone(true)
+                        isSeriesRVGone(false)
+                        setSearchingForMTVText("${getString(R.string.searching_for)} \"$it\"...")
                         isSearchingForLLGone(false)
-                        isNoResultsFoundForMTVGone(true)
-
-                        if (networkAvailable) {
-                            isNoInternetConnectionMTVGone(true)
-                            isSeriesRVGone(false)
-                            setSearchingForMTVText("${getString(R.string.searching_for)} \"$it\"...")
-                            getData(it, seriesListAdapter)
-                        } else {
-                            isNoInternetConnectionMTVGone(false)
-                            isSeriesRVGone(true)
-                        }
-
+                        getData(it, seriesListAdapter)
                     } else {
+                        isNoInternetConnectionMTVGone(false)
                         isSeriesRVGone(true)
-                        isNoResultsFoundForMTVGone(true)
+                        isSearchingForLLGone(true)
                     }
 
-                }
+                } else isSeriesRVGone(true)
 
             })
 
@@ -110,9 +103,7 @@ class SeriesListFragment : Fragment(), SeriesListAdapter.ItemClickListener {
                         if (isFirstAppend) {
                             isSearchingForLLGone(false)
                             isFirstAppend = false
-                        } else {
-                            isSearchingForLL2Gone(false)
-                        }
+                        } else isSearchingForLL2Gone(false)
 
                     }
 
@@ -124,6 +115,10 @@ class SeriesListFragment : Fragment(), SeriesListAdapter.ItemClickListener {
                     is LoadState.Error -> {
                         isSearchingForLLGone(true)
                         isSearchingForLL2Gone(true)
+
+                        if (!networkAvailable) R.string.no_internet_connection.showToast(
+                            requireContext()
+                        )
                     }
 
                 }
@@ -144,19 +139,19 @@ class SeriesListFragment : Fragment(), SeriesListAdapter.ItemClickListener {
                             if (searchResult.value != null) {
                                 setNoResultsFoundForMTVText("${getString(R.string.no_results_found_for)} \"${searchResult.value}\"")
                                 isNoResultsFoundForMTVGone(false)
-                            } else {
-                                isNoResultsFoundForMTVGone(true)
-                            }
+                            } else isNoResultsFoundForMTVGone(true)
 
-                        } else {
-                            isNoResultsFoundForMTVGone(true)
-                        }
+                        } else isNoResultsFoundForMTVGone(true)
 
                     }
 
                     is LoadState.Error -> {
                         isSearchingForLLGone(true)
                         isSearchingForLL2Gone(true)
+
+                        if (!networkAvailable) R.string.no_internet_connection.showToast(
+                            requireContext()
+                        )
                     }
 
                 }

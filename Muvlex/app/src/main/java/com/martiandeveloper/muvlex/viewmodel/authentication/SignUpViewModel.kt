@@ -7,6 +7,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.utils.Event
 import com.martiandeveloper.muvlex.utils.appLanguage
+import com.martiandeveloper.muvlex.utils.errorMessageAuth
+import com.martiandeveloper.muvlex.utils.errorMessageVoid
 
 class SignUpViewModel : ViewModel() {
 
@@ -86,24 +88,9 @@ class SignUpViewModel : ViewModel() {
             _progressMTVTextDecider.value = ""
             _progressADOpen.value = false
 
-            if (it.isSuccessful) {
-                sendEmailVerification()
-            } else {
-
+            if (it.isSuccessful) sendEmailVerification() else {
                 _signUpSuccessful.value = false
-
-                if (it.exception != null) {
-
-                    if (it.exception!!.localizedMessage != null) {
-                        _errorMessage.value = Event(it.exception!!.localizedMessage!!.toString())
-                    } else {
-                        _errorMessage.value = Event("")
-                    }
-
-                } else {
-                    _errorMessage.value = Event("")
-                }
-
+                _errorMessage.value = errorMessageAuth(it)
             }
 
         }
@@ -126,31 +113,11 @@ class SignUpViewModel : ViewModel() {
                 Firebase.auth.setLanguageCode(appLanguage)
 
                 user.sendEmailVerification().addOnCompleteListener {
-
                     _progressMTVTextDecider.value = ""
                     _progressADOpen.value = false
 
-                    if (it.isSuccessful) {
-                        _signUpSuccessful.value = true
-                    } else {
-
-                        _signUpSuccessful.value = false
-
-                        if (it.exception != null) {
-
-                            if (it.exception!!.localizedMessage != null) {
-                                _errorMessage.value =
-                                    Event(it.exception!!.localizedMessage!!.toString())
-                            } else {
-                                _errorMessage.value = Event("")
-                            }
-
-                        } else {
-                            _errorMessage.value = Event("")
-                        }
-
-                    }
-
+                    _signUpSuccessful.value = it.isSuccessful
+                    if (!signUpSuccessful.value!!) errorMessageVoid(it)
                 }
 
             } else {
@@ -224,44 +191,27 @@ class SignUpViewModel : ViewModel() {
 
                 if (it.isSuccessful) {
 
-                    if (it.result != null) {
+                    if (it.result != null)
 
-                        if (it.result!!.user != null) {
+                        if (it.result!!.user != null)
 
-                            if (it.result!!.user!!.isEmailVerified) {
-                                _emailVerificationSuccessful.value = true
-                            } else {
+                            if (it.result!!.user!!.isEmailVerified) _emailVerificationSuccessful.value =
+                                true else {
                                 _emailVerificationSuccessful.value = false
                                 _errorMessage.value = Event("unverified")
                             }
-
-                        } else {
+                        else {
                             _emailVerificationSuccessful.value = false
                             _errorMessage.value = Event("")
                         }
-
-                    } else {
+                    else {
                         _emailVerificationSuccessful.value = false
                         _errorMessage.value = Event("")
                     }
 
                 } else {
-
                     _emailVerificationSuccessful.value = false
-
-                    if (it.exception != null) {
-
-                        if (it.exception!!.localizedMessage != null) {
-                            _errorMessage.value =
-                                Event(it.exception!!.localizedMessage!!.toString())
-                        } else {
-                            _errorMessage.value = Event("")
-                        }
-
-                    } else {
-                        _errorMessage.value = Event("")
-                    }
-
+                    _errorMessage.value = errorMessageAuth(it)
                 }
 
             }

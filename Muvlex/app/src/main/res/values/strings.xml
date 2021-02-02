@@ -40,7 +40,6 @@
     <string name="okay">Okay</string>
     <string name="resend">Resend</string>
     <string name="home">Home</string>
-    <string name="notification">Notification</string>
     <string name="profile">Profile</string>
     <string name="movies">Movies</string>
     <string name="series">Series</string>
@@ -52,6 +51,12 @@
     <string name="share_your_thoughts_with_other">Share your thoughts with others</string>
     <string name="write_a_review">Write a review</string>
     <string name="overview">Overview</string>
+    <string name="post">Post</string>
+    <string name="reviews_are_public_and_editable">Reviews are public and editable</string>
+    <string name="the_name_and_photo_on_your_muvlex_profile_will_appear_with_your_review_please_do_a_fair_rate_and_write_a_relevant_review_about_the_movie_or_series_so_the_other_users_can_get_benefit_from_it">The name and photo on your Muvlex profile will appear with your review. Please, do a fair rate and write a relevant review about the movie or series so the other users can get benefit from it.</string>
+    <string name="got_it">Got it</string>
+    <string name="learn_more">Learn more</string>
+    <string name="describe_your_experience_optional">Describe your experience (optional)</string>
 
     <!--Alert texts-->
     <string name="creating_user">Creating user</string>

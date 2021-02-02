@@ -17,13 +17,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/notificationFragment"
-        android:icon="@drawable/ic_notification"
-        android:orderInCategory="3"
-        android:title="@string/notification"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_profile"
         android:orderInCategory="4"

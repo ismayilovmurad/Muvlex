@@ -27,9 +27,9 @@ import java.util.*
 class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
     NavController.OnDestinationChangedListener {
 
-    private lateinit var activityMainBinding: ActivityMainBinding
-
     private lateinit var mainViewModel: MainViewModel
+
+    private lateinit var activityMainBinding: ActivityMainBinding
 
     private lateinit var adapter: LanguageAdapter
 
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
 
         super.onCreate(savedInstanceState)
 
-        checkLanguage()
+        changeLanguage()
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
@@ -61,44 +61,24 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
 
     }
 
-    private fun checkLanguage() {
+    private fun changeLanguage() {
+        appLanguage =
+            getSharedPreferences(LANGUAGE_SHARED_PREFERENCE, Context.MODE_PRIVATE).getString(
+                LANGUAGE_CODE_KEY,
+                "en"
+            )!!
 
-        val sharedPreference =
-            getSharedPreferences(LANGUAGE_SHARED_PREFERENCE, Context.MODE_PRIVATE)
-        val languageCode = sharedPreference.getString(LANGUAGE_CODE_KEY, "nope")
-
-        if (languageCode != null) {
-
-            if (languageCode != "nope") {
-                appLanguage = languageCode
-                changeLanguage(languageCode)
-            }
-
-        }
-
-    }
-
-    private fun changeLanguage(languageCode: String) {
-        val displayMetrics = resources.displayMetrics
         val configuration = resources.configuration
-        configuration.setLocale(Locale(languageCode))
+        configuration.setLocale(Locale(appLanguage))
         @Suppress("DEPRECATION")
-        resources.updateConfiguration(configuration, displayMetrics)
+        resources.updateConfiguration(configuration, resources.displayMetrics)
     }
 
     private fun observe() {
 
-        with(mainViewModel) {
-
-            languageLLClick.observe(this@MainActivity, EventObserver {
-
-                if (it) {
-                    openLanguageDialog()
-                }
-
-            })
-
-        }
+        mainViewModel.languageLLClick.observe(this@MainActivity, EventObserver {
+            if (it) openLanguageDialog()
+        })
 
     }
 
@@ -124,15 +104,15 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
 
         val languageList = ArrayList<Language>()
 
-        val sharedPreference =
-            getSharedPreferences(LANGUAGE_SHARED_PREFERENCE, Context.MODE_PRIVATE)
-        val language = sharedPreference.getString(LANGUAGE_KEY, "English")
+        val language =
+            getSharedPreferences(LANGUAGE_SHARED_PREFERENCE, Context.MODE_PRIVATE).getString(
+                LANGUAGE_KEY,
+                "English"
+            )
 
         for (i in 0 until primaryLanguageList.size) {
 
-            val checkedLanguage = primaryLanguageList.indexOf(language)
-
-            if (i == checkedLanguage) {
+            if (i == primaryLanguageList.indexOf(language))
                 languageList.add(
                     Language(
                         primaryLanguageList[i],
@@ -140,7 +120,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
                         true
                     )
                 )
-            } else {
+            else
                 languageList.add(
                     Language(
                         primaryLanguageList[i],
@@ -148,7 +128,6 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
                         false
                     )
                 )
-            }
 
         }
 
@@ -162,45 +141,32 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
         }
 
         mainViewModel.searchETText.observe(this, {
-
-            if (it.isNullOrEmpty()) {
+            if (it.isNullOrEmpty())
                 binding.dialogLanguageMainET.setCompoundDrawablesWithIntrinsicBounds(
                     0, 0, 0, 0
                 )
-            } else {
+            else
                 binding.dialogLanguageMainET.setCompoundDrawablesWithIntrinsicBounds(
                     0,
                     0,
                     R.drawable.ic_close,
                     0
                 )
-            }
 
             adapter.filter.filter(it)
-
         })
 
         binding.dialogLanguageMainET.setOnTouchListener(View.OnTouchListener { _, event ->
-
-            if (event.action == MotionEvent.ACTION_UP) {
-
-                if (binding.dialogLanguageMainET.compoundDrawables[2] != null) {
-
+            if (event.action == MotionEvent.ACTION_UP)
+                if (binding.dialogLanguageMainET.compoundDrawables[2] != null)
                     if (event.rawX >= binding.dialogLanguageMainET.right - binding.dialogLanguageMainET.compoundDrawables[2].bounds.width()
                     ) {
-
                         binding.dialogLanguageMainET.text.clear()
 
                         return@OnTouchListener true
-
                     }
 
-                }
-
-            }
-
             false
-
         })
 
         with(dialogLanguage) {
@@ -222,11 +188,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
 
     private fun saveLanguage(languageCode: String, language: String) {
 
-        val sharedPreference =
-            getSharedPreferences(LANGUAGE_SHARED_PREFERENCE, Context.MODE_PRIVATE)
-        val editor = sharedPreference!!.edit()
-
-        with(editor) {
+        with(getSharedPreferences(LANGUAGE_SHARED_PREFERENCE, Context.MODE_PRIVATE)!!.edit()) {
             putString(LANGUAGE_CODE_KEY, languageCode)
             putString(LANGUAGE_KEY, language)
             apply()

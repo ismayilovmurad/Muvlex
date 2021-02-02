@@ -1,7 +1,9 @@
 package com.martiandeveloper.muvlex.utils
 
 import android.content.Context
+import android.text.method.HideReturnsTransformationMethod
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import android.widget.Toast.makeText
@@ -56,4 +58,15 @@ fun AlertDialog.show(view: View) {
 
 fun String?.check(): Boolean {
     return this != null && this != "null" && this != ""
+}
+
+fun EditText.setCompoundDrawables(drawable: Int) {
+    setCompoundDrawablesWithIntrinsicBounds(
+        0,
+        0,
+        drawable,
+        0
+    )
+    transformationMethod =
+        HideReturnsTransformationMethod.getInstance()
 }
