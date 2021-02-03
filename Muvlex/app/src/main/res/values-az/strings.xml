@@ -56,6 +56,10 @@
     <string name="got_it">Anladım</string>
     <string name="learn_more">Daha ətraflı bilgi al</string>
     <string name="describe_your_experience_optional">Təcrübənizi təsvir edin (istəyə bağlı)</string>
+    <string name="discard_draft">Taslak atılsın?</string>
+    <string name="keep">Saxla</string>
+    <string name="discard">At</string>
+    <string name="rate_this_series">Bu seriyala səs ver</string>
 
     <!--Alert texts-->
     <string name="creating_user">İstifadəçi yaradılır</string>

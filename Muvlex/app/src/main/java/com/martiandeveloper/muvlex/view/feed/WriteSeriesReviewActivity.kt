@@ -14,16 +14,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.martiandeveloper.muvlex.R
-import com.martiandeveloper.muvlex.databinding.ActivityWriteMovieReviewBinding
-import com.martiandeveloper.muvlex.databinding.DialogDiscardDraftMovieBinding
+import com.martiandeveloper.muvlex.databinding.ActivityWriteSeriesReviewBinding
+import com.martiandeveloper.muvlex.databinding.DialogDiscardDraftSeriesBinding
 import com.martiandeveloper.muvlex.utils.*
-import com.martiandeveloper.muvlex.viewmodel.feed.WriteMovieReviewViewModel
+import com.martiandeveloper.muvlex.viewmodel.feed.WriteSeriesReviewViewModel
 
-class WriteMovieReviewActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListener {
+class WriteSeriesReviewActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListener {
 
-    private lateinit var writeMovieReviewViewModel: WriteMovieReviewViewModel
+    private lateinit var writeSeriesReviewViewModel: WriteSeriesReviewViewModel
 
-    private lateinit var activityWriteMovieReviewBinding: ActivityWriteMovieReviewBinding
+    private lateinit var activityWriteSeriesReviewBinding: ActivityWriteSeriesReviewBinding
 
     private lateinit var discardDialog: AlertDialog
 
@@ -31,18 +31,18 @@ class WriteMovieReviewActivity : AppCompatActivity(), RatingBar.OnRatingBarChang
 
         super.onCreate(savedInstanceState)
 
-        writeMovieReviewViewModel =
-            ViewModelProviders.of(this).get(WriteMovieReviewViewModel::class.java)
+        writeSeriesReviewViewModel =
+            ViewModelProviders.of(this).get(WriteSeriesReviewViewModel::class.java)
 
-        activityWriteMovieReviewBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_write_movie_review)
+        activityWriteSeriesReviewBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_write_series_review)
 
-        activityWriteMovieReviewBinding.let {
-            it.writeMovieReviewViewModel = writeMovieReviewViewModel
+        activityWriteSeriesReviewBinding.let {
+            it.writeSeriesReviewViewModel = writeSeriesReviewViewModel
             it.lifecycleOwner = this
         }
 
-        writeMovieReviewViewModel.isPostPBGone(true)
+        writeSeriesReviewViewModel.isPostPBGone(true)
 
         observe()
 
@@ -60,12 +60,12 @@ class WriteMovieReviewActivity : AppCompatActivity(), RatingBar.OnRatingBarChang
 
         super.onResume()
 
-        val activityWriteMovieReviewReviewET =
-            activityWriteMovieReviewBinding.activityWriteMovieReviewReviewET
-        activityWriteMovieReviewReviewET.requestFocus()
+        val activityWriteSeriesReviewReviewET =
+            activityWriteSeriesReviewBinding.activityWriteSeriesReviewReviewET
+        activityWriteSeriesReviewReviewET.requestFocus()
 
         (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(
-            activityWriteMovieReviewReviewET,
+            activityWriteSeriesReviewReviewET,
             InputMethodManager.SHOW_IMPLICIT
         )
 
@@ -73,9 +73,9 @@ class WriteMovieReviewActivity : AppCompatActivity(), RatingBar.OnRatingBarChang
 
     private fun observe() {
 
-        with(writeMovieReviewViewModel) {
+        with(writeSeriesReviewViewModel) {
 
-            postMTVClick.observe(this@WriteMovieReviewActivity, EventObserver {
+            postMTVClick.observe(this@WriteSeriesReviewActivity, EventObserver {
                 if (networkAvailable) {
                     val id = intent.getStringExtra("id")
                     if (id != null) if (star.value!! >= .5) save(id)
@@ -84,11 +84,11 @@ class WriteMovieReviewActivity : AppCompatActivity(), RatingBar.OnRatingBarChang
                 )
             })
 
-            gotItMTVClick.observe(this@WriteMovieReviewActivity, EventObserver {
+            gotItMTVClick.observe(this@WriteSeriesReviewActivity, EventObserver {
                 if (it) isNoteCVGone(true)
             })
 
-            learnMoreMTVClick.observe(this@WriteMovieReviewActivity, EventObserver {
+            learnMoreMTVClick.observe(this@WriteSeriesReviewActivity, EventObserver {
                 if (it) startActivity(
                     Intent(
                         Intent.ACTION_VIEW, Uri.parse(
@@ -98,19 +98,19 @@ class WriteMovieReviewActivity : AppCompatActivity(), RatingBar.OnRatingBarChang
                 )
             })
 
-            keepMTVClick.observe(this@WriteMovieReviewActivity, EventObserver {
+            keepMTVClick.observe(this@WriteSeriesReviewActivity, EventObserver {
                 if (it) discardDialog.dismiss()
             })
 
-            discardMTVClick.observe(this@WriteMovieReviewActivity, EventObserver {
+            discardMTVClick.observe(this@WriteSeriesReviewActivity, EventObserver {
                 if (it) onBackPressed()
             })
 
-            saveSuccessful.observe(this@WriteMovieReviewActivity, {
+            saveSuccessful.observe(this@WriteSeriesReviewActivity, {
                 if (it) onBackPressed()
             })
 
-            errorMessage.observe(this@WriteMovieReviewActivity, EventObserver {
+            errorMessage.observe(this@WriteSeriesReviewActivity, EventObserver {
                 R.string.something_went_wrong_try_again_later.showToast(applicationContext)
             })
 
@@ -119,7 +119,7 @@ class WriteMovieReviewActivity : AppCompatActivity(), RatingBar.OnRatingBarChang
     }
 
     private fun setToolbar() {
-        setSupportActionBar(activityWriteMovieReviewBinding.activityWriteMovieReviewMainMTB)
+        setSupportActionBar(activityWriteSeriesReviewBinding.activityWriteSeriesReviewMainMTB)
 
         if (supportActionBar != null)
 
@@ -134,12 +134,12 @@ class WriteMovieReviewActivity : AppCompatActivity(), RatingBar.OnRatingBarChang
 
     private fun setViewData() {
 
-        activityWriteMovieReviewBinding.activityWriteMovieReviewPosterIV.load(
+        activityWriteSeriesReviewBinding.activityWriteSeriesReviewPosterIV.load(
             this,
             intent.getStringExtra("poster")
         )
 
-        with(writeMovieReviewViewModel) {
+        with(writeSeriesReviewViewModel) {
             this.setTitle(intent.getStringExtra("title")!!)
             setStar(intent.getFloatExtra("rating", .5F))
         }
@@ -147,12 +147,12 @@ class WriteMovieReviewActivity : AppCompatActivity(), RatingBar.OnRatingBarChang
     }
 
     private fun setListeners() {
-        activityWriteMovieReviewBinding.activityWriteMovieReviewMainRB.onRatingBarChangeListener =
+        activityWriteSeriesReviewBinding.activityWriteSeriesReviewMainRB.onRatingBarChangeListener =
             this
     }
 
     override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
-        writeMovieReviewViewModel.setStar(if (rating < .5) .5F else rating)
+        writeSeriesReviewViewModel.setStar(if (rating < .5) .5F else rating)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -173,10 +173,10 @@ class WriteMovieReviewActivity : AppCompatActivity(), RatingBar.OnRatingBarChang
     private fun openDiscardDialog() {
 
         val binding =
-            DialogDiscardDraftMovieBinding.inflate(LayoutInflater.from(applicationContext))
+            DialogDiscardDraftSeriesBinding.inflate(LayoutInflater.from(applicationContext))
 
         binding.let {
-            it.writeMovieReviewViewModel = writeMovieReviewViewModel
+            it.writeSeriesReviewViewModel = writeSeriesReviewViewModel
             it.lifecycleOwner = this
         }
 

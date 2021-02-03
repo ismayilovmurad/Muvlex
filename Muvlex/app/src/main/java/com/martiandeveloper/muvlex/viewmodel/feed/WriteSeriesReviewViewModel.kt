@@ -9,15 +9,15 @@ import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.utils.Event
 import com.martiandeveloper.muvlex.utils.errorMessageVoid
 
-class WriteMovieReviewViewModel : ViewModel() {
+class WriteSeriesReviewViewModel : ViewModel() {
 
     //########## Title MaterialTextView text
-    private var _title = MutableLiveData<String>()
-    val title: LiveData<String>
-        get() = _title
+    private var _name = MutableLiveData<String>()
+    val name: LiveData<String>
+        get() = _name
 
-    fun setTitle(title: String) {
-        _title.value = title
+    fun setTitle(name: String) {
+        _name.value = name
     }
 
 
@@ -125,7 +125,7 @@ class WriteMovieReviewViewModel : ViewModel() {
         if (user != null) {
 
             val usernameMap = hashMapOf(
-                "movie_id" to id,
+                "series_id" to id,
                 "rating" to _star.value.toString(),
                 "review" to if (!reviewETText.value.isNullOrEmpty()) {
                     if (reviewETText.value.toString().trimStart().trimEnd()
@@ -135,7 +135,7 @@ class WriteMovieReviewViewModel : ViewModel() {
                 "time" to (System.currentTimeMillis() / 1000).toString()
             )
 
-            Firebase.firestore.collection("movie_posts").document("${user.uid}_$id")
+            Firebase.firestore.collection("series_posts").document("${user.uid}_$id")
                 .set(usernameMap).addOnCompleteListener {
                     isPostPBGone(true)
                     isPostMTVGone(false)

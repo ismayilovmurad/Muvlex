@@ -18,6 +18,10 @@
         android:theme="@style/Theme.Muvlex"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.feed.WriteSeriesReviewActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".view.feed.WriteMovieReviewActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />

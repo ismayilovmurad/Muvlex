@@ -14,30 +14,30 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.martiandeveloper.muvlex.R
-import com.martiandeveloper.muvlex.databinding.FragmentRateMovieBinding
+import com.martiandeveloper.muvlex.databinding.FragmentRateSeriesBinding
 import com.martiandeveloper.muvlex.utils.*
-import com.martiandeveloper.muvlex.viewmodel.feed.RateMovieViewModel
+import com.martiandeveloper.muvlex.viewmodel.feed.RateSeriesViewModel
 
-class RateMovieFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
+class RateSeriesFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
 
-    private lateinit var rateMovieViewModel: RateMovieViewModel
+    private lateinit var rateSeriesViewModel: RateSeriesViewModel
 
-    private lateinit var fragmentRateMovieBinding: FragmentRateMovieBinding
+    private lateinit var fragmentRateSeriesBinding: FragmentRateSeriesBinding
 
-    private val args: RateMovieFragmentArgs by navArgs()
+    private val args: RateSeriesFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        rateMovieViewModel = ViewModelProviders.of(this).get(RateMovieViewModel::class.java)
+        rateSeriesViewModel = ViewModelProviders.of(this).get(RateSeriesViewModel::class.java)
 
-        fragmentRateMovieBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_rate_movie, container, false)
+        fragmentRateSeriesBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_rate_series, container, false)
 
-        fragmentRateMovieBinding.let {
-            it.rateMovieViewModel = rateMovieViewModel
+        fragmentRateSeriesBinding.let {
+            it.rateSeriesViewModel = rateSeriesViewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
 
@@ -49,14 +49,14 @@ class RateMovieFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
 
         setListeners()
 
-        return fragmentRateMovieBinding.root
+        return fragmentRateSeriesBinding.root
 
     }
 
     private fun setToolbar() {
 
         with(activity as AppCompatActivity) {
-            setSupportActionBar(fragmentRateMovieBinding.fragmentRateMovieMainMTB)
+            setSupportActionBar(fragmentRateSeriesBinding.fragmentRateSeriesMainMTB)
 
             if (supportActionBar != null)
 
@@ -71,15 +71,15 @@ class RateMovieFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
     private fun setViewData() {
         if (args.id != 0)
 
-            with(rateMovieViewModel) {
-                setTitle(if (args.originalTitle != getString(R.string.unknown)) args.originalTitle else args.title)
+            with(rateSeriesViewModel) {
+                setTitle(if (args.originalName != getString(R.string.unknown)) args.originalName else args.name)
 
-                fragmentRateMovieBinding.fragmentRateMoviePosterIV.load(
+                fragmentRateSeriesBinding.fragmentRateSeriesPosterIV.load(
                     requireContext(),
                     if (args.posterPath != getString(R.string.unknown)) "$BASE_URL_POSTER${args.posterPath}" else null
                 )
 
-                setReleaseDate(args.releaseDate)
+                setReleaseDate(args.firstAirDate)
 
                 setVoteAverage(args.voteAverage)
 
@@ -93,14 +93,14 @@ class RateMovieFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
     }
 
     private fun setListeners() {
-        fragmentRateMovieBinding.fragmentRateMovieMainRB.onRatingBarChangeListener = this
+        fragmentRateSeriesBinding.fragmentRateSeriesMainRB.onRatingBarChangeListener = this
     }
 
     override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
         if (rating > 0.0) startActivity(
             Intent(
                 context,
-                WriteMovieReviewActivity::class.java
+                WriteSeriesReviewActivity::class.java
             ).putExtra(
                 "id",
                 if (args.id != 0) args.id.toString() else null
@@ -108,8 +108,8 @@ class RateMovieFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
                 "poster",
                 if (args.posterPath != getString(R.string.unknown)) "$BASE_URL_POSTER${args.posterPath}" else null
             ).putExtra(
-                "title",
-                if (args.originalTitle != getString(R.string.unknown)) args.originalTitle else args.title
+                "name",
+                if (args.originalName != getString(R.string.unknown)) args.originalName else args.name
             ).putExtra("rating", rating)
         )
     }

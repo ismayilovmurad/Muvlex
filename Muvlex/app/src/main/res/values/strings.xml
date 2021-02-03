@@ -57,6 +57,10 @@
     <string name="got_it">Got it</string>
     <string name="learn_more">Learn more</string>
     <string name="describe_your_experience_optional">Describe your experience (optional)</string>
+    <string name="discard_draft">Discard draft?</string>
+    <string name="keep">Keep</string>
+    <string name="discard">Discard</string>
+    <string name="rate_this_series">Rate this series</string>
 
     <!--Alert texts-->
     <string name="creating_user">Creating user</string>

@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_searchFragment_to_rateMovieFragment"
             app:destination="@id/rateMovieFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_rateSeriesFragment"
+            app:destination="@id/rateSeriesFragment" />
 
     </fragment>
 
@@ -94,6 +97,59 @@
 
         <argument
             android:name="title"
+            android:defaultValue="unknown"
+            app:argType="string" />
+
+        <argument
+            android:name="voteAverage"
+            android:defaultValue="unknown"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/rateSeriesFragment"
+        android:name="com.martiandeveloper.muvlex.view.feed.RateSeriesFragment"
+        android:label="RateSeriesFragment"
+        tools:layout="@layout/activity_write_series_review">
+
+        <argument
+            android:name="genreIds"
+            android:defaultValue="unknown"
+            app:argType="string" />
+
+        <argument
+            android:name="id"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+        <argument
+            android:name="originalLanguage"
+            android:defaultValue="unknown"
+            app:argType="string" />
+
+        <argument
+            android:name="originalName"
+            android:defaultValue="unknown"
+            app:argType="string" />
+
+        <argument
+            android:name="overview"
+            android:defaultValue="unknown"
+            app:argType="string" />
+
+        <argument
+            android:name="posterPath"
+            android:defaultValue="unknown"
+            app:argType="string" />
+
+        <argument
+            android:name="firstAirDate"
+            android:defaultValue="unknown"
+            app:argType="string" />
+
+        <argument
+            android:name="name"
             android:defaultValue="unknown"
             app:argType="string" />
 

@@ -56,6 +56,10 @@
     <string name="got_it">Anladım</string>
     <string name="learn_more">Daha fazla bilgi edin</string>
     <string name="describe_your_experience_optional">Deneyiminizi anlatın (isteğe bağlı)</string>
+    <string name="discard_draft">Taslak silinsin mi?</string>
+    <string name="keep">Tut</string>
+    <string name="discard">Sil</string>
+    <string name="rate_this_series">Bu diziye oy ver</string>
 
     <!--Alert texts-->
     <string name="creating_user">Kullanıcı oluşturuluyor</string>
