@@ -92,6 +92,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/activity_write_movie_review_postMTV"
                         style="@style/StyleRegularTextView"
+                        android:onClick="@{()->writeMovieReviewViewModel.onPostMTVClick()}"
                         android:paddingStart="4dp"
                         android:paddingTop="8dp"
                         android:paddingEnd="4dp"
@@ -140,6 +141,7 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/StyleRegularTextView"
+                            android:onClick="@{()->writeMovieReviewViewModel.onGotItMTVClick()}"
                             android:paddingStart="4dp"
                             android:paddingTop="8dp"
                             android:paddingEnd="4dp"
@@ -151,6 +153,7 @@
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/StyleRegularTextView"
                             android:layout_marginStart="16dp"
+                            android:onClick="@{()->writeMovieReviewViewModel.onLearnMoreMTVClick()}"
                             android:paddingStart="4dp"
                             android:paddingTop="8dp"
                             android:paddingEnd="4dp"
@@ -166,6 +169,7 @@
             </androidx.cardview.widget.CardView>
 
             <RatingBar
+                android:id="@+id/activity_write_movie_review_mainRB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -177,28 +181,34 @@
                 android:secondaryProgressTint="@color/color_on_background"
                 android:stepSize=".5" />
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/StyleRegularTextView"
-                android:layout_gravity="end"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:text="@{writeMovieReviewViewModel.length}"
-                android:textSize="12sp" />
-
-            <EditText
-                android:id="@+id/activity_write_movie_review_reviewET"
-                style="@style/StyleRegularEditText"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/edit_text_background_2"
-                android:gravity="top|start"
-                android:hint="@string/describe_your_experience_optional"
-                android:imeOptions="actionDone"
-                android:inputType="textMultiLine"
-                android:padding="16dp"
-                android:text="@={writeMovieReviewViewModel.reviewETText}"
-                tools:ignore="Autofill" />
+                android:layout_marginTop="32dp"
+                app:boxBackgroundMode="none"
+                app:counterEnabled="true"
+                app:counterMaxLength="500"
+                app:counterTextColor="@color/color_regular_text"
+                app:errorEnabled="false"
+                app:hintEnabled="false">
+
+                <EditText
+                    android:id="@+id/activity_write_movie_review_reviewET"
+                    style="@style/StyleRegularEditText"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@drawable/edit_text_background_2"
+                    android:gravity="top|start"
+                    android:hint="@string/describe_your_experience_optional"
+                    android:imeOptions="actionDone"
+                    android:inputType="textMultiLine"
+                    android:longClickable="false"
+                    android:maxLength="500"
+                    android:padding="16dp"
+                    android:text="@={writeMovieReviewViewModel.reviewETText}"
+                    tools:ignore="Autofill" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 

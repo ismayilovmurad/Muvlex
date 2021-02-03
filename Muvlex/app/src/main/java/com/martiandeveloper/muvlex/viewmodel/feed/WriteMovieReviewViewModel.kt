@@ -90,14 +90,4 @@ class WriteMovieReviewViewModel : ViewModel() {
     //########## Review EditText text
     val reviewETText: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
-
-    //########## Review length MaterialTextView text
-    private var _length = MutableLiveData<String>()
-    val length: LiveData<String>
-        get() = _length
-
-    fun setLength(length: String) {
-        _length.value = length
-    }
-
 }

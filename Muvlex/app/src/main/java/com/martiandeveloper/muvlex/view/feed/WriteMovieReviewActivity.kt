@@ -2,12 +2,14 @@ package com.martiandeveloper.muvlex.view.feed
 
 import android.content.Context
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.ActivityWriteMovieReviewBinding
+import com.martiandeveloper.muvlex.utils.EventObserver
 import com.martiandeveloper.muvlex.utils.load
 import com.martiandeveloper.muvlex.viewmodel.feed.WriteMovieReviewViewModel
 
@@ -32,6 +34,10 @@ class WriteMovieReviewActivity : AppCompatActivity() {
             it.lifecycleOwner = this
         }
 
+        writeMovieReviewViewModel.isPostPBGone(true)
+
+        observe()
+
         setToolbar()
 
         setViewData()
@@ -50,6 +56,26 @@ class WriteMovieReviewActivity : AppCompatActivity() {
             activityWriteMovieReviewReviewET,
             InputMethodManager.SHOW_IMPLICIT
         )
+
+    }
+
+    private fun observe() {
+
+        with(writeMovieReviewViewModel) {
+
+            postMTVClick.observe(this@WriteMovieReviewActivity, EventObserver {
+                TODO()
+            })
+
+            gotItMTVClick.observe(this@WriteMovieReviewActivity, EventObserver {
+                TODO()
+            })
+
+            learnMoreMTVClick.observe(this@WriteMovieReviewActivity, EventObserver {
+                TODO()
+            })
+
+        }
 
     }
 
@@ -77,6 +103,21 @@ class WriteMovieReviewActivity : AppCompatActivity() {
         with(writeMovieReviewViewModel) {
             this.setTitle(intent.getStringExtra("title")!!)
             setStar(intent.getFloatExtra("rating", 0F))
+        }
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when (item.itemId) {
+
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+
         }
 
     }
