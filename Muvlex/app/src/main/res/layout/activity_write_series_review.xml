@@ -101,7 +101,7 @@
                         android:textAllCaps="true"
                         android:textColor="@color/color_supreme_action"
                         android:textStyle="bold"
-                        android:visibility="@{writeSeriesReviewViewModel.postMTVGone ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{writeSeriesReviewViewModel.postMTVGone ? View.INVISIBLE : View.VISIBLE}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

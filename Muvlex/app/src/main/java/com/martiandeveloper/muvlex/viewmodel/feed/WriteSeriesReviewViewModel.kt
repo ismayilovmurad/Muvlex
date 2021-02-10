@@ -125,6 +125,7 @@ class WriteSeriesReviewViewModel : ViewModel() {
         if (user != null) {
 
             val usernameMap = hashMapOf(
+                "user_id" to user.uid,
                 "series_id" to id,
                 "rating" to _star.value.toString(),
                 "review" to if (!reviewETText.value.isNullOrEmpty()) {
@@ -135,7 +136,7 @@ class WriteSeriesReviewViewModel : ViewModel() {
                 "time" to (System.currentTimeMillis() / 1000).toString()
             )
 
-            Firebase.firestore.collection("series_posts").document("${user.uid}_$id")
+            Firebase.firestore.collection("posts").document("${user.uid}_$id")
                 .set(usernameMap).addOnCompleteListener {
                     isPostPBGone(true)
                     isPostMTVGone(false)

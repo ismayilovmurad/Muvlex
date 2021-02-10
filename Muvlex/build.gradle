@@ -5,7 +5,7 @@ buildscript {
         // Gradle
         gradle_version = '4.1.2'
         // Kotlin
-        kotlin_version = "1.4.21"
+        kotlin_version = "1.4.30"
         // Firebase
         firebase_version = "4.3.4"
         // Navigation
@@ -17,7 +17,7 @@ buildscript {
         // Build tools
         build_tools_version = "30.0.3"
         // Min SDK
-        min_sdk_version = 23
+        min_sdk_version = 21
         // Target SDK
         target_sdk_version = 30
         // Version code

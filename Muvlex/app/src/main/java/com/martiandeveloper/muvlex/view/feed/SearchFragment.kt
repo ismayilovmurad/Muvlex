@@ -87,16 +87,21 @@ class SearchFragment : Fragment() {
 
                 with(fragmentSearchBinding.fragmentSearchSearchET) {
 
-                    viewLifecycleOwner.lifecycleScope.launch {
+                    if (it.isNullOrEmpty()) {
+                        setCompoundDrawablesWithIntrinsicBounds(
+                            0, 0, 0, 0
+                        )
 
-                        if (it.isNullOrEmpty()) {
-                            setCompoundDrawables(0)
-                            searchResult.value = ""
-                        } else {
-                            setCompoundDrawables(R.drawable.ic_close)
-                            searchResult.value = it
-                        }
+                        searchResult.value = ""
+                    } else {
+                        setCompoundDrawablesWithIntrinsicBounds(
+                            0,
+                            0,
+                            R.drawable.ic_close,
+                            0
+                        )
 
+                        searchResult.value = it
                     }
 
                 }

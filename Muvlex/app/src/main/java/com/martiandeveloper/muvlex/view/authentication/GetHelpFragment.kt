@@ -43,7 +43,7 @@ class GetHelpFragment : Fragment() {
             )
 
         fragmentGetHelpBinding.let {
-            it.getHelpLoggingInViewModel = getHelpViewModel
+            it.getHelpViewModel = getHelpViewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
 

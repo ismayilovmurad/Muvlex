@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="getHelpLoggingInViewModel"
+            name="getHelpViewModel"
             type="com.martiandeveloper.muvlex.viewmodel.authentication.GetHelpViewModel" />
 
     </data>
@@ -55,14 +55,14 @@
                     android:inputType="textEmailAddress"
                     android:longClickable="false"
                     android:singleLine="true"
-                    android:text="@={getHelpLoggingInViewModel.emailOrUsernameETText}"
+                    android:text="@={getHelpViewModel.emailOrUsernameETText}"
                     tools:ignore="Autofill" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/fragment_get_help_logging_in_continueMBTN"
                     style="@style/StyleSupremeButton"
                     android:layout_marginTop="24dp"
-                    android:onClick="@{()->getHelpLoggingInViewModel.onContinueMBTNClick()}"
+                    android:onClick="@{()->getHelpViewModel.onContinueMBTNClick()}"
                     android:text="@string/_continue" />
 
             </LinearLayout>
