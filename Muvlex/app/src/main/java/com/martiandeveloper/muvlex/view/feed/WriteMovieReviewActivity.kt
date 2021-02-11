@@ -78,7 +78,10 @@ class WriteMovieReviewActivity : AppCompatActivity(), RatingBar.OnRatingBarChang
             postMTVClick.observe(this@WriteMovieReviewActivity, EventObserver {
                 if (networkAvailable) {
                     val id = intent.getStringExtra("id")
-                    if (id != null) if (star.value!! >= .5) save(id)
+                    if (id != null) if (star.value!! >= .5) save(
+                        id,
+                        intent.getStringExtra("poster")!!
+                    )
                 } else R.string.no_internet_connection.showToast(
                     applicationContext
                 )

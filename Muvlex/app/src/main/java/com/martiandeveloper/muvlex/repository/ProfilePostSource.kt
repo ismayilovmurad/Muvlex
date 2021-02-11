@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.model.ProfilePost
@@ -18,7 +19,9 @@ class ProfilePostSource(
         return try {
             val currentPage =
                 params.key ?: firebaseFirestore.collection("posts")
-                    .whereEqualTo("user_id", Firebase.auth.currentUser!!.uid).limit(10).get()
+                    .orderBy("time", Query.Direction.DESCENDING)
+                    .whereEqualTo("user_id", Firebase.auth.currentUser!!.uid)
+                    .limit(10).get()
                     .await()
 
             val lastDocumentSnapshot = currentPage.documents[currentPage.size() - 1]
@@ -27,7 +30,9 @@ class ProfilePostSource(
                 data = currentPage.toObjects(ProfilePost::class.java),
                 prevKey = null,
                 nextKey = firebaseFirestore.collection("posts")
-                    .whereEqualTo("user_id", Firebase.auth.currentUser!!.uid).limit(10)
+                    .orderBy("time", Query.Direction.DESCENDING)
+                    .whereEqualTo("user_id", Firebase.auth.currentUser!!.uid)
+                    .limit(10)
                     .startAfter(lastDocumentSnapshot).get().await()
             )
         } catch (e: Exception) {

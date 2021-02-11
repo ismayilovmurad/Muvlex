@@ -1,16 +1,25 @@
 package com.martiandeveloper.muvlex.adapter
 
 import android.content.Context
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.Timestamp
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.RecyclerviewProfilePostItemBinding
 import com.martiandeveloper.muvlex.model.ProfilePost
 import com.martiandeveloper.muvlex.utils.load
+import timber.log.Timber
+import java.text.DateFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.time.days
+
 
 class ProfilePostAdapter(private val itemCLickListener: ItemClickListener) :
     PagingDataAdapter<ProfilePost, ProfilePostAdapter.ProfilePostViewHolder>(ProfilePostDiffCallback()) {
@@ -63,7 +72,7 @@ class ProfilePostAdapter(private val itemCLickListener: ItemClickListener) :
                         it.title =
                             if (profilePost.title != null) title else context.resources.getString(R.string.unknown)
                         it.star = if (profilePost.star != null) star!!.toFloat() else 1F
-                        it.time = if (profilePost.time != null) time else "-"
+                        it.time = if (profilePost.time != null) getPrettyTime(time!!) else "-"
                         it.review =
                             if (profilePost.review != null) review else context.resources.getString(
                                 R.string.unknown
@@ -79,6 +88,22 @@ class ProfilePostAdapter(private val itemCLickListener: ItemClickListener) :
 
                     it.executePendingBindings()
                 }
+
+        }
+
+        private fun getPrettyTime(time: Timestamp): String {
+
+            return try {
+                val currentTime = System.currentTimeMillis()
+                val prettyTime = DateUtils.getRelativeTimeSpanString(
+                    time.toDate().time,
+                    currentTime,
+                    DateUtils.MINUTE_IN_MILLIS
+                )
+                prettyTime.toString()
+            } catch (e: ParseException) {
+                binding.root.context.resources.getString(R.string.unknown)
+            }
 
         }
 

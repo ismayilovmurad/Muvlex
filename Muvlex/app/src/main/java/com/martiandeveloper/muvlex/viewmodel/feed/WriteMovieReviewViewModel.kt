@@ -8,6 +8,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.utils.Event
 import com.martiandeveloper.muvlex.utils.errorMessageVoid
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class WriteMovieReviewViewModel : ViewModel() {
 
@@ -115,7 +118,7 @@ class WriteMovieReviewViewModel : ViewModel() {
 
 
     //########## Save rating and review
-    fun save(id: String) {
+    fun save(id: String, posterPath: String) {
 
         isPostMTVGone(true)
         isPostPBGone(false)
@@ -126,14 +129,22 @@ class WriteMovieReviewViewModel : ViewModel() {
 
             val usernameMap = hashMapOf(
                 "user_id" to user.uid,
-                "movie_id" to id,
-                "rating" to _star.value.toString(),
+                "item_id" to id,
+                "star" to _star.value.toString(),
                 "review" to if (!reviewETText.value.isNullOrEmpty()) {
                     if (reviewETText.value.toString().trimStart().trimEnd()
                             .isNotEmpty()
                     ) reviewETText.value.toString().trimStart().trimEnd() else "no_review"
                 } else "no_review",
-                "time" to (System.currentTimeMillis() / 1000).toString()
+                "time" to getDateFromString(
+                    SimpleDateFormat(
+                        "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                        Locale.getDefault()
+                    ).format(Date())
+                ),
+                "title" to _title.value,
+                "posterPath" to posterPath
+
             )
 
             Firebase.firestore.collection("posts").document("${user.uid}_$id")
@@ -153,6 +164,13 @@ class WriteMovieReviewViewModel : ViewModel() {
 
     }
 
+    private fun getDateFromString(currentDate: String): Date? {
+        return try {
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(currentDate)
+        } catch (e: ParseException) {
+            null
+        }
+    }
 
     //########## Save successful
     private var _saveSuccessful = MutableLiveData<Boolean>()
