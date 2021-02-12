@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.martiandeveloper.muvlex.R
@@ -19,7 +18,6 @@ import com.martiandeveloper.muvlex.utils.networkAvailable
 import com.martiandeveloper.muvlex.utils.searchResult
 import com.martiandeveloper.muvlex.utils.showToast
 import com.martiandeveloper.muvlex.viewmodel.feed.MovieListViewModel
-import kotlinx.coroutines.launch
 
 class MovieListFragment : Fragment(), MovieListAdapter.ItemClickListener {
 

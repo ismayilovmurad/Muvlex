@@ -1,6 +1,5 @@
 package com.martiandeveloper.muvlex.viewmodel.feed
 
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LoadState

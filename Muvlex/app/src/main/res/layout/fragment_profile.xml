@@ -22,7 +22,8 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:contentDescription="@string/profile_picture" />
 
         </androidx.cardview.widget.CardView>
 
@@ -30,6 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
+            android:baselineAligned="false"
             android:weightSum="3"
             app:layout_constraintBottom_toBottomOf="@id/fragment_profile_userImageCV"
             app:layout_constraintEnd_toEndOf="parent"

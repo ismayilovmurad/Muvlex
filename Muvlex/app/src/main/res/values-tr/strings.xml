@@ -88,6 +88,7 @@
     <string name="vote_average">Ortalama oy</string>
     <string name="genre">Tür</string>
     <string name="language">Dil</string>
+    <string name="profile_picture">Profil fotoğrafı</string>
 
     <!--Toast texts-->
     <string name="something_went_wrong_try_again_later">Bir şeyler ters gitti, daha sonra tekrar dene</string>

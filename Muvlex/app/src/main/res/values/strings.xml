@@ -89,6 +89,7 @@
     <string name="vote_average">Vote average</string>
     <string name="genre">Genre</string>
     <string name="language">Language</string>
+    <string name="profile_picture">Profile picture</string>
 
     <!--Toast texts-->
     <string name="something_went_wrong_try_again_later">Something went wrong, try again later</string>

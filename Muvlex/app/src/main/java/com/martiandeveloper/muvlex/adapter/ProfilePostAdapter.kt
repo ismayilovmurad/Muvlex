@@ -13,12 +13,7 @@ import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.RecyclerviewProfilePostItemBinding
 import com.martiandeveloper.muvlex.model.ProfilePost
 import com.martiandeveloper.muvlex.utils.load
-import timber.log.Timber
-import java.text.DateFormat
 import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.time.days
 
 
 class ProfilePostAdapter(private val itemCLickListener: ItemClickListener) :

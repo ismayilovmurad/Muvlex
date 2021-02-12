@@ -88,6 +88,7 @@
     <string name="vote_average">Orta səs</string>
     <string name="genre">Janr</string>
     <string name="language">Dil</string>
+    <string name="profile_picture">Profil şəkili</string>
 
     <!--Toast texts-->
     <string name="something_went_wrong_try_again_later">Bir xəta baş verdi, daha sonra yenidən cəhd et</string>

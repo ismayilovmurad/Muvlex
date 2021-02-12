@@ -44,8 +44,8 @@ class ProfileFragment : Fragment(), ProfilePostAdapter.ItemClickListener {
         profilePostAdapter = ProfilePostAdapter(this)
 
         fragmentProfileItemBinding.fragmentProfilePostRV.let {
-            it.adapter = profilePostAdapter
             it.layoutManager = LinearLayoutManager(context)
+            it.adapter = profilePostAdapter
             it.setHasFixedSize(true)
         }
 
