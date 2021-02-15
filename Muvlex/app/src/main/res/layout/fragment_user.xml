@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.feed.HomeFragment">
+    tools:context=".view.feed.UserFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_home_mainRV"
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/fragment_user_followBTN"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp" />
+        android:text="Follow" />
 
 </FrameLayout>
-    </layout>
+</layout>

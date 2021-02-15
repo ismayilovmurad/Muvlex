@@ -1,13 +1,15 @@
 package com.martiandeveloper.muvlex.view.feed
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView.OnEditorActionListener
+import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -18,6 +20,7 @@ import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.FragmentSearchBinding
 import com.martiandeveloper.muvlex.utils.*
 import com.martiandeveloper.muvlex.viewmodel.feed.SearchViewModel
+
 
 class SearchFragment : Fragment() {
 
@@ -43,6 +46,24 @@ class SearchFragment : Fragment() {
         observe()
 
         setRemoveAllListenerToSearchET()
+
+        fragmentSearchBinding.fragmentSearchSearchET.setOnEditorActionListener(
+            OnEditorActionListener { v, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || (event.action == KeyEvent.ACTION_DOWN
+                            && event.keyCode == KeyEvent.KEYCODE_ENTER)
+                ) {
+
+                    val imm =
+                        requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
+                    imm!!.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+
+                    if (!searchViewModel.searchETText.value.isNullOrEmpty()) searchResult.value =
+                        searchViewModel.searchETText.value
+
+                    return@OnEditorActionListener true
+                }
+                false
+            })
 
         return fragmentSearchBinding.root
 
@@ -98,8 +119,6 @@ class SearchFragment : Fragment() {
                             R.drawable.ic_close,
                             0
                         )
-
-                        searchResult.value = it
                     }
 
                 }

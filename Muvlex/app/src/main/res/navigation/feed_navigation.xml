@@ -48,9 +48,14 @@
         <action
             android:id="@+id/action_searchFragment_to_rateMovieFragment"
             app:destination="@id/rateMovieFragment" />
+
         <action
             android:id="@+id/action_searchFragment_to_rateSeriesFragment"
             app:destination="@id/rateSeriesFragment" />
+
+        <action
+            android:id="@+id/action_searchFragment_to_userFragment"
+            app:destination="@id/userFragment" />
 
     </fragment>
 
@@ -158,6 +163,16 @@
             android:defaultValue="unknown"
             app:argType="string" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.martiandeveloper.muvlex.view.feed.UserFragment"
+        android:label="UserFragment"
+        tools:layout="@layout/fragment_user" >
+        <argument
+            android:name="user_id"
+            android:defaultValue="none" />
     </fragment>
 
 </navigation>

@@ -10,70 +10,70 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
 import com.martiandeveloper.muvlex.R
-import com.martiandeveloper.muvlex.databinding.RecyclerviewProfilePostItemBinding
-import com.martiandeveloper.muvlex.model.ProfilePost
+import com.martiandeveloper.muvlex.databinding.RecyclerviewExplorePostItemBinding
+import com.martiandeveloper.muvlex.model.ExplorePost
 import com.martiandeveloper.muvlex.utils.load
 import java.text.ParseException
 
 
-class ProfilePostAdapter(private val itemCLickListener: ItemClickListener) :
-    PagingDataAdapter<ProfilePost, ProfilePostAdapter.ProfilePostViewHolder>(ProfilePostDiffCallback()) {
+class ExplorePostAdapter(private val itemCLickListener: ItemClickListener) :
+    PagingDataAdapter<ExplorePost, ExplorePostAdapter.ExplorePostViewHolder>(ExplorePostDiffCallback()) {
 
     private lateinit var context: Context
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfilePostViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExplorePostViewHolder {
         context = parent.context
 
-        return ProfilePostViewHolder(
+        return ExplorePostViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(context),
-                R.layout.recyclerview_profile_post_item,
+                R.layout.recyclerview_explore_post_item,
                 parent,
                 false
             )
         )
     }
 
-    override fun onBindViewHolder(holder: ProfilePostViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ExplorePostViewHolder, position: Int) {
         holder.bind(context, getItem(position), itemCLickListener)
     }
 
-    class ProfilePostDiffCallback : DiffUtil.ItemCallback<ProfilePost>() {
+    class ExplorePostDiffCallback : DiffUtil.ItemCallback<ExplorePost>() {
 
-        override fun areItemsTheSame(oldItem: ProfilePost, newItem: ProfilePost): Boolean {
+        override fun areItemsTheSame(oldItem: ExplorePost, newItem: ExplorePost): Boolean {
             return oldItem.time == newItem.time
         }
 
-        override fun areContentsTheSame(oldItem: ProfilePost, newItem: ProfilePost): Boolean {
+        override fun areContentsTheSame(oldItem: ExplorePost, newItem: ExplorePost): Boolean {
             return oldItem == newItem
         }
 
     }
 
-    class ProfilePostViewHolder(private val binding: RecyclerviewProfilePostItemBinding) :
+    class ExplorePostViewHolder(private val binding: RecyclerviewExplorePostItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
             context: Context,
-            profilePost: ProfilePost?,
+            explorePost: ExplorePost?,
             itemClickListener: ItemClickListener
         ) {
-            if (profilePost != null)
+            if (explorePost != null)
 
                 binding.let {
 
-                    with(profilePost) {
+                    with(explorePost) {
 
                         it.title =
-                            if (profilePost.title != null) title else context.resources.getString(R.string.unknown)
-                        it.star = if (profilePost.star != null) star!!.toFloat() else 1F
-                        it.time = if (profilePost.time != null) getPrettyTime(time!!) else "-"
+                            if (explorePost.title != null) title else context.resources.getString(R.string.unknown)
+                        it.star = if (explorePost.star != null) star!!.toFloat() else 1F
+                        it.time = if (explorePost.time != null) getPrettyTime(time!!) else "-"
                         it.review =
-                            if (profilePost.review != null) review else context.resources.getString(
+                            if (explorePost.review != null) review else context.resources.getString(
                                 R.string.unknown
                             )
 
-                        binding.recyclerviewProfilePostItemPosterIV.load(context, posterPath)
+                        binding.recyclerviewExplorePostItemPosterIV.load(context, posterPath)
 
                         itemView.setOnClickListener {
                             itemClickListener.onItemClick(this)
@@ -105,7 +105,7 @@ class ProfilePostAdapter(private val itemCLickListener: ItemClickListener) :
     }
 
     interface ItemClickListener {
-        fun onItemClick(profilePost: ProfilePost)
+        fun onItemClick(profilePost: ExplorePost)
     }
 
 }
