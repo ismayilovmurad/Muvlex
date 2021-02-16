@@ -3,7 +3,6 @@ package com.martiandeveloper.muvlex.viewmodel.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -17,36 +16,20 @@ class SplashViewModel : ViewModel() {
 
 
     //########## Is email verified
-    fun isEmailVerified(user: FirebaseUser) {
-
-        if (user.isEmailVerified) hasUserUsername(user) else {
-            Firebase.auth.signOut()
-            _feedEnable.value = false
-        }
-
+    fun isEmailVerified() {
+        if (Firebase.auth.currentUser!!.isEmailVerified) hasUserUsername() else _feedEnable.value =
+            false
     }
 
 
     //########## Has user username
-    private fun hasUserUsername(user: FirebaseUser) {
+    private fun hasUserUsername() {
 
-        Firebase.firestore.collection("users").document(user.uid).get().addOnCompleteListener {
-
-            if (it.isSuccessful)
-
-                if (it.result != null) {
-                    _feedEnable.value = it.result!!.get("username") != null
-                    if (!_feedEnable.value!!) Firebase.auth.signOut()
-                } else {
-                    Firebase.auth.signOut()
-                    _feedEnable.value = false
-                }
-            else {
-                Firebase.auth.signOut()
-                _feedEnable.value = false
+        Firebase.firestore.collection("users").document(Firebase.auth.currentUser!!.uid).get()
+            .addOnCompleteListener {
+                _feedEnable.value =
+                    it.isSuccessful && it.result != null && it.result!!.get("username") != null
             }
-
-        }
 
     }
 

@@ -3,7 +3,6 @@
     <string name="app_name" translatable="false">Muvlex</string>
 
     <!--UI texts-->
-    <string name="change_language">Change language</string>
     <string name="active_language">English</string>
     <string name="select_language">Select language</string>
     <string name="search">Search</string>
@@ -82,6 +81,7 @@
 
     <!--Image descriptions-->
     <string name="logo">Logo</string>
+    <string name="change_language">Change language</string>
     <string name="back">Back</string>
     <string name="poster">Poster</string>
     <string name="star">Star</string>

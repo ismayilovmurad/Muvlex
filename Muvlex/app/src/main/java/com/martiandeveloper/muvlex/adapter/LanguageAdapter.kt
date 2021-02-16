@@ -18,7 +18,7 @@ class LanguageAdapter(
     private val itemClickListener: ItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
-    private var languageListFilter = ArrayList<Language>()
+    private var languageListFilter: ArrayList<Language>
 
     init {
         languageListFilter = languageList

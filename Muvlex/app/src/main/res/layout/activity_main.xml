@@ -8,30 +8,36 @@
         <import type="android.view.View" />
 
         <variable
-            name="mainViewModel"
+            name="viewModel"
             type="com.martiandeveloper.muvlex.viewmodel.main.MainViewModel" />
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".view.main.MainActivity">
 
         <LinearLayout
-            android:id="@+id/activity_main_languageLL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:onClick="@{()->mainViewModel.onLanguageLLClick()}"
+            android:onClick="@{()->viewModel.onLanguageLLClick()}"
             android:padding="8dp"
-            android:visibility="@{mainViewModel.languageLLGone ? View.GONE : View.VISIBLE}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:visibility="@{viewModel.languageLLGone ? View.GONE : View.VISIBLE}">
 
-            <include layout="@layout/layout_language" />
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/StyleRegularTextView"
+                android:text="@string/active_language" />
+
+            <ImageView
+                style="@style/StyleRegularImageView"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/change_language"
+                android:src="@drawable/ic_next" />
 
         </LinearLayout>
 
@@ -39,13 +45,10 @@
             android:id="@+id/activity_main_mainFCV"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="match_parent"
             app:defaultNavHost="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_main_languageLL"
             app:navGraph="@navigation/main_navigation" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>

@@ -1,8 +1,6 @@
 package com.martiandeveloper.muvlex.view.main
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +15,10 @@ import com.martiandeveloper.muvlex.databinding.FragmentSplashBinding
 import com.martiandeveloper.muvlex.utils.navigate
 import com.martiandeveloper.muvlex.utils.networkAvailable
 import com.martiandeveloper.muvlex.viewmodel.main.SplashViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SplashFragment : Fragment() {
 
@@ -28,6 +30,7 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         splashViewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
 
         fragmentSplashBinding =
@@ -39,15 +42,24 @@ class SplashFragment : Fragment() {
 
         animateLogo()
 
-        decideWhereToGo()
+        CoroutineScope(Dispatchers.Main).launch {
+            decideWhereToGo()
+        }
 
         return fragmentSplashBinding.root
+
     }
 
     private fun observe() {
 
         splashViewModel.feedEnable.observe(viewLifecycleOwner, {
-            view.navigate(if (it) SplashFragmentDirections.actionSplashFragmentToFeedFragment() else SplashFragmentDirections.actionSplashFragmentToLogInFragment())
+
+            if (!it) Firebase.auth.signOut()
+
+            with(SplashFragmentDirections) {
+                view.navigate(if (it) actionSplashFragmentToFeedFragment() else actionSplashFragmentToLogInFragment())
+            }
+
         })
 
     }
@@ -58,16 +70,13 @@ class SplashFragment : Fragment() {
         fragmentSplashBinding.fragmentSplashLogoIV.startAnimation(alphaAnimation)
     }
 
-    private fun decideWhereToGo() {
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (Firebase.auth.currentUser != null)
-                if (networkAvailable) splashViewModel.isEmailVerified(Firebase.auth.currentUser!!) else view.navigate(
-                    SplashFragmentDirections.actionSplashFragmentToLogInFragment()
-                )
-            else view.navigate(SplashFragmentDirections.actionSplashFragmentToLogInFragment())
-        }, 2000)
-
+    private suspend fun decideWhereToGo() {
+        delay(2000)
+        if (Firebase.auth.currentUser != null)
+            if (networkAvailable) splashViewModel.isEmailVerified() else view.navigate(
+                SplashFragmentDirections.actionSplashFragmentToLogInFragment()
+            )
+        else view.navigate(SplashFragmentDirections.actionSplashFragmentToLogInFragment())
     }
 
 }

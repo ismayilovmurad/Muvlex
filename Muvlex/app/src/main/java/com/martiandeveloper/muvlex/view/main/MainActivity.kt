@@ -27,9 +27,9 @@ import java.util.*
 class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
     NavController.OnDestinationChangedListener {
 
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var viewModel: MainViewModel
 
-    private lateinit var activityMainBinding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     private lateinit var adapter: LanguageAdapter
 
@@ -41,12 +41,12 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
 
         changeLanguage()
 
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        activityMainBinding.let {
-            it.mainViewModel = mainViewModel
+        binding.let {
+            it.viewModel = viewModel
             it.lifecycleOwner = this
         }
 
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
         navController =
             (supportFragmentManager.findFragmentById(R.id.activity_main_mainFCV) as NavHostFragment).navController
 
-        mainViewModel.isLanguageLLGone(true)
+        viewModel.isLanguageLLGone(true)
 
         NetworkAvailability(applicationContext).registerNetworkCallback()
 
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
 
     private fun observe() {
 
-        mainViewModel.languageLLClick.observe(this@MainActivity, EventObserver {
+        viewModel.languageLLClick.observe(this@MainActivity, EventObserver {
             if (it) openLanguageDialog()
         })
 
@@ -85,17 +85,14 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
     @SuppressLint("InflateParams", "ClickableViewAccessibility")
     private fun openLanguageDialog() {
 
-        val dialogLanguage = MaterialAlertDialogBuilder(this, R.style.StyleDialog)
+        val dialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog)
 
         val binding = DialogLanguageBinding.inflate(LayoutInflater.from(applicationContext))
 
         binding.let {
-            it.mainViewModel = mainViewModel
+            it.viewModel = viewModel
             it.lifecycleOwner = this
         }
-
-        val layoutLocalizationMainRV =
-            binding.dialogLanguageMainRV
 
         val primaryLanguageList: ArrayList<String> =
             ArrayList(listOf(*resources.getStringArray(R.array.primaryLanguage)))
@@ -104,54 +101,39 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
 
         val languageList = ArrayList<Language>()
 
-        val language =
-            getSharedPreferences(LANGUAGE_SHARED_PREFERENCE, Context.MODE_PRIVATE).getString(
-                LANGUAGE_KEY,
-                "English"
-            )
-
         for (i in 0 until primaryLanguageList.size) {
 
-            if (i == primaryLanguageList.indexOf(language))
-                languageList.add(
-                    Language(
-                        primaryLanguageList[i],
-                        secondaryLanguageList[i],
-                        true
+            languageList.add(
+                Language(
+                    primaryLanguageList[i],
+                    secondaryLanguageList[i],
+                    i == primaryLanguageList.indexOf(
+                        getSharedPreferences(
+                            LANGUAGE_SHARED_PREFERENCE,
+                            Context.MODE_PRIVATE
+                        ).getString(LANGUAGE_KEY, "English")
                     )
                 )
-            else
-                languageList.add(
-                    Language(
-                        primaryLanguageList[i],
-                        secondaryLanguageList[i],
-                        false
-                    )
-                )
+            )
 
         }
 
-        mainViewModel.fillLanguageList(languageList)
+        viewModel.fillLanguageList(languageList)
 
-        adapter = mainViewModel.languageList.value?.let { LanguageAdapter(it, this) }!!
+        adapter = viewModel.languageList.value?.let { LanguageAdapter(it, this) }!!
 
-        layoutLocalizationMainRV.let {
+        binding.dialogLanguageMainRV.let {
             it.layoutManager = LinearLayoutManager(this)
             it.adapter = adapter
         }
 
-        mainViewModel.searchETText.observe(this, {
-            if (it.isNullOrEmpty())
-                binding.dialogLanguageMainET.setCompoundDrawablesWithIntrinsicBounds(
-                    0, 0, 0, 0
-                )
-            else
-                binding.dialogLanguageMainET.setCompoundDrawablesWithIntrinsicBounds(
-                    0,
-                    0,
-                    R.drawable.ic_close,
-                    0
-                )
+        viewModel.searchETText.observe(this, {
+            binding.dialogLanguageMainET.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                0,
+                if (it.isNullOrEmpty()) 0 else R.drawable.ic_close,
+                0
+            )
 
             adapter.filter.filter(it)
         })
@@ -169,7 +151,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
             false
         })
 
-        with(dialogLanguage) {
+        with(dialog) {
             setView(binding.root)
             show()
         }
@@ -213,16 +195,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
         destination: NavDestination,
         arguments: Bundle?
     ) {
-
-        when (destination.label.toString()) {
-            "SplashFragment" -> mainViewModel.isLanguageLLGone(true)
-            "LogInFragment" -> mainViewModel.isLanguageLLGone(false)
-            "SignUpFragment" -> mainViewModel.isLanguageLLGone(false)
-            "SignUpUsernameFragment" -> mainViewModel.isLanguageLLGone(true)
-            "FeedFragment" -> mainViewModel.isLanguageLLGone(true)
-            "GetHelpLoggingInFragment" -> mainViewModel.isLanguageLLGone(true)
-        }
-
+        viewModel.isLanguageLLGone(!(destination.label.toString() == "LogInFragment" || destination.label.toString() == "SignUpFragment"))
     }
 
     override fun onResume() {

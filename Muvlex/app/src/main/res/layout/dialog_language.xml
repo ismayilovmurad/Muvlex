@@ -5,7 +5,7 @@
     <data>
 
         <variable
-            name="mainViewModel"
+            name="viewModel"
             type="com.martiandeveloper.muvlex.viewmodel.main.MainViewModel" />
 
     </data>
@@ -20,7 +20,6 @@
             style="@style/StyleRegularTextView"
             android:text="@string/select_language"
             android:textAllCaps="true"
-            android:textSize="16sp"
             android:textStyle="bold" />
 
         <View
@@ -38,7 +37,7 @@
             android:imeOptions="actionDone"
             android:inputType="text"
             android:longClickable="false"
-            android:text="@={mainViewModel.searchETText}"
+            android:text="@={viewModel.searchETText}"
             android:textSize="14sp"
             tools:ignore="Autofill" />
 
@@ -46,8 +45,7 @@
             android:id="@+id/dialog_language_mainRV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:scrollbars="vertical" />
+            android:layout_marginTop="8dp" />
 
     </LinearLayout>
 
