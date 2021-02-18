@@ -7,7 +7,7 @@
         <import type="android.view.View" />
 
         <variable
-            name="logInViewModel"
+            name="viewModel"
             type="com.martiandeveloper.muvlex.viewmodel.authentication.LogInViewModel" />
 
     </data>
@@ -23,13 +23,13 @@
             style="@style/StyleSupremeProgressbar"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:visibility="@{logInViewModel.errorADPBGone ? View.GONE : View.VISIBLE}" />
+            android:visibility="@{viewModel.errorADPBGone ? View.GONE : View.VISIBLE}" />
 
         <ImageView
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:contentDescription="@string/success"
-            android:visibility="@{logInViewModel.errorADIVGone ? View.GONE : View.VISIBLE}"
+            android:contentDescription="@string/error"
+            android:visibility="@{viewModel.errorADIVGone ? View.GONE : View.VISIBLE}"
             app:srcCompat="@drawable/ic_error" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -53,7 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:onClick="@{()->logInViewModel.onResendMBTNClick()}"
+                android:onClick="@{()->viewModel.onResendMBTNClick()}"
                 android:text="@string/resend" />
 
             <com.google.android.material.button.MaterialButton
@@ -62,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:onClick="@{()->logInViewModel.onOkayMBTNClick()}"
+                android:onClick="@{()->viewModel.onOkayMBTNClick()}"
                 android:text="@string/okay" />
 
         </LinearLayout>

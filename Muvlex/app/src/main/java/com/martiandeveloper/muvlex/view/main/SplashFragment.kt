@@ -13,12 +13,7 @@ import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.FragmentSplashBinding
 import com.martiandeveloper.muvlex.utils.navigate
-import com.martiandeveloper.muvlex.utils.networkAvailable
 import com.martiandeveloper.muvlex.viewmodel.main.SplashViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class SplashFragment : Fragment() {
 
@@ -42,12 +37,13 @@ class SplashFragment : Fragment() {
 
         animateLogo()
 
-        CoroutineScope(Dispatchers.Main).launch {
-            decideWhereToGo()
-        }
-
         return fragmentSplashBinding.root
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        splashViewModel.decideWhereToGo(fragmentSplashBinding.root)
     }
 
     private fun observe() {
@@ -68,15 +64,6 @@ class SplashFragment : Fragment() {
         val alphaAnimation = AlphaAnimation(0.0f, 1.0f)
         alphaAnimation.duration = 1000
         fragmentSplashBinding.fragmentSplashLogoIV.startAnimation(alphaAnimation)
-    }
-
-    private suspend fun decideWhereToGo() {
-        delay(2000)
-        if (Firebase.auth.currentUser != null)
-            if (networkAvailable) splashViewModel.isEmailVerified() else view.navigate(
-                SplashFragmentDirections.actionSplashFragmentToLogInFragment()
-            )
-        else view.navigate(SplashFragmentDirections.actionSplashFragmentToLogInFragment())
     }
 
 }

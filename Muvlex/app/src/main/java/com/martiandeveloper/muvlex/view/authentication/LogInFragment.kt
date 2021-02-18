@@ -12,8 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.DialogEmailNotVerifiedBinding
 import com.martiandeveloper.muvlex.databinding.DialogProgressLogInBinding
@@ -23,11 +21,11 @@ import com.martiandeveloper.muvlex.viewmodel.authentication.LogInViewModel
 
 class LogInFragment : Fragment() {
 
-    private lateinit var logInViewModel: LogInViewModel
+    private lateinit var viewModel: LogInViewModel
 
-    private lateinit var fragmentLogInBinding: FragmentLogInBinding
+    private lateinit var binding: FragmentLogInBinding
 
-    private var isPasswordVisible = false
+    private var passwordVisible = false
 
     private lateinit var progressDialog: AlertDialog
     private lateinit var errorDialog: AlertDialog
@@ -37,23 +35,17 @@ class LogInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        logInViewModel = ViewModelProviders.of(this).get(LogInViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(LogInViewModel::class.java)
 
-        fragmentLogInBinding =
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_log_in, container, false)
 
-        fragmentLogInBinding.let {
-            it.logInViewModel = logInViewModel
+        binding.let {
+            it.viewModel = viewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
 
         observe()
-
-        with(logInViewModel) {
-            isLogInMBTNEnable(false)
-            isErrorADIVGone(false)
-            isErrorADPBGone(true)
-        }
 
         setPasswordToggle()
 
@@ -62,17 +54,17 @@ class LogInFragment : Fragment() {
             errorDialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
         }
 
-        return fragmentLogInBinding.root
+        return binding.root
 
     }
 
     private fun observe() {
 
-        with(logInViewModel) {
+        with(viewModel) {
 
             logInMBTNEnable.observe(viewLifecycleOwner, {
 
-                with(fragmentLogInBinding.fragmentLogInLogInMBTN) {
+                with(binding.fragmentLogInLogInMBTN) {
                     if (it) enable(context) else disable(context)
                 }
 
@@ -87,16 +79,21 @@ class LogInFragment : Fragment() {
             })
 
             logInMBTNClick.observe(viewLifecycleOwner, EventObserver {
-                if (it) if (networkAvailable) if (Patterns.EMAIL_ADDRESS.matcher(
-                        emailOrUsernameACTText.value!!
-                    ).matches()
-                ) logIn() else isUsernameExists() else R.string.no_internet_connection.showToast(
-                    requireContext()
-                )
+
+                if (it) {
+
+                    if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
+                        if (!Patterns.EMAIL_ADDRESS.matcher(emailOrUsernameACTText.value!!)
+                                .matches()
+                        ) isUsernameExists() else logIn()
+                    }
+
+                }
+
             })
 
             progressADOpen.observe(viewLifecycleOwner, {
-                setProgress(it)
+                if (it) openProgressDialog() else progressDialog.dismiss()
             })
 
             signUpMTVClick.observe(viewLifecycleOwner, EventObserver {
@@ -167,19 +164,20 @@ class LogInFragment : Fragment() {
             })
 
             okayMBTNClick.observe(viewLifecycleOwner, EventObserver {
-
-                if (it) {
-                    isErrorADOpen(false)
-                    Firebase.auth.signOut()
-                }
-
+                if (it) isErrorADOpen(false)
             })
 
             resendMBTNClick.observe(viewLifecycleOwner, EventObserver {
-                if (it) if (networkAvailable) {
-                    isResendAndOkayMBTNSEnable(false)
-                    resendEmailVerification()
-                } else R.string.no_internet_connection.showToast(requireContext())
+
+                if (it) {
+
+                    if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
+                        isResendAndOkayMBTNSEnable(false)
+                        resendEmailVerification()
+                    }
+
+                }
+
             })
 
             resendSuccessful.observe(viewLifecycleOwner, EventObserver {
@@ -189,7 +187,6 @@ class LogInFragment : Fragment() {
                 if (it) {
                     R.string.check_your_email_to_verify_your_muvlex_account.showToast(requireContext())
                     isErrorADOpen(false)
-                    Firebase.auth.signOut()
                 }
 
             })
@@ -201,39 +198,32 @@ class LogInFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun setPasswordToggle() {
 
-        val fragmentLogInPasswordET = fragmentLogInBinding.fragmentLogInPasswordET
+        with(binding.fragmentLogInPasswordET) {
 
-        fragmentLogInPasswordET.setOnTouchListener(View.OnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_UP)
+            setOnTouchListener(View.OnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_UP)
 
-                if (event.rawX >= fragmentLogInPasswordET.right - fragmentLogInPasswordET.compoundDrawables[2].bounds.width()
-                ) {
+                    if (event.rawX >= right - compoundDrawables[2].bounds.width()
+                    ) {
 
-                    isPasswordVisible = if (isPasswordVisible) {
-                        fragmentLogInPasswordET.setCompoundDrawables(R.drawable.ic_visibility_off)
-                        false
-                    } else {
-                        fragmentLogInPasswordET.setCompoundDrawables(R.drawable.ic_visibility)
-                        true
+                        passwordVisible = if (passwordVisible) {
+                            setCompoundDrawables(R.drawable.ic_visibility_off)
+                            false
+                        } else {
+                            setCompoundDrawables(R.drawable.ic_visibility)
+                            true
+                        }
+
+                        setSelection(selectionEnd)
+
+                        return@OnTouchListener true
+
                     }
 
-                    fragmentLogInPasswordET.setSelection(fragmentLogInPasswordET.selectionEnd)
+                false
+            })
 
-                    return@OnTouchListener true
-
-                }
-
-            false
-        })
-
-    }
-
-    private fun setProgress(progress: Boolean) {
-
-        if (progress) {
-            logInViewModel.isLogInMBTNEnable(false)
-            openProgressDialog()
-        } else progressDialog.dismiss()
+        }
 
     }
 
@@ -242,7 +232,7 @@ class LogInFragment : Fragment() {
         val binding = DialogProgressLogInBinding.inflate(LayoutInflater.from(context))
 
         binding.let {
-            it.logInViewModel = logInViewModel
+            it.viewModel = viewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
 
@@ -255,11 +245,11 @@ class LogInFragment : Fragment() {
         val binding = DialogEmailNotVerifiedBinding.inflate(LayoutInflater.from(context))
 
         binding.let {
-            it.logInViewModel = logInViewModel
+            it.viewModel = viewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
 
-        with(logInViewModel) {
+        with(viewModel) {
 
             resendAndOkayMBTNSEnable.observe(viewLifecycleOwner, {
 

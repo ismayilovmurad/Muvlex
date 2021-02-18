@@ -53,7 +53,7 @@ buildscript {
         // Retrofit converter Moshi
         converter_moshi = "2.6.2"
         // Paging
-        paging_version = "3.0.0-alpha13"
+        paging_version = "3.0.0-beta01"
         // Glide
         glide_version = "4.11.0"
         // Timber

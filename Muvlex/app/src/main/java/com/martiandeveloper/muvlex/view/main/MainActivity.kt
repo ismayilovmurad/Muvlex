@@ -55,8 +55,6 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
         navController =
             (supportFragmentManager.findFragmentById(R.id.activity_main_mainFCV) as NavHostFragment).navController
 
-        viewModel.isLanguageLLGone(true)
-
         NetworkAvailability(applicationContext).registerNetworkCallback()
 
     }

@@ -44,6 +44,7 @@ class MainViewModel : ViewModel() {
 
     init {
         _languageList.value = ArrayList()
+        _languageLLGone.value = true
     }
 
 }

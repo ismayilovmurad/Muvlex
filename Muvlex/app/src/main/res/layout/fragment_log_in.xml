@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="logInViewModel"
+            name="viewModel"
             type="com.martiandeveloper.muvlex.viewmodel.authentication.LogInViewModel" />
 
     </data>
@@ -29,8 +29,6 @@
                 android:orientation="vertical"
                 android:padding="24dp"
                 app:layout_constraintBottom_toTopOf="@id/fragment_log_in_signUpLL"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textview.MaterialTextView
@@ -38,7 +36,6 @@
                     android:text="@string/log_in" />
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                    android:id="@+id/fragment_log_in_emailOrUsernameACT"
                     style="@style/StyleRegularEditText"
                     android:layout_marginTop="24dp"
                     android:digits="qwertyuiopasdfghjklzxcvbnm1234567890,./?;:'\|[{]}=+-_)(*^%$#@!~"
@@ -46,7 +43,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
-                    android:text="@={logInViewModel.emailOrUsernameACTText}" />
+                    android:text="@={viewModel.emailOrUsernameACTText}" />
 
                 <EditText
                     android:id="@+id/fragment_log_in_passwordET"
@@ -58,24 +55,21 @@
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:longClickable="false"
-                    android:text="@={logInViewModel.passwordETText}"
+                    android:text="@={viewModel.passwordETText}"
                     tools:ignore="Autofill" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/fragment_log_in_logInMBTN"
                     style="@style/StyleSupremeButton"
                     android:layout_marginTop="24dp"
-                    android:onClick="@{()->logInViewModel.onLogInMBTNClick()}"
+                    android:onClick="@{()->viewModel.onLogInMBTNClick()}"
                     android:text="@string/log_in" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    android:gravity="center">
 
                     <com.google.android.material.textview.MaterialTextView
                         style="@style/StyleRegularTextView"
@@ -84,11 +78,10 @@
                         android:textSize="12sp" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/fragment_login_getHelpLoggingInMTV"
                         style="@style/StyleActionTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="@{()->logInViewModel.onGetHelpMTVClick()}"
+                        android:onClick="@{()->viewModel.onGetHelpMTVClick()}"
                         android:padding="8dp"
                         android:text="@string/get_help"
                         android:textSize="13sp" />
@@ -99,12 +92,10 @@
 
             <LinearLayout
                 android:id="@+id/fragment_log_in_signUpLL"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/StyleRegularTextView"
@@ -113,11 +104,10 @@
                     android:textSize="12sp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/fragment_log_in_signUpMTV"
                     style="@style/StyleActionTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->logInViewModel.onSignUpMTVClick()}"
+                    android:onClick="@{()->viewModel.onSignUpMTVClick()}"
                     android:padding="8dp"
                     android:text="@string/sign_up"
                     android:textSize="13sp" />

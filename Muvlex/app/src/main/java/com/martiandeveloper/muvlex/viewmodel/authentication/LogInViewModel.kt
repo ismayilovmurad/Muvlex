@@ -3,7 +3,6 @@ package com.martiandeveloper.muvlex.viewmodel.authentication
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -80,23 +79,29 @@ class LogInViewModel : ViewModel() {
             passwordETText.value!!
         ).addOnCompleteListener {
 
-            _progressMTVTextDecider.value = ""
-            _progressADOpen.value = false
-
             if (it.isSuccessful)
 
                 if (it.result != null)
 
-                    if (it.result!!.user != null) checkEmailVerification(it.result!!.user!!)
+                    if (it.result!!.user != null) checkEmailVerification()
                     else {
+                        _progressMTVTextDecider.value = ""
+                        _progressADOpen.value = false
+
                         _logInSuccessful.value = false
                         _errorMessage.value = Event("")
                     }
                 else {
+                    _progressMTVTextDecider.value = ""
+                    _progressADOpen.value = false
+
                     _logInSuccessful.value = false
                     _errorMessage.value = Event("")
                 }
             else {
+                _progressMTVTextDecider.value = ""
+                _progressADOpen.value = false
+
                 _logInSuccessful.value = false
                 _errorMessage.value = errorMessageAuth(it)
             }
@@ -107,9 +112,12 @@ class LogInViewModel : ViewModel() {
 
 
     //########## Check email verification
-    private fun checkEmailVerification(user: FirebaseUser) {
+    private fun checkEmailVerification() {
 
-        if (user.isEmailVerified) hasUserUsername(user) else {
+        if (Firebase.auth.currentUser!!.isEmailVerified) hasUserUsername() else {
+            _progressMTVTextDecider.value = ""
+            _progressADOpen.value = false
+
             _logInSuccessful.value = false
             _errorMessage.value = Event("Email is not verified")
         }
@@ -118,34 +126,35 @@ class LogInViewModel : ViewModel() {
 
 
     //########## Has user username
-    private fun hasUserUsername(user: FirebaseUser) {
+    private fun hasUserUsername() {
 
         _progressMTVTextDecider.value = "load"
-        _progressADOpen.value = true
 
-        Firebase.firestore.collection("users").document(user.uid).get().addOnCompleteListener {
+        Firebase.firestore.collection("users").document(Firebase.auth.currentUser!!.uid).get()
+            .addOnCompleteListener {
 
-            _progressMTVTextDecider.value = ""
-            _progressADOpen.value = false
+                _progressMTVTextDecider.value = ""
+                _progressADOpen.value = false
 
-            if (it.isSuccessful)
+                if (it.isSuccessful)
 
-                if (it.result != null)
+                    if (it.result != null)
 
-                    if (it.result!!.get("username") != null) _logInSuccessful.value = true else {
+                        if (it.result!!.get("username") != null) _logInSuccessful.value =
+                            true else {
+                            _logInSuccessful.value = false
+                            _errorMessage.value = Event("Username not found")
+                        }
+                    else {
                         _logInSuccessful.value = false
-                        _errorMessage.value = Event("Username not found")
+                        _errorMessage.value = Event("")
                     }
                 else {
                     _logInSuccessful.value = false
-                    _errorMessage.value = Event("")
+                    _errorMessage.value = errorMessageDocument(it)
                 }
-            else {
-                _logInSuccessful.value = false
-                _errorMessage.value = errorMessageDocument(it)
-            }
 
-        }
+            }
 
     }
 
@@ -183,14 +192,14 @@ class LogInViewModel : ViewModel() {
         Firebase.firestore.collection("users")
             .whereEqualTo("username", emailOrUsernameACTText.value).get().addOnCompleteListener {
 
-                _progressMTVTextDecider.value = ""
-                _progressADOpen.value = false
-
                 if (it.isSuccessful) {
 
                     for (i in it.result!!) {
 
                         if (i.getString("username") == emailOrUsernameACTText.value) getUserEmail(it.result!!.documents[0].id) else {
+                            _progressMTVTextDecider.value = ""
+                            _progressADOpen.value = false
+
                             _logInSuccessful.value = false
                             _errorMessage.value = Event("no_account")
                         }
@@ -198,11 +207,17 @@ class LogInViewModel : ViewModel() {
                     }
 
                     if (it.result?.size() == 0) {
+                        _progressMTVTextDecider.value = ""
+                        _progressADOpen.value = false
+
                         _logInSuccessful.value = false
                         _errorMessage.value = Event("no_account")
                     }
 
                 } else {
+                    _progressMTVTextDecider.value = ""
+                    _progressADOpen.value = false
+
                     _logInSuccessful.value = false
                     _errorMessage.value = errorMessageQuery(it)
                 }
@@ -216,13 +231,9 @@ class LogInViewModel : ViewModel() {
     private fun getUserEmail(uid: String) {
 
         _progressMTVTextDecider.value = "load"
-        _progressADOpen.value = true
 
         Firebase.firestore.collection("users").document(uid)
             .get().addOnCompleteListener {
-
-                _progressMTVTextDecider.value = ""
-                _progressADOpen.value = false
 
                 if (it.isSuccessful)
 
@@ -231,14 +242,23 @@ class LogInViewModel : ViewModel() {
                         if (it.result != null) loginWithUsername(
                             it.result!!.get("email").toString()
                         ) else {
+                            _progressMTVTextDecider.value = ""
+                            _progressADOpen.value = false
+
                             _logInSuccessful.value = false
                             _errorMessage.value = Event("")
                         }
                     else {
+                        _progressMTVTextDecider.value = ""
+                        _progressADOpen.value = false
+
                         _logInSuccessful.value = false
                         _errorMessage.value = Event("")
                     }
                 else {
+                    _progressMTVTextDecider.value = ""
+                    _progressADOpen.value = false
+
                     _logInSuccessful.value = false
                     _errorMessage.value = errorMessageDocument(it)
                 }
@@ -252,7 +272,6 @@ class LogInViewModel : ViewModel() {
     private fun loginWithUsername(email: String) {
 
         _progressMTVTextDecider.value = "login"
-        _progressADOpen.value = true
 
         Firebase.auth.signInWithEmailAndPassword(
             email,
@@ -310,6 +329,7 @@ class LogInViewModel : ViewModel() {
         get() = _errorADOpen
 
     fun isErrorADOpen(open: Boolean) {
+        if (!open) Firebase.auth.signOut()
         _errorADOpen.value = open
     }
 
@@ -320,36 +340,38 @@ class LogInViewModel : ViewModel() {
         _errorADIVGone.value = true
         _errorADPBGone.value = false
 
-        val user = Firebase.auth.currentUser
+        with(Firebase.auth.currentUser) {
 
-        if (user != null)
+            if (this != null)
 
-            if (!user.isEmailVerified) {
+                if (!isEmailVerified) {
 
-                Firebase.auth.setLanguageCode(appLanguage)
+                    Firebase.auth.setLanguageCode(appLanguage)
 
-                user.sendEmailVerification().addOnCompleteListener {
+                    sendEmailVerification().addOnCompleteListener {
+                        _errorADIVGone.value = false
+                        _errorADPBGone.value = true
+
+                        _resendSuccessful.value = Event(it.isSuccessful)
+                        if (!_resendSuccessful.value!!.peekContent()) _errorMessage.value =
+                            errorMessageVoid(it)
+                    }
+
+                } else {
                     _errorADIVGone.value = false
                     _errorADPBGone.value = true
 
-                    _resendSuccessful.value = Event(it.isSuccessful)
-                    if (!_resendSuccessful.value!!.peekContent()) _errorMessage.value =
-                        errorMessageVoid(it)
+                    _resendSuccessful.value = Event(false)
+                    _errorMessage.value = Event("already_verified")
                 }
-
-            } else {
+            else {
                 _errorADIVGone.value = false
                 _errorADPBGone.value = true
 
                 _resendSuccessful.value = Event(false)
-                _errorMessage.value = Event("already_verified")
+                _errorMessage.value = Event("")
             }
-        else {
-            _errorADIVGone.value = false
-            _errorADPBGone.value = true
 
-            _resendSuccessful.value = Event(false)
-            _errorMessage.value = Event("")
         }
 
     }
@@ -366,19 +388,11 @@ class LogInViewModel : ViewModel() {
     val errorADPBGone: LiveData<Boolean>
         get() = _errorADPBGone
 
-    fun isErrorADPBGone(gone: Boolean) {
-        _errorADPBGone.value = gone
-    }
-
 
     //########## Error AlertDialog ImageView gone
     private var _errorADIVGone = MutableLiveData<Boolean>()
     val errorADIVGone: LiveData<Boolean>
         get() = _errorADIVGone
-
-    fun isErrorADIVGone(gone: Boolean) {
-        _errorADIVGone.value = gone
-    }
 
 
     //########## Resend and okay MaterialButtons enable
@@ -388,6 +402,11 @@ class LogInViewModel : ViewModel() {
 
     fun isResendAndOkayMBTNSEnable(enable: Boolean) {
         _resendAndOkayMBTNSEnable.value = enable
+    }
+
+    init {
+        _logInMBTNEnable.value = false
+        _errorADPBGone.value = true
     }
 
 }
