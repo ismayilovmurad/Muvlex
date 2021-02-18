@@ -114,12 +114,24 @@ class LogInViewModel : ViewModel() {
     //########## Check email verification
     private fun checkEmailVerification() {
 
-        if (Firebase.auth.currentUser!!.isEmailVerified) hasUserUsername() else {
+        val user = Firebase.auth.currentUser
+
+        if (user != null) {
+
+            if (user.isEmailVerified) hasUserUsername() else {
+                _progressMTVTextDecider.value = ""
+                _progressADOpen.value = false
+
+                _logInSuccessful.value = false
+                _errorMessage.value = Event("Email is not verified")
+            }
+
+        } else {
             _progressMTVTextDecider.value = ""
             _progressADOpen.value = false
 
             _logInSuccessful.value = false
-            _errorMessage.value = Event("Email is not verified")
+            _errorMessage.value = Event("")
         }
 
     }
@@ -130,31 +142,40 @@ class LogInViewModel : ViewModel() {
 
         _progressMTVTextDecider.value = "load"
 
-        Firebase.firestore.collection("users").document(Firebase.auth.currentUser!!.uid).get()
-            .addOnCompleteListener {
+        val user = Firebase.auth.currentUser
 
-                _progressMTVTextDecider.value = ""
-                _progressADOpen.value = false
+        if (user != null) {
 
-                if (it.isSuccessful)
+            Firebase.firestore.collection("users").document(user.uid).get()
+                .addOnCompleteListener {
 
-                    if (it.result != null)
+                    _progressMTVTextDecider.value = ""
+                    _progressADOpen.value = false
 
-                        if (it.result!!.get("username") != null) _logInSuccessful.value =
-                            true else {
+                    if (it.isSuccessful)
+
+                        if (it.result != null)
+
+                            if (it.result!!.get("username") != null) _logInSuccessful.value =
+                                true else {
+                                _logInSuccessful.value = false
+                                _errorMessage.value = Event("Username not found")
+                            }
+                        else {
                             _logInSuccessful.value = false
-                            _errorMessage.value = Event("Username not found")
+                            _errorMessage.value = Event("")
                         }
                     else {
                         _logInSuccessful.value = false
-                        _errorMessage.value = Event("")
+                        _errorMessage.value = errorMessageDocument(it)
                     }
-                else {
-                    _logInSuccessful.value = false
-                    _errorMessage.value = errorMessageDocument(it)
+
                 }
 
-            }
+        } else {
+            _logInSuccessful.value = false
+            _errorMessage.value = Event("")
+        }
 
     }
 

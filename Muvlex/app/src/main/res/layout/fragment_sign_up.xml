@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="signUpViewModel"
+            name="viewModel"
             type="com.martiandeveloper.muvlex.viewmodel.authentication.SignUpViewModel" />
 
     </data>
@@ -29,8 +29,6 @@
                 android:orientation="vertical"
                 android:padding="24dp"
                 app:layout_constraintBottom_toTopOf="@id/fragment_sign_up_logInLL"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textview.MaterialTextView
@@ -38,13 +36,12 @@
                     android:text="@string/sign_up" />
 
                 <EditText
-                    android:id="@+id/fragment_sign_up_emailET"
                     style="@style/StyleRegularEditText"
                     android:layout_marginTop="24dp"
                     android:hint="@string/email_address"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
-                    android:text="@={signUpViewModel.emailETText}"
+                    android:text="@={viewModel.emailETText}"
                     tools:ignore="Autofill" />
 
                 <EditText
@@ -57,7 +54,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"
                     android:longClickable="false"
-                    android:text="@={signUpViewModel.passwordETText}"
+                    android:text="@={viewModel.passwordETText}"
                     tools:ignore="Autofill" />
 
                 <EditText
@@ -70,26 +67,24 @@
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:longClickable="false"
-                    android:text="@={signUpViewModel.confirmPasswordETText}"
+                    android:text="@={viewModel.confirmPasswordETText}"
                     tools:ignore="Autofill" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/fragment_sign_up_nextMBTN"
                     style="@style/StyleSupremeButton"
                     android:layout_marginTop="24dp"
-                    android:onClick="@{()->signUpViewModel.onNextMBTNClick()}"
+                    android:onClick="@{()->viewModel.onNextMBTNClick()}"
                     android:text="@string/next" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/fragment_sign_up_logInLL"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/StyleRegularTextView"
@@ -98,11 +93,8 @@
                     android:textSize="12sp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/fragment_sign_up_logInMTV"
                     style="@style/StyleActionTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{()->signUpViewModel.onLogInMTVClick()}"
+                    android:onClick="@{()->viewModel.onLogInMTVClick()}"
                     android:padding="8dp"
                     android:text="@string/log_in"
                     android:textSize="13sp" />

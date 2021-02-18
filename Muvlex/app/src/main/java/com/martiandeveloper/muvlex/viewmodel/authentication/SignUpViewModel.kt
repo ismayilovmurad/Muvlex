@@ -85,10 +85,10 @@ class SignUpViewModel : ViewModel() {
             passwordETText.value!!
         ).addOnCompleteListener {
 
-            _progressMTVTextDecider.value = ""
-            _progressADOpen.value = false
-
             if (it.isSuccessful) sendEmailVerification() else {
+                _progressMTVTextDecider.value = ""
+                _progressADOpen.value = false
+
                 _signUpSuccessful.value = false
                 _errorMessage.value = errorMessageAuth(it)
             }
@@ -102,32 +102,39 @@ class SignUpViewModel : ViewModel() {
     private fun sendEmailVerification() {
 
         _progressMTVTextDecider.value = "verification"
-        _progressADOpen.value = true
 
-        val user = Firebase.auth.currentUser
+        with(Firebase.auth.currentUser) {
 
-        if (user != null) {
+            if (this != null) {
 
-            if (!user.isEmailVerified) {
+                if (!isEmailVerified) {
 
-                Firebase.auth.setLanguageCode(appLanguage)
+                    Firebase.auth.setLanguageCode(appLanguage)
 
-                user.sendEmailVerification().addOnCompleteListener {
+                    sendEmailVerification().addOnCompleteListener {
+                        _progressMTVTextDecider.value = ""
+                        _progressADOpen.value = false
+
+                        _signUpSuccessful.value = it.isSuccessful
+                        if (!signUpSuccessful.value!!) errorMessageVoid(it)
+                    }
+
+                } else {
                     _progressMTVTextDecider.value = ""
                     _progressADOpen.value = false
 
-                    _signUpSuccessful.value = it.isSuccessful
-                    if (!signUpSuccessful.value!!) errorMessageVoid(it)
+                    _signUpSuccessful.value = false
+                    _errorMessage.value = Event("")
                 }
 
             } else {
+                _progressMTVTextDecider.value = ""
+                _progressADOpen.value = false
+
                 _signUpSuccessful.value = false
                 _errorMessage.value = Event("")
             }
 
-        } else {
-            _signUpSuccessful.value = false
-            _errorMessage.value = Event("")
         }
 
     }
@@ -173,55 +180,61 @@ class SignUpViewModel : ViewModel() {
         _successADIVGone.value = true
         _successADPBGone.value = false
 
-        val user = Firebase.auth.currentUser
+        with(Firebase.auth.currentUser) {
 
-        if (user != null) {
+            if (this != null) {
 
-            user.reload()
+                reload()
 
-            Firebase.auth.signOut()
+                with(Firebase.auth) {
 
-            Firebase.auth.signInWithEmailAndPassword(
-                emailETText.value!!,
-                passwordETText.value!!
-            ).addOnCompleteListener {
+                    signOut()
 
+                    signInWithEmailAndPassword(
+                        emailETText.value!!,
+                        passwordETText.value!!
+                    ).addOnCompleteListener {
+
+                        _successADIVGone.value = false
+                        _successADPBGone.value = true
+
+                        if (it.isSuccessful) {
+
+                            if (it.result != null)
+
+                                if (it.result!!.user != null)
+
+                                    if (it.result!!.user!!.isEmailVerified) _emailVerificationSuccessful.value =
+                                        true else {
+                                        _emailVerificationSuccessful.value = false
+                                        _errorMessage.value = Event("unverified")
+                                    }
+                                else {
+                                    _emailVerificationSuccessful.value = false
+                                    _errorMessage.value = Event("")
+                                }
+                            else {
+                                _emailVerificationSuccessful.value = false
+                                _errorMessage.value = Event("")
+                            }
+
+                        } else {
+                            _emailVerificationSuccessful.value = false
+                            _errorMessage.value = errorMessageAuth(it)
+                        }
+
+                    }
+
+                }
+
+            } else {
                 _successADIVGone.value = false
                 _successADPBGone.value = true
 
-                if (it.isSuccessful) {
-
-                    if (it.result != null)
-
-                        if (it.result!!.user != null)
-
-                            if (it.result!!.user!!.isEmailVerified) _emailVerificationSuccessful.value =
-                                true else {
-                                _emailVerificationSuccessful.value = false
-                                _errorMessage.value = Event("unverified")
-                            }
-                        else {
-                            _emailVerificationSuccessful.value = false
-                            _errorMessage.value = Event("")
-                        }
-                    else {
-                        _emailVerificationSuccessful.value = false
-                        _errorMessage.value = Event("")
-                    }
-
-                } else {
-                    _emailVerificationSuccessful.value = false
-                    _errorMessage.value = errorMessageAuth(it)
-                }
-
+                _emailVerificationSuccessful.value = false
+                _errorMessage.value = Event("")
             }
 
-        } else {
-            _successADIVGone.value = false
-            _successADPBGone.value = true
-
-            _emailVerificationSuccessful.value = false
-            _errorMessage.value = Event("")
         }
 
     }
@@ -238,19 +251,11 @@ class SignUpViewModel : ViewModel() {
     val successADPBGone: LiveData<Boolean>
         get() = _successADPBGone
 
-    fun isSuccessADPBGone(gone: Boolean) {
-        _successADPBGone.value = gone
-    }
-
 
     //########## Success AlertDialog ImageView gone
     private var _successADIVGone = MutableLiveData<Boolean>()
     val successADIVGone: LiveData<Boolean>
         get() = _successADIVGone
-
-    fun isSuccessADIVGone(gone: Boolean) {
-        _successADIVGone.value = gone
-    }
 
 
     //########## Continue MaterialButton enable
@@ -260,6 +265,11 @@ class SignUpViewModel : ViewModel() {
 
     fun isContinueMBTNEnable(enable: Boolean) {
         _continueMBTNEnable.value = enable
+    }
+
+    init {
+        _nextMBTNEnable.value = false
+        _successADPBGone.value = true
     }
 
 }
