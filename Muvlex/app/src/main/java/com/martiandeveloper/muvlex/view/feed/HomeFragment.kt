@@ -46,7 +46,7 @@ class HomeFragment : Fragment(), HomePostAdapter.ItemClickListener {
 
         Firebase.firestore.collection("users").document(Firebase.auth.currentUser!!.uid).get().addOnCompleteListener {
 
-            val document: DocumentSnapshot = it.getResult()!!
+            val document: DocumentSnapshot = it.result!!
             val group = document["following"] as List<String>?
 
             if (group != null) {

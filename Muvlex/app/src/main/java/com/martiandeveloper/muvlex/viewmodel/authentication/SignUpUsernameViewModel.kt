@@ -7,7 +7,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.utils.Event
-import com.martiandeveloper.muvlex.utils.errorMessageQuery
 import com.martiandeveloper.muvlex.utils.errorMessageVoid
 
 class SignUpUsernameViewModel : ViewModel() {
@@ -32,16 +31,6 @@ class SignUpUsernameViewModel : ViewModel() {
     }
 
 
-    //########## Username error MaterialTextView gone
-    private var _usernameErrorMTVGone = MutableLiveData<Boolean>()
-    val usernameErrorMTVGone: LiveData<Boolean>
-        get() = _usernameErrorMTVGone
-
-    fun isUsernameErrorMTVGone(gone: Boolean) {
-        _usernameErrorMTVGone.value = gone
-    }
-
-
     //########## Username EditText text
     val usernameETText: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
@@ -50,10 +39,6 @@ class SignUpUsernameViewModel : ViewModel() {
     private var _usernamePBGone = MutableLiveData<Boolean>()
     val usernamePBGone: LiveData<Boolean>
         get() = _usernamePBGone
-
-    fun isUsernamePBGone(gone: Boolean) {
-        _usernamePBGone.value = gone
-    }
 
 
     //########## Next MaterialButton click
@@ -86,9 +71,16 @@ class SignUpUsernameViewModel : ViewModel() {
     }
 
 
+    //########## Username ProgressBar gone
+    private var _usernameAvailable = MutableLiveData<Boolean>()
+    val usernameAvailable: LiveData<Boolean>
+        get() = _usernameAvailable
+
+
     //########## Is username available
     fun isUsernameAvailable() {
 
+        _nextMBTNEnable.value = false
         _usernamePBGone.value = false
 
         Firebase.firestore.collection("users").whereEqualTo("username", usernameETText.value).get()
@@ -99,28 +91,18 @@ class SignUpUsernameViewModel : ViewModel() {
                 if (it.isSuccessful) {
 
                     for (i in it.result!!) {
-
                         if (i.getString("username") == usernameETText.value) _usernameAvailable.value =
                             false
-
                     }
 
-                    if (it.result?.size() == 0) _usernameAvailable.value = true
+                    _usernameAvailable.value =
+                        it.result?.size() == 0 && !usernameETText.value.isNullOrEmpty()
 
-                } else {
-                    _usernameAvailable.value = false
-                    _errorMessage.value = errorMessageQuery(it)
-                }
+                } else _usernameAvailable.value = false
 
             }
 
     }
-
-
-    //########## Username available
-    private var _usernameAvailable = MutableLiveData<Boolean>()
-    val usernameAvailable: LiveData<Boolean>
-        get() = _usernameAvailable
 
 
     //########## Error message
@@ -138,63 +120,60 @@ class SignUpUsernameViewModel : ViewModel() {
         Firebase.firestore.collection("users").whereEqualTo("username", usernameETText.value).get()
             .addOnCompleteListener {
 
-                _progressMTVTextDecider.value = ""
-                _progressADOpen.value = false
-
                 if (it.isSuccessful) {
 
                     for (i in it.result!!) {
 
                         if (i.getString("username") == usernameETText.value) {
-                            _usernameAvailable.value = false
+                            _progressMTVTextDecider.value = ""
+                            _progressADOpen.value = false
+
+                            _errorMessage.value = Event("username_not_available")
                         }
 
                     }
 
-                    if (it.result != null)
+                    if (it.result?.size() == 0 && !usernameETText.value.isNullOrEmpty()) {
 
-                        if (it.result?.size() == 0) {
+                        with(Firebase.auth.currentUser) {
 
-                            _progressMTVTextDecider.value = "save"
-                            _progressADOpen.value = true
-                            _usernameAvailable.value = true
+                            if (this != null) {
 
-                            val user = Firebase.auth.currentUser
-
-                            if (user != null) {
-
-                                val usernameMap = hashMapOf(
+                                val map = hashMapOf(
+                                    "uid" to uid,
                                     "username" to usernameETText.value,
-                                    "email" to user.email
+                                    "email" to email,
+                                    "following" to arrayListOf<String>(),
+                                    "followers" to arrayListOf<String>()
                                 )
 
-                                Firebase.firestore.collection("users").document(user.uid)
-                                    .set(usernameMap).addOnCompleteListener { result ->
+                                Firebase.firestore.collection("users").document(uid)
+                                    .set(map).addOnCompleteListener { result ->
                                         _progressMTVTextDecider.value = ""
                                         _progressADOpen.value = false
 
-                                        _saveSuccessful.value = result.isSuccessful
-
-                                        if (!_saveSuccessful.value!!) errorMessageVoid(result)
+                                        if (result.isSuccessful) _saveSuccessful.value =
+                                            true else _errorMessage.value = errorMessageVoid(result)
                                     }
 
                             } else {
-                                _saveSuccessful.value = false
                                 _errorMessage.value = Event("")
                             }
 
-                        } else {
-                            _usernameAvailable.value = false
-                            _errorMessage.value = Event("")
                         }
-                    else {
-                        _usernameAvailable.value = false
+
+                    } else {
+                        _progressMTVTextDecider.value = ""
+                        _progressADOpen.value = false
+
                         _errorMessage.value = Event("")
                     }
 
                 } else {
-                    _usernameAvailable.value = false
-                    _errorMessage.value = errorMessageQuery(it)
+                    _progressMTVTextDecider.value = ""
+                    _progressADOpen.value = false
+
+                    _errorMessage.value = Event("")
                 }
 
             }
@@ -218,5 +197,11 @@ class SignUpUsernameViewModel : ViewModel() {
     private var _saveSuccessful = MutableLiveData<Boolean>()
     val saveSuccessful: LiveData<Boolean>
         get() = _saveSuccessful
+
+
+    init {
+        _nextMBTNEnable.value = false
+        _usernamePBGone.value = true
+    }
 
 }

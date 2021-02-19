@@ -45,23 +45,30 @@ class GetHelpViewModel : ViewModel() {
 
 
     //########## Send password reset email
-    fun sendPasswordResetEmailForUsername() {
+    fun sendPasswordResetEmail(email: String?) {
+        val email1: String
+
+        if (email == null) {
+            _progressADOpen.value = true
+            email1 = emailOrUsernameETText.value!!
+        } else email1 = email
 
         _progressTVTextDecider.value = "send"
-        _progressADOpen.value = true
 
-        Firebase.auth.setLanguageCode(appLanguage)
+        with(Firebase.auth) {
 
-        Firebase.auth.sendPasswordResetEmail(
-            emailOrUsernameETText.value!!
-        ).addOnCompleteListener {
-            _progressTVTextDecider.value = ""
-            _progressADOpen.value = false
+            setLanguageCode(appLanguage)
 
-            _sendPasswordResetEmailSuccessful.value = it.isSuccessful
+            sendPasswordResetEmail(
+                email1
+            ).addOnCompleteListener {
+                _progressTVTextDecider.value = ""
+                _progressADOpen.value = false
 
-            if (!_sendPasswordResetEmailSuccessful.value!!) _errorMessage.value =
-                errorMessageVoid(it)
+                if (it.isSuccessful) _sendPasswordResetEmailSuccessful.value =
+                    true else _errorMessage.value = errorMessageVoid(it)
+            }
+
         }
 
     }
@@ -100,28 +107,28 @@ class GetHelpViewModel : ViewModel() {
         Firebase.firestore.collection("users")
             .whereEqualTo("username", emailOrUsernameETText.value).get().addOnCompleteListener {
 
-                _progressTVTextDecider.value = ""
-                _progressADOpen.value = false
-
                 if (it.isSuccessful) {
 
                     for (i in it.result!!) {
 
                         if (i.getString("username") == emailOrUsernameETText.value) getUserEmail(it.result!!.documents[0].id)
                         else {
-                            _sendPasswordResetEmailSuccessful.value = false
+                            _progressTVTextDecider.value = ""
+                            _progressADOpen.value = false
                             _errorMessage.value = Event("no_account")
                         }
 
                     }
 
                     if (it.result?.size() == 0) {
-                        _sendPasswordResetEmailSuccessful.value = false
+                        _progressTVTextDecider.value = ""
+                        _progressADOpen.value = false
                         _errorMessage.value = Event("no_account")
                     }
 
                 } else {
-                    _sendPasswordResetEmailSuccessful.value = false
+                    _progressTVTextDecider.value = ""
+                    _progressADOpen.value = false
                     _errorMessage.value = errorMessageQuery(it)
                 }
 
@@ -134,59 +141,35 @@ class GetHelpViewModel : ViewModel() {
     private fun getUserEmail(uid: String) {
 
         _progressTVTextDecider.value = "load"
-        _progressADOpen.value = true
 
         Firebase.firestore.collection("users").document(uid)
             .get().addOnCompleteListener {
-
-                _progressTVTextDecider.value = ""
-                _progressADOpen.value = false
 
                 if (it.isSuccessful) {
 
                     if (it.result != null)
 
-                        if (it.result != null) sendPasswordResetEmailForUsername(
+                        if (it.result != null) sendPasswordResetEmail(
                             it.result!!.get("email").toString()
                         )
                         else {
-                            _sendPasswordResetEmailSuccessful.value = false
+                            _progressTVTextDecider.value = ""
+                            _progressADOpen.value = false
                             _errorMessage.value = Event("")
                         }
                     else {
-                        _sendPasswordResetEmailSuccessful.value = false
+                        _progressTVTextDecider.value = ""
+                        _progressADOpen.value = false
                         _errorMessage.value = Event("")
                     }
 
                 } else {
-                    _sendPasswordResetEmailSuccessful.value = false
+                    _progressTVTextDecider.value = ""
+                    _progressADOpen.value = false
                     _errorMessage.value = errorMessageDocument(it)
                 }
 
             }
-
-    }
-
-
-    //########## Send password reset email for username
-    private fun sendPasswordResetEmailForUsername(email: String) {
-
-        _progressTVTextDecider.value = "send"
-        _progressADOpen.value = true
-
-        Firebase.auth.setLanguageCode(appLanguage)
-
-        Firebase.auth.sendPasswordResetEmail(
-            email
-        ).addOnCompleteListener {
-            _progressTVTextDecider.value = ""
-            _progressADOpen.value = false
-
-            _sendPasswordResetEmailSuccessful.value = it.isSuccessful
-
-            if (!_sendPasswordResetEmailSuccessful.value!!) _errorMessage.value =
-                errorMessageVoid(it)
-        }
 
     }
 
@@ -208,6 +191,10 @@ class GetHelpViewModel : ViewModel() {
 
     fun isSuccessADOpen(open: Boolean) {
         _successADOpen.value = open
+    }
+
+    init {
+        _continueMBTNEnable.value = false
     }
 
 }

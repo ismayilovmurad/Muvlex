@@ -8,7 +8,7 @@
         <import type="android.view.View" />
 
         <variable
-            name="signUpUsernameViewModel"
+            name="viewModel"
             type="com.martiandeveloper.muvlex.viewmodel.authentication.SignUpUsernameViewModel" />
 
     </data>
@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none"
-        tools:context=".view.authentication.SignUpFragment">
+        tools:context=".view.authentication.SignUpUsernameFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,14 +31,11 @@
                 android:orientation="vertical"
                 android:padding="24dp"
                 app:layout_constraintBottom_toTopOf="@id/fragment_sign_up_username_privacyPolicyMTV"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/StyleSupremeTextView"
                     android:text="@string/welcome_to_muvlex"
-                    android:textAlignment="center"
                     android:textSize="24sp" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -49,15 +46,12 @@
                     android:textSize="16sp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/StyleRegularTextView"
                     android:layout_gravity="start"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="24dp"
-                    android:fontFamily="@font/rubik"
-                    android:text="@{signUpUsernameViewModel.usernameErrorMTVText}"
-                    android:textColor="@color/color_error"
-                    android:visibility="@{signUpUsernameViewModel.usernameErrorMTVGone ? View.INVISIBLE : View.VISIBLE}" />
+                    android:text="@{viewModel.usernameErrorMTVText}"
+                    android:textColor="@color/color_error" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -65,17 +59,14 @@
                     android:layout_marginTop="8dp">
 
                     <EditText
-                        android:id="@+id/fragment_sign_up_username_usernameET"
                         style="@style/StyleRegularEditText"
                         android:digits="qwertyuiopasdfghjklzxcvbnm1234567890,./?;:'\|[{]}=+-_)(*^%$#@!~"
                         android:hint="@string/username"
                         android:imeOptions="actionDone"
-                        android:inputType="textEmailAddress"
+                        android:inputType="text"
                         android:longClickable="false"
                         android:singleLine="true"
-                        android:text="@={signUpUsernameViewModel.usernameETText}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@={viewModel.usernameETText}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="Autofill" />
@@ -83,7 +74,7 @@
                     <ProgressBar
                         style="@style/StyleSupremeProgressbar"
                         android:layout_marginEnd="8dp"
-                        android:visibility="@{signUpUsernameViewModel.usernamePBGone ? View.INVISIBLE : View.VISIBLE}"
+                        android:visibility="@{viewModel.usernamePBGone ? View.INVISIBLE : View.VISIBLE}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -94,7 +85,7 @@
                     android:id="@+id/fragment_sign_up_username_nextMBTN"
                     style="@style/StyleSupremeButton"
                     android:layout_marginTop="24dp"
-                    android:onClick="@{()->signUpUsernameViewModel.onNextMBTNClick()}"
+                    android:onClick="@{()->viewModel.onNextMBTNClick()}"
                     android:text="@string/next" />
 
             </LinearLayout>
@@ -102,15 +93,13 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/fragment_sign_up_username_privacyPolicyMTV"
                 style="@style/StyleRegularTextView"
-                android:onClick="@{()->signUpUsernameViewModel.onPrivacyPolicyMTVClick()}"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
+                android:layout_width="match_parent"
+                android:onClick="@{()->viewModel.onPrivacyPolicyMTVClick()}"
+                android:paddingHorizontal="16dp"
                 android:paddingBottom="8dp"
                 android:text="@string/by_clicking_next_you_agree_to_our_privacy_policy_terms_conditions"
                 android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -102,7 +102,7 @@ class SignUpFragment : Fragment() {
                         if (passwordETText.value != confirmPasswordETText.value) R.string.passwords_dont_match.showToast(
                             requireContext()
                         ) else {
-                            hideKeyboard()
+                            activity?.let { it1 -> hideKeyboard(it1) }
                             signUp()
                         }
                     }
@@ -177,13 +177,6 @@ class SignUpFragment : Fragment() {
 
         }
 
-    }
-
-    private fun hideKeyboard() {
-        (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
-            (activity?.currentFocus ?: View(activity)).windowToken,
-            0
-        )
     }
 
     @SuppressLint("ClickableViewAccessibility")

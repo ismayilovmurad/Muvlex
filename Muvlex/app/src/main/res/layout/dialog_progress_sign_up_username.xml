@@ -4,7 +4,7 @@
     <data>
 
         <variable
-            name="signUpUsernameViewModel"
+            name="viewModel"
             type="com.martiandeveloper.muvlex.viewmodel.authentication.SignUpUsernameViewModel" />
 
     </data>
@@ -17,7 +17,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             style="@style/StyleRegularTextView"
-            android:text="@{signUpUsernameViewModel.progressMTVText}" />
+            android:text="@{viewModel.progressMTVText}" />
 
         <ProgressBar
             style="@style/StyleSupremeProgressbar"
