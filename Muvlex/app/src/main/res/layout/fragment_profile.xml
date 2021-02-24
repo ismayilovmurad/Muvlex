@@ -46,13 +46,13 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleRegularTextView"
+                    style="@style/StyleRegularMaterialTextView"
                     android:text="388"
                     android:textColor="@color/color_supreme_text"
                     android:textSize="18sp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleRegularTextView"
+                    style="@style/StyleRegularMaterialTextView"
                     android:text="Posts" />
 
             </LinearLayout>
@@ -65,13 +65,13 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleRegularTextView"
+                    style="@style/StyleRegularMaterialTextView"
                     android:text="11.4K"
                     android:textColor="@color/color_supreme_text"
                     android:textSize="18sp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleRegularTextView"
+                    style="@style/StyleRegularMaterialTextView"
                     android:text="Followers" />
 
             </LinearLayout>
@@ -84,13 +84,13 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleRegularTextView"
+                    style="@style/StyleRegularMaterialTextView"
                     android:text="109"
                     android:textColor="@color/color_supreme_text"
                     android:textSize="18sp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleRegularTextView"
+                    style="@style/StyleRegularMaterialTextView"
                     android:text="Following" />
 
             </LinearLayout>

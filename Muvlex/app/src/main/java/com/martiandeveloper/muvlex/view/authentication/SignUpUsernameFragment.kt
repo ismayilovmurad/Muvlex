@@ -1,7 +1,5 @@
 package com.martiandeveloper.muvlex.view.authentication
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -65,9 +63,7 @@ class SignUpUsernameFragment : Fragment() {
             usernameETText.observe(viewLifecycleOwner, {
                 setUsernameErrorMTVText(
                     if (it.isNullOrEmpty()) getString(R.string.username_cannot_be_empty)
-                    else if (it.length > 15) getString(
-                        R.string.username_not_available
-                    )
+                    else if (it.length > 15) getString(R.string.username_not_available)
                     else if (!Pattern.compile("""^[_.A-Za-z0-9]*((\s)*[_.A-Za-z0-9])*${'$'}""")
                             .matcher(it).matches()
                     ) getString(R.string.username_can_only_use_letters_numbers_underscores_and_periods)
@@ -90,57 +86,53 @@ class SignUpUsernameFragment : Fragment() {
             })
 
             nextMBTNClick.observe(viewLifecycleOwner, EventObserver {
-                if (it)
-                    if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
-                        if (usernameETText.value.isNullOrEmpty()) setUsernameErrorMTVText(
-                            getString(
-                                R.string.username_cannot_be_empty
-                            )
-                        ) else {
-                            activity?.let { it1 -> hideKeyboard(it1) }
-                            saveUsernameAndEmail()
-                        }
-                    }
+
+                activity?.hideKeyboard()
+
+                if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
+                    if (usernameETText.value.isNullOrEmpty()) setUsernameErrorMTVText(
+                        getString(
+                            R.string.username_cannot_be_empty
+                        )
+                    ) else saveUsernameAndEmail()
+                }
+
             })
 
             progressADOpen.observe(viewLifecycleOwner, {
-                setProgress(it)
-            })
-
-            privacyPolicyMTVClick.observe(viewLifecycleOwner, EventObserver {
-                if (it) startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)))
-            })
-
-            saveSuccessful.observe(viewLifecycleOwner, {
-                if (it) {
-                    view.navigate(SignUpUsernameFragmentDirections.actionSignUpUsernameFragmentToFeedFragment())
-                }
+                if (it) openProgressDialog() else dialog.dismiss()
             })
 
             errorMessage.observe(viewLifecycleOwner, EventObserver {
-                if (it == "username_not_available") setUsernameErrorMTVText(getString(R.string.username_not_available)) else R.string.something_went_wrong_try_again_later.showToast(
+                if (it == USERNAME_NOT_AVAILABLE) setUsernameErrorMTVText(getString(R.string.username_not_available)) else R.string.something_went_wrong_try_again_later.showToast(
                     requireContext()
                 )
             })
 
             progressMTVTextDecider.observe(viewLifecycleOwner, {
                 setProgressMTVText(
+                    getString(
 
-                    when (it) {
-                        "check" -> getString(R.string.checking_username)
-                        "save" -> getString(R.string.saving)
-                        else -> ""
-                    }
+                        when (it) {
+                            CHECK_USERNAME -> R.string.checking_username
+                            SAVE -> R.string.saving
+                            else -> R.string.blank_message
+                        }
 
+                    )
                 )
+            })
+
+            saveSuccessful.observe(viewLifecycleOwner, {
+                view.navigate(SignUpUsernameFragmentDirections.actionSignUpUsernameFragmentToFeedFragment())
+            })
+
+            privacyPolicyMTVClick.observe(viewLifecycleOwner, EventObserver {
+                view.navigate(SignUpUsernameFragmentDirections.actionSignUpUsernameFragmentToPrivacyPolicyFragment())
             })
 
         }
 
-    }
-
-    private fun setProgress(progress: Boolean) {
-        if (progress) openProgressDialog() else dialog.dismiss()
     }
 
     private fun openProgressDialog() {

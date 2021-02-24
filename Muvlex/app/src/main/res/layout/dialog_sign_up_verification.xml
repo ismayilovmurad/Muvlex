@@ -33,7 +33,7 @@
             app:srcCompat="@drawable/ic_success" />
 
         <com.google.android.material.textview.MaterialTextView
-            style="@style/StyleRegularTextView"
+            style="@style/StyleRegularMaterialTextView"
             android:layout_marginTop="24dp"
             android:lineSpacingExtra="8dp"
             android:text="@string/your_account_is_successfully_created_verify_your_account_by_checking_your_email_address"
@@ -42,7 +42,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/dialog_sign_up_verification_continueMBTN"
-            style="@style/StyleSupremeButton"
+            style="@style/StyleSupremeMaterialButton"
             android:layout_marginTop="24dp"
             android:onClick="@{()->viewModel.onContinueMBTNClick()}"
             android:text="@string/_continue" />

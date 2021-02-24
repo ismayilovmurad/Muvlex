@@ -116,7 +116,7 @@
         android:id="@+id/rateSeriesFragment"
         android:name="com.martiandeveloper.muvlex.view.feed.RateSeriesFragment"
         android:label="RateSeriesFragment"
-        tools:layout="@layout/activity_write_series_review">
+        tools:layout="@layout/fragment_rate_series">
 
         <argument
             android:name="genreIds"
@@ -169,10 +169,12 @@
         android:id="@+id/userFragment"
         android:name="com.martiandeveloper.muvlex.view.feed.UserFragment"
         android:label="UserFragment"
-        tools:layout="@layout/fragment_user" >
+        tools:layout="@layout/fragment_user">
+
         <argument
             android:name="user_id"
             android:defaultValue="none" />
+
     </fragment>
 
 </navigation>

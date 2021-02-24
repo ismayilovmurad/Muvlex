@@ -1,14 +1,12 @@
 package com.martiandeveloper.muvlex.view.authentication
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -96,17 +94,12 @@ class SignUpFragment : Fragment() {
 
             nextMBTNClick.observe(viewLifecycleOwner, EventObserver {
 
-                if (it) {
+                activity?.hideKeyboard()
 
-                    if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
-                        if (passwordETText.value != confirmPasswordETText.value) R.string.passwords_dont_match.showToast(
-                            requireContext()
-                        ) else {
-                            activity?.let { it1 -> hideKeyboard(it1) }
-                            signUp()
-                        }
-                    }
-
+                if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
+                    if (passwordETText.value != confirmPasswordETText.value) R.string.passwords_dont_match.showToast(
+                        requireContext()
+                    ) else signUp()
                 }
 
             })
@@ -115,62 +108,49 @@ class SignUpFragment : Fragment() {
                 if (it) openProgressDialog() else progressDialog.dismiss()
             })
 
-            logInMTVClick.observe(viewLifecycleOwner, EventObserver {
-                if (it) view.navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
-            })
-
-            signUpSuccessful.observe(viewLifecycleOwner, {
-                isSuccessADOpen(it)
-            })
-
             errorMessage.observe(viewLifecycleOwner, EventObserver {
 
                 when (it) {
-                    "The email address is badly formatted." -> R.string.enter_a_valid_email_address
-                    "The given password is invalid. [ Password should be at least 6 characters ]" -> R.string.password_should_be_at_least_6_characters
-                    "The email address is already in use by another account." -> R.string.email_address_is_already_in_use_by_another_account
-                    "unverified" -> R.string.verify_your_email_address_to_continue
+                    INVALID_EMAIL_FORMAT -> R.string.enter_a_valid_email_address
+                    INVALID_PASSWORD -> R.string.password_should_be_at_least_6_characters
+                    UNVERIFIED_EMAIL -> R.string.verify_your_email_address_to_continue
+                    EMAIL_ALREADY_EXISTS -> R.string.email_address_is_already_in_use_by_another_account
                     else -> R.string.something_went_wrong_try_again_later
                 }.showToast(requireContext())
 
             })
 
-            continueMBTNClick.observe(viewLifecycleOwner, EventObserver {
+            progressMTVTextDecider.observe(viewLifecycleOwner, {
+                setProgressMTVText(
+                    getString(
 
-                if (it) {
+                        when (it) {
+                            CREATE -> R.string.creating_user
+                            SEND_VERIFICATION -> R.string.sending_verification_code
+                            else -> R.string.blank_message
+                        }
 
-                    if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
-                        isContinueMBTNEnable(false)
-                        isEmailVerified()
-                    }
-
-                }
-
+                    )
+                )
             })
 
             successADOpen.observe(viewLifecycleOwner, {
                 if (it) openSuccessDialog() else successDialog.dismiss()
             })
 
-            progressMTVTextDecider.observe(viewLifecycleOwner, {
-                setProgressMTVText(
-
-                    when (it) {
-                        "create" -> getString(R.string.creating_user)
-                        "verification" -> getString(R.string.sending_verification_code)
-                        else -> ""
-                    }
-
-                )
+            logInMTVClick.observe(viewLifecycleOwner, EventObserver {
+                view.navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
             })
 
             emailVerificationSuccessful.observe(viewLifecycleOwner, {
+                view.navigate(SignUpFragmentDirections.actionSignUpFragmentToSignUpUsernameFragment())
+            })
 
-                isContinueMBTNEnable(true)
+            continueMBTNClick.observe(viewLifecycleOwner, EventObserver {
 
-                if (it) {
-                    isSuccessADOpen(false)
-                    view.navigate(SignUpFragmentDirections.actionSignUpFragmentToSignUpUsernameFragment())
+                if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
+                    isContinueMBTNEnable(false)
+                    isEmailVerified()
                 }
 
             })
@@ -211,31 +191,6 @@ class SignUpFragment : Fragment() {
 
     }
 
-    private fun openSuccessDialog() {
-
-        val binding = DialogSignUpVerificationBinding.inflate(LayoutInflater.from(context))
-
-        binding.let {
-            it.viewModel = viewModel
-            it.lifecycleOwner = viewLifecycleOwner
-        }
-
-        with(viewModel) {
-
-            continueMBTNEnable.observe(viewLifecycleOwner, {
-
-                with(binding.dialogSignUpVerificationContinueMBTN) {
-                    if (it) enable(requireContext()) else disable(requireContext())
-                }
-
-            })
-
-        }
-
-        successDialog.show(binding.root)
-
-    }
-
     private fun openProgressDialog() {
 
         val binding = DialogProgressSignUpBinding.inflate(LayoutInflater.from(context))
@@ -246,6 +201,27 @@ class SignUpFragment : Fragment() {
         }
 
         progressDialog.show(binding.root)
+
+    }
+
+    private fun openSuccessDialog() {
+
+        val binding = DialogSignUpVerificationBinding.inflate(LayoutInflater.from(context))
+
+        binding.let {
+            it.viewModel = viewModel
+            it.lifecycleOwner = viewLifecycleOwner
+        }
+
+        viewModel.continueMBTNEnable.observe(viewLifecycleOwner, {
+
+            with(binding.dialogSignUpVerificationContinueMBTN) {
+                if (it) enable(requireContext()) else disable(requireContext())
+            }
+
+        })
+
+        successDialog.show(binding.root)
 
     }
 

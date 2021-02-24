@@ -49,7 +49,7 @@
             app:layout_constraintTop_toBottomOf="@+id/recyclerview_explore_post_mainV">
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/StyleRegularTextView"
+                style="@style/StyleRegularMaterialTextView"
                 android:text="@{title}"
                 android:textColor="@color/color_supreme_text"
                 android:textSize="16sp" />
@@ -72,7 +72,7 @@
                     android:stepSize=".5" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleRegularTextView"
+                    style="@style/StyleRegularMaterialTextView"
                     android:layout_marginStart="8dp"
                     android:text="@{time}"
                     android:textSize="12sp" />
@@ -80,7 +80,7 @@
             </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/StyleRegularTextView"
+                style="@style/StyleRegularMaterialTextView"
                 android:layout_marginTop="16dp"
                 android:text="@{review}" />
 

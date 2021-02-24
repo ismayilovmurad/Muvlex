@@ -19,7 +19,7 @@
         tools:ignore="RtlSymmetry">
 
         <com.google.android.material.textview.MaterialTextView
-            style="@style/StyleRegularTextView"
+            style="@style/StyleRegularMaterialTextView"
             android:text="@string/discard_draft"
             android:textSize="16sp" />
 
@@ -30,7 +30,7 @@
             android:layout_marginTop="24dp">
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/StyleRegularTextView"
+                style="@style/StyleRegularMaterialTextView"
                 android:background="?android:attr/selectableItemBackground"
                 android:onClick="@{()->writeSeriesReviewViewModel.onKeepMTVClick()}"
                 android:padding="16dp"
@@ -39,7 +39,7 @@
                 android:textSize="16sp" />
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/StyleRegularTextView"
+                style="@style/StyleRegularMaterialTextView"
                 android:background="?android:attr/selectableItemBackground"
                 android:onClick="@{()->writeSeriesReviewViewModel.onDiscardMTVClick()}"
                 android:padding="16dp"

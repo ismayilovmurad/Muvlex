@@ -37,10 +37,3 @@ fun errorMessageAuth(task: Task<AuthResult>): Event<String> {
         task.exception!!.localizedMessage!!.toString()
     ) else Event("") else Event("")
 }
-
-fun hideKeyboard(activity: Activity) {
-    (activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
-        (activity.currentFocus ?: View(activity)).windowToken,
-        0
-    )
-}

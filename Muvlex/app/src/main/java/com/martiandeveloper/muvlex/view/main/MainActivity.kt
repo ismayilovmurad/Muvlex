@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -35,6 +36,8 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
 
     private lateinit var navController: NavController
 
+    private lateinit var dialog: AlertDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -55,6 +58,8 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
         navController =
             (supportFragmentManager.findFragmentById(R.id.activity_main_mainFCV) as NavHostFragment).navController
 
+        dialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
+
         NetworkAvailability(applicationContext).registerNetworkCallback()
 
     }
@@ -63,7 +68,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
         appLanguage =
             getSharedPreferences(LANGUAGE_SHARED_PREFERENCE, Context.MODE_PRIVATE).getString(
                 LANGUAGE_CODE_KEY,
-                "en"
+                ENGLISH_CODE
             )!!
 
         val configuration = resources.configuration
@@ -75,15 +80,13 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
     private fun observe() {
 
         viewModel.languageLLClick.observe(this@MainActivity, EventObserver {
-            if (it) openLanguageDialog()
+            openLanguageDialog()
         })
 
     }
 
     @SuppressLint("InflateParams", "ClickableViewAccessibility")
     private fun openLanguageDialog() {
-
-        val dialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog)
 
         val binding = DialogLanguageBinding.inflate(LayoutInflater.from(applicationContext))
 
@@ -123,6 +126,7 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
         binding.dialogLanguageMainRV.let {
             it.layoutManager = LinearLayoutManager(this)
             it.adapter = adapter
+            it.setHasFixedSize(true)
         }
 
         viewModel.searchETText.observe(this, {
@@ -159,9 +163,9 @@ class MainActivity : AppCompatActivity(), LanguageAdapter.ItemClickListener,
     override fun onItemClick(language: Language) {
 
         when (language.primaryLanguage) {
-            "English" -> saveLanguage("en", "English")
-            "Türkçe" -> saveLanguage("tr", "Türkçe")
-            "Azəricə" -> saveLanguage("az", "Azəricə")
+            ENGLISH -> saveLanguage(ENGLISH_CODE, ENGLISH)
+            TURKISH -> saveLanguage(TURKISH_CODE, TURKISH)
+            AZERBAIJANI -> saveLanguage(AZERBAIJANI_CODE, AZERBAIJANI)
         }
 
     }

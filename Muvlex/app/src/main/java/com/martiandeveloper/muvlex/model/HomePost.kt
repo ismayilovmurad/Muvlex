@@ -10,5 +10,6 @@ data class HomePost(
     var item_id: String? = null,
     var title: String? = null,
     var posterPath: String? = null,
-    var star: String? = null
+    var star: String? = null,
+    var user_id: String? = null
 )

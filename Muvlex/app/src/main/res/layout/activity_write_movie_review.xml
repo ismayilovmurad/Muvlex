@@ -66,14 +66,14 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <com.google.android.material.textview.MaterialTextView
-                            style="@style/StyleRegularTextView"
+                            style="@style/StyleRegularMaterialTextView"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:text="@{writeMovieReviewViewModel.title}"
                             android:textColor="@color/color_supreme_text" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            style="@style/StyleRegularTextView"
+                            style="@style/StyleRegularMaterialTextView"
                             android:text="@string/rate_this_movie"
                             android:textSize="12sp" />
 
@@ -91,7 +91,7 @@
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/activity_write_movie_review_postMTV"
-                        style="@style/StyleRegularTextView"
+                        style="@style/StyleRegularMaterialTextView"
                         android:onClick="@{()->writeMovieReviewViewModel.onPostMTVClick()}"
                         android:paddingStart="8dp"
                         android:paddingTop="8dp"
@@ -124,12 +124,12 @@
                     android:padding="16dp">
 
                     <com.google.android.material.textview.MaterialTextView
-                        style="@style/StyleRegularTextView"
+                        style="@style/StyleRegularMaterialTextView"
                         android:text="@string/reviews_are_public_and_editable"
                         android:textSize="15sp" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        style="@style/StyleRegularTextView"
+                        style="@style/StyleRegularMaterialTextView"
                         android:layout_marginTop="16dp"
                         android:lineSpacingExtra="4sp"
                         android:text="@string/the_name_and_photo_on_your_muvlex_profile_will_appear_with_your_review_please_do_a_fair_rate_and_write_a_relevant_review_about_the_movie_or_series_so_the_other_users_can_get_benefit_from_it" />
@@ -140,7 +140,7 @@
                         android:layout_marginTop="16dp">
 
                         <com.google.android.material.textview.MaterialTextView
-                            style="@style/StyleRegularTextView"
+                            style="@style/StyleRegularMaterialTextView"
                             android:onClick="@{()->writeMovieReviewViewModel.onGotItMTVClick()}"
                             android:paddingStart="4dp"
                             android:paddingTop="8dp"
@@ -151,7 +151,7 @@
                             android:textSize="15sp" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            style="@style/StyleRegularTextView"
+                            style="@style/StyleRegularMaterialTextView"
                             android:layout_marginStart="16dp"
                             android:onClick="@{()->writeMovieReviewViewModel.onLearnMoreMTVClick()}"
                             android:paddingStart="4dp"

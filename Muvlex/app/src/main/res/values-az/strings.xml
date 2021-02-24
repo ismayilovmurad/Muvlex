@@ -24,7 +24,7 @@
     </string>
     <string name="username">İstifadəçi adı</string>
     <string name="by_clicking_next_you_agree_to_our_privacy_policy_terms_conditions">
-        İrəliyə tıklayaraq Məxfilik Siyasətimiz, Qaydalar və Şərtlərimizi qəbul edirsən.
+        İrəliyə tıklayaraq <b>Gizlilik Siyasətimiz</b>, <b>Qaydalar və Şərtlərimizi</b> qəbul edirsən.
     </string>
     <string name="username_not_available">İstifadəçi adı mövcud deyil</string>
     <string name="username_can_only_use_letters_numbers_underscores_and_periods">
@@ -103,6 +103,127 @@
     <string name="invalid_password">Etibarsız şifrə</string>
     <string name="check_your_email_to_verify_your_muvlex_account">Muvlex hesabını təsdiqləmək üçün elektron poçtunu yoxla</string>
     <string name="email_address_is_already_verified">Elektron poçt ünvanı artıq təsdiqlənib</string>
+    <string name="there_are_no_email_clients_installed">Qurulmuş bir e-poçt müştərisi yoxdur</string>
+
+    <!--Privacy Policy and Terms & Conditions-->
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_content">
+        Murad Ismayilov built the Muvlex app as an ad-supported app.
+         This service is provided by Murad Ismayilov at no cost and is intended for use as is.
+        \n\nThis page is used to inform visitors regarding my policies with the collection, use, and disclosure of personal information if anyone decided to use my service.
+        \n\nIf you choose to use my service, then you agree to the collection and use of information about this policy.
+         The personal information that I collect is used for providing and improving the service.
+         I will not use or share your information with anyone except as described in this privacy policy.
+        \n\nThe terms used in this privacy policy have the same meanings as in our terms and conditions, which are accessible at Muvlex unless otherwise defined in this privacy policy.
+    </string>
+    <string name="information_collection_and_use">Information Collection and Use</string>
+    <string name="information_collection_and_use_content">
+        For a better experience, while using our Service, I may require you to provide us with certain personally identifiable information, including but not limited to an email address, username, profile picture, user biography, the followers of a user, the users which a user follows, posts of a user, saved posts of a user, the posts which a user has liked, the posts which a user has commented, the comments of a user.
+         The information that I request will be retained on your device and is not collected by me in any way.
+        \n\nThe app does use third-party services that may collect information used to identify you.
+        \n\nLink to the privacy policy of third-party service providers used by the app
+    </string>
+    <string name="google_play_services">Google Play Services</string>
+    <string name="google_analytics_for_firebase">Google Analytics for Firebase</string>
+    <string name="firebase_crashlytics">Firebase Crashlytics</string>
+    <string name="facebook">Facebook</string>
+    <string name="log_data">Log Data</string>
+    <string name="log_data_content">
+        I want to inform you that whenever you use my service, in case of an error in the app I collect data and information (through third-party products) on your phone called Log Data.
+         This log data may include information such as your device internet protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing my service, the time and date of your use of the service, and other statistics.
+    </string>
+    <string name="cookies">Cookies</string>
+    <string name="cookies_content">
+        Cookies are files with a small amount of data that are commonly used as anonymous unique identifiers.
+         These are sent to your browser from the websites that you visit and are stored on your device\'s internal memory.
+        \n\nThis service does not use these “cookies” explicitly.
+         However, the app may use third-party code and libraries that use “cookies” to collect information and improve their services.
+    </string>
+    <string name="service_providers">Service Providers</string>
+    <string name="service_providers_content">
+        I may employ third-party companies and individuals due to the following reasons:
+        \n\n* To facilitate our service;
+        \n* To provide the service on our behalf;
+        \n* To perform service-related services; or
+        \n* To assist us in analyzing how our service is used.
+        \n\nI want to inform users of this service that these third-parties have access to their personal information.
+         The reason is to perform the tasks assigned to them on our behalf.
+         However, they are obligated not to disclose or use the information for any other purpose.
+    </string>
+    <string name="security">Security</string>
+    <string name="security_content">
+        I value your trust in providing us your personal information, thus we are striving to use commercially acceptable means of protecting it.
+         But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and I cannot guarantee its absolute security.
+    </string>
+    <string name="links_to_other_sites">Links to Other Sites</string>
+    <string name="links_to_other_sites_content">
+        This service may contain links to other sites.
+         If you click on a third-party link, you will be directed to that site.
+         Note that these external sites are not operated by me.
+         Therefore, I strongly advise you to review the privacy policy of these websites.
+         I have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.
+    </string>
+    <string name="children_s_privacy">Children’s Privacy</string>
+    <string name="children_s_privacy_content">
+        These services do not address anyone under the age of 13.
+         I do not knowingly collect personally identifiable information from children under 13.
+         In the case I discover that a child under 13 has provided me with personal information, I immediately delete this from our servers.
+         If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact me so that I will be able to do the necessary actions.
+    </string>
+    <string name="changes_to_this_privacy_policy">Changes to This Privacy Policy</string>
+    <string name="changes_to_this_privacy_policy_content">
+        I may update our privacy policy from time to time.
+         Thus, you are advised to review this page periodically for any changes.
+         I will notify you of any changes by posting the new privacy policy on this page.
+    </string>
+    <string name="this_policy_is_effective_as_of">This policy is effective as of</string>
+    <string name="effective_date">2021–02–23</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="contact_us_content">
+        If you have any questions or suggestions about my privacy policy, do not hesitate to contact me at
+    </string>
+    <string name="muvlexapp_gmail_com">muvlexapp@gmail.com</string>
+    <string name="this_privacy_policy_page_was_created_at">This privacy policy page was created at</string>
+    <string name="privacypolicytemplate_net">privacypolicytemplate.net</string>
+    <string name="and_modified_generated_by">and modified/generated by</string>
+    <string name="app_privacy_policy_generator">App Privacy Policy Generator</string>
+    <string name="terms_and_conditions">Terms &amp; Conditions</string>
+    <string name="terms_and_conditions_content_0">
+        By downloading or using the app, these terms will automatically apply to you – you should make sure therefore that you read them carefully before using the app.
+         You’re not allowed to copy or modify the app, any part of the app, or our trademarks in any way.
+         You’re not allowed to attempt to extract the source code of the app, and you also shouldn’t try to translate the app into other languages or make derivative versions.
+         The app itself, and all the trademarks, copyright, database rights, and other intellectual property rights related to it, still belong to Murad Ismayilov.
+        \n\nMurad Ismayilov is committed to ensuring that the app is as useful and efficient as possible.
+         For that reason, we reserve the right to make changes to the app or to charge for its services, at any time and for any reason.
+         We will never charge you for the app or its services without making it very clear to you exactly what you’re paying for.
+        \n\nThe Muvlex app stores and processes the personal data that you have provided to us, to provide my service.
+         It’s your responsibility to keep your phone and access to the app secure.
+         We, therefore, recommend that you do not jailbreak or root your phone, which is the process of removing software restrictions and limitations imposed by the official operating system of your device.
+         It could make your phone vulnerable to malware/viruses/malicious programs, compromise your phone’s security features and it could mean that the Muvlex app won’t work properly or at all.
+        \n\nThe app does use third-party services that declare its terms and conditions.
+        \n\nLink to terms and conditions of third-party service providers used by the app
+    </string>
+    <string name="terms_and_conditions_content_1">
+        You should be aware that there are certain things that Murad Ismayilov will not take responsibility for.
+         Certain functions of the app will require the app to have an active internet connection.
+         The connection can be Wi-Fi or provided by your mobile network provider, but Murad Ismayilov cannot take responsibility for the app not working at full functionality if you don’t have access to Wi-Fi, and you don’t have any of your data allowance left.
+        \n\nIf you’re using the app outside of an area with Wi-Fi, you should remember that your terms of the agreement with your mobile network provider will still apply.
+         As a result, you may be charged by your mobile provider for the cost of data for the duration of the connection while accessing the app, or other third-party charges.
+         In using the app, you’re accepting responsibility for any such charges, including roaming data charges if you use the app outside of your home territory (i.e. region or country) without turning off data roaming.
+         If you are not the bill payer for the device on which you’re using the app, please be aware that we assume that you have received permission from the bill payer for using the app.
+        \n\nAlong the same lines, Murad Ismayilov cannot always take responsibility for the way you use the app i.e.
+         You need to make sure that your device stays charged – if it runs out of battery and you can’t turn it on to avail of the service, Murad Ismayilov cannot accept responsibility.
+        \n\nConcerning Murad Ismayilov’s responsibility for your use of the app, when you’re using the app, it’s important to bear in mind that although we endeavor to ensure that it is updated and correct at all times, we do rely on third parties to provide information to us so that we can make it available to you.
+         Murad Ismayilov accepts no liability for any loss, direct or indirect, you experience as a result of relying wholly on this functionality of the app.
+        \n\nAt some point, we may wish to update the app.
+         The app is currently available on Android – the requirements for the system(and for any additional systems we decide to extend the availability of the app to) may change, and you’ll need to download the updates if you want to keep using the app.
+         Murad Ismayilov does not promise that it will always update the app so that it is relevant to you and/or works with the Android version that you have installed on your device.
+         However, you promise to always accept updates to the application when offered to you, We may also wish to stop providing the app, and may terminate use of it at any time without giving notice of termination to you.
+         Unless we tell you otherwise, upon any termination, (a) the rights and licenses granted to you in these terms will end; (b) you must stop using the app, and (if needed) delete it from your device.
+    </string>
+    <string name="changes_to_this_terms_and_conditions">Changes to This Terms and Conditions</string>
+    <string name="changes_to_this_terms_and_conditions_content">I may update our terms and conditions from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new terms and conditions on this page.</string>
+    <string name="this_terms_and_conditions_page_was_generated_by">This terms and conditions page was generated by</string>
 
     <string-array name="secondaryLanguage">
         <item>İngiliscə</item>

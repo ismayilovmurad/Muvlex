@@ -17,38 +17,38 @@ import com.martiandeveloper.muvlex.viewmodel.main.SplashViewModel
 
 class SplashFragment : Fragment() {
 
-    private lateinit var splashViewModel: SplashViewModel
+    private lateinit var viewModel: SplashViewModel
 
-    private lateinit var fragmentSplashBinding: FragmentSplashBinding
+    private lateinit var binding: FragmentSplashBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        splashViewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
 
-        fragmentSplashBinding =
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_splash, container, false)
 
-        fragmentSplashBinding.lifecycleOwner = viewLifecycleOwner
+        binding.lifecycleOwner = viewLifecycleOwner
 
         observe()
 
         animateLogo()
 
-        return fragmentSplashBinding.root
+        return binding.root
 
     }
 
     override fun onResume() {
         super.onResume()
-        splashViewModel.decideWhereToGo(fragmentSplashBinding.root)
+        viewModel.decideWhereToGo(binding.root)
     }
 
     private fun observe() {
 
-        splashViewModel.feedEnable.observe(viewLifecycleOwner, {
+        viewModel.feedEnable.observe(viewLifecycleOwner, {
 
             if (!it) Firebase.auth.signOut()
 
@@ -63,7 +63,7 @@ class SplashFragment : Fragment() {
     private fun animateLogo() {
         val alphaAnimation = AlphaAnimation(0.0f, 1.0f)
         alphaAnimation.duration = 1000
-        fragmentSplashBinding.fragmentSplashLogoIV.startAnimation(alphaAnimation)
+        binding.fragmentSplashLogoIV.startAnimation(alphaAnimation)
     }
 
 }

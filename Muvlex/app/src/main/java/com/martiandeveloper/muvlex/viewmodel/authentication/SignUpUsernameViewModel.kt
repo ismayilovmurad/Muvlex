@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.martiandeveloper.muvlex.utils.CHECK_USERNAME
 import com.martiandeveloper.muvlex.utils.Event
+import com.martiandeveloper.muvlex.utils.USERNAME_NOT_AVAILABLE
 import com.martiandeveloper.muvlex.utils.errorMessageVoid
 
 class SignUpUsernameViewModel : ViewModel() {
@@ -21,24 +23,8 @@ class SignUpUsernameViewModel : ViewModel() {
     }
 
 
-    //########## Username error MaterialTextView text
-    private var _usernameErrorMTVText = MutableLiveData<String>()
-    val usernameErrorMTVText: LiveData<String>
-        get() = _usernameErrorMTVText
-
-    fun setUsernameErrorMTVText(text: String) {
-        _usernameErrorMTVText.value = text
-    }
-
-
     //########## Username EditText text
     val usernameETText: MutableLiveData<String> by lazy { MutableLiveData<String>() }
-
-
-    //########## Username ProgressBar gone
-    private var _usernamePBGone = MutableLiveData<Boolean>()
-    val usernamePBGone: LiveData<Boolean>
-        get() = _usernamePBGone
 
 
     //########## Next MaterialButton click
@@ -48,16 +34,6 @@ class SignUpUsernameViewModel : ViewModel() {
 
     fun onNextMBTNClick() {
         _nextMBTNClick.value = Event(true)
-    }
-
-
-    //########## Privacy policy MaterialTextView click
-    private var _privacyPolicyMTVClick = MutableLiveData<Event<Boolean>>()
-    val privacyPolicyMTVClick: LiveData<Event<Boolean>>
-        get() = _privacyPolicyMTVClick
-
-    fun onPrivacyPolicyMTVClick() {
-        _privacyPolicyMTVClick.value = Event(true)
     }
 
 
@@ -71,10 +47,60 @@ class SignUpUsernameViewModel : ViewModel() {
     }
 
 
+    //########## Progress MaterialTextView text decider
+    private var _progressMTVTextDecider = MutableLiveData<String>()
+    val progressMTVTextDecider: LiveData<String>
+        get() = _progressMTVTextDecider
+
+
+    //########## Progress AlertDialog open
+    private var _progressADOpen = MutableLiveData<Boolean>()
+    val progressADOpen: LiveData<Boolean>
+        get() = _progressADOpen
+
+
+    //########## Error message
+    private var _errorMessage = MutableLiveData<Event<String>>()
+    val errorMessage: LiveData<Event<String>>
+        get() = _errorMessage
+
+
+    //########## Save successful
+    private var _saveSuccessful = MutableLiveData<Boolean>()
+    val saveSuccessful: LiveData<Boolean>
+        get() = _saveSuccessful
+
+
+    //########## Username error MaterialTextView text
+    private var _usernameErrorMTVText = MutableLiveData<String>()
+    val usernameErrorMTVText: LiveData<String>
+        get() = _usernameErrorMTVText
+
+    fun setUsernameErrorMTVText(text: String) {
+        _usernameErrorMTVText.value = text
+    }
+
+
+    //########## Username ProgressBar gone
+    private var _usernamePBGone = MutableLiveData<Boolean>()
+    val usernamePBGone: LiveData<Boolean>
+        get() = _usernamePBGone
+
+
     //########## Username ProgressBar gone
     private var _usernameAvailable = MutableLiveData<Boolean>()
     val usernameAvailable: LiveData<Boolean>
         get() = _usernameAvailable
+
+
+    //########## Privacy policy MaterialTextView click
+    private var _privacyPolicyMTVClick = MutableLiveData<Event<Boolean>>()
+    val privacyPolicyMTVClick: LiveData<Event<Boolean>>
+        get() = _privacyPolicyMTVClick
+
+    fun onPrivacyPolicyMTVClick() {
+        _privacyPolicyMTVClick.value = Event(true)
+    }
 
 
     //########## Is username available
@@ -105,16 +131,10 @@ class SignUpUsernameViewModel : ViewModel() {
     }
 
 
-    //########## Error message
-    private var _errorMessage = MutableLiveData<Event<String>>()
-    val errorMessage: LiveData<Event<String>>
-        get() = _errorMessage
-
-
     //########## Save username and email
     fun saveUsernameAndEmail() {
 
-        _progressMTVTextDecider.value = "check"
+        _progressMTVTextDecider.value = CHECK_USERNAME
         _progressADOpen.value = true
 
         Firebase.firestore.collection("users").whereEqualTo("username", usernameETText.value).get()
@@ -128,7 +148,7 @@ class SignUpUsernameViewModel : ViewModel() {
                             _progressMTVTextDecider.value = ""
                             _progressADOpen.value = false
 
-                            _errorMessage.value = Event("username_not_available")
+                            _errorMessage.value = Event(USERNAME_NOT_AVAILABLE)
                         }
 
                     }
@@ -156,9 +176,7 @@ class SignUpUsernameViewModel : ViewModel() {
                                             true else _errorMessage.value = errorMessageVoid(result)
                                     }
 
-                            } else {
-                                _errorMessage.value = Event("")
-                            }
+                            } else _errorMessage.value = Event("")
 
                         }
 
@@ -179,24 +197,6 @@ class SignUpUsernameViewModel : ViewModel() {
             }
 
     }
-
-
-    //########## Progress MaterialTextView text decider
-    private var _progressMTVTextDecider = MutableLiveData<String>()
-    val progressMTVTextDecider: LiveData<String>
-        get() = _progressMTVTextDecider
-
-
-    //########## Progress AlertDialog open
-    private var _progressADOpen = MutableLiveData<Boolean>()
-    val progressADOpen: LiveData<Boolean>
-        get() = _progressADOpen
-
-
-    //########## Save successful
-    private var _saveSuccessful = MutableLiveData<Boolean>()
-    val saveSuccessful: LiveData<Boolean>
-        get() = _saveSuccessful
 
 
     init {

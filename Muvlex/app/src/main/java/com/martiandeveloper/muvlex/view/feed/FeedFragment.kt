@@ -14,7 +14,7 @@ import com.martiandeveloper.muvlex.databinding.FragmentFeedBinding
 
 class FeedFragment : Fragment() {
 
-    private lateinit var fragmentFeedBinding: FragmentFeedBinding
+    private lateinit var binding: FragmentFeedBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,15 +22,15 @@ class FeedFragment : Fragment() {
     ): View {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
-        fragmentFeedBinding =
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_feed, container, false)
 
         NavigationUI.setupWithNavController(
-            fragmentFeedBinding.fragmentFeedMainBNV,
+            binding.fragmentFeedMainBNV,
             (childFragmentManager.findFragmentById(R.id.fragment_feed_mainFCV) as NavHostFragment).navController
         )
 
-        return fragmentFeedBinding.root
+        return binding.root
     }
 
 }

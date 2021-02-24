@@ -38,13 +38,54 @@ class LogInViewModel : ViewModel() {
     }
 
 
-    //########## Get help MaterialTextView click
-    private var _getHelpMTVClick = MutableLiveData<Event<Boolean>>()
-    val getHelpMTVClick: LiveData<Event<Boolean>>
-        get() = _getHelpMTVClick
+    //########## Log in MaterialButton enable
+    private var _logInMBTNEnable = MutableLiveData<Boolean>()
+    val logInMBTNEnable: LiveData<Boolean>
+        get() = _logInMBTNEnable
 
-    fun onGetHelpMTVClick() {
-        _getHelpMTVClick.value = Event(true)
+    fun isLogInMBTNEnable(enable: Boolean) {
+        _logInMBTNEnable.value = enable
+    }
+
+
+    //########## Progress MaterialTextView text decider
+    private var _progressMTVTextDecider = MutableLiveData<String>()
+    val progressMTVTextDecider: LiveData<String>
+        get() = _progressMTVTextDecider
+
+
+    //########## Progress AlertDialog open
+    private var _progressADOpen = MutableLiveData<Boolean>()
+    val progressADOpen: LiveData<Boolean>
+        get() = _progressADOpen
+
+
+    //########## Error message
+    private var _errorMessage = MutableLiveData<Event<String>>()
+    val errorMessage: LiveData<Event<String>>
+        get() = _errorMessage
+
+
+    //########## Log in successful
+    private var _logInSuccessful = MutableLiveData<Boolean>()
+    val logInSuccessful: LiveData<Boolean>
+        get() = _logInSuccessful
+
+
+    //########## Error AlertDialog open
+    private var _errorADOpen = MutableLiveData<Boolean>()
+    val errorADOpen: LiveData<Boolean>
+        get() = _errorADOpen
+
+    private fun isErrorADOpen(open: Boolean) {
+        if (!open) Firebase.auth.signOut()
+        _errorADOpen.value = open
+    }
+
+
+    //########## Okay MaterialButton click
+    fun onOkayMBTNClick() {
+        isErrorADOpen(false)
     }
 
 
@@ -58,20 +99,58 @@ class LogInViewModel : ViewModel() {
     }
 
 
-    //########## Log in MaterialButton enable
-    private var _logInMBTNEnable = MutableLiveData<Boolean>()
-    val logInMBTNEnable: LiveData<Boolean>
-        get() = _logInMBTNEnable
+    //########## Error AlertDialog ProgressBar gone
+    private var _errorADPBGone = MutableLiveData<Boolean>()
+    val errorADPBGone: LiveData<Boolean>
+        get() = _errorADPBGone
 
-    fun isLogInMBTNEnable(enable: Boolean) {
-        _logInMBTNEnable.value = enable
+
+    //########## Error AlertDialog ImageView gone
+    private var _errorADIVGone = MutableLiveData<Boolean>()
+    val errorADIVGone: LiveData<Boolean>
+        get() = _errorADIVGone
+
+
+    //########## Resend successful
+    private var _resendSuccessful = MutableLiveData<Event<Boolean>>()
+    val resendSuccessful: LiveData<Event<Boolean>>
+        get() = _resendSuccessful
+
+
+    //########## Resend and okay MaterialButtons enable
+    private var _resendAndOkayMBTNSEnable = MutableLiveData<Boolean>()
+    val resendAndOkayMBTNSEnable: LiveData<Boolean>
+        get() = _resendAndOkayMBTNSEnable
+
+    fun isResendAndOkayMBTNSEnable(enable: Boolean) {
+        _resendAndOkayMBTNSEnable.value = enable
+    }
+
+
+    //########## Get help MaterialTextView click
+    private var _getHelpMTVClick = MutableLiveData<Event<Boolean>>()
+    val getHelpMTVClick: LiveData<Event<Boolean>>
+        get() = _getHelpMTVClick
+
+    fun onGetHelpMTVClick() {
+        _getHelpMTVClick.value = Event(true)
+    }
+
+
+    //########## Resend MaterialButton click
+    private var _resendMBTNClick = MutableLiveData<Event<Boolean>>()
+    val resendMBTNClick: LiveData<Event<Boolean>>
+        get() = _resendMBTNClick
+
+    fun onResendMBTNClick() {
+        _resendMBTNClick.value = Event(true)
     }
 
 
     //########## Log in
-    fun logIn() {
+    fun logInUser() {
 
-        _progressMTVTextDecider.value = "login"
+        _progressMTVTextDecider.value = LOGIN
         _progressADOpen.value = true
 
         Firebase.auth.signInWithEmailAndPassword(
@@ -88,21 +167,18 @@ class LogInViewModel : ViewModel() {
                         _progressMTVTextDecider.value = ""
                         _progressADOpen.value = false
 
-                        _logInSuccessful.value = false
                         _errorMessage.value = Event("")
                     }
                 else {
                     _progressMTVTextDecider.value = ""
                     _progressADOpen.value = false
 
-                    _logInSuccessful.value = false
                     _errorMessage.value = Event("")
                 }
             else {
                 _progressMTVTextDecider.value = ""
                 _progressADOpen.value = false
 
-                _logInSuccessful.value = false
                 _errorMessage.value = errorMessageAuth(it)
             }
 
@@ -114,24 +190,24 @@ class LogInViewModel : ViewModel() {
     //########## Check email verification
     private fun checkEmailVerification() {
 
-        val user = Firebase.auth.currentUser
+        with(Firebase.auth.currentUser) {
 
-        if (user != null) {
+            if (this != null) {
 
-            if (user.isEmailVerified) hasUserUsername() else {
+                if (isEmailVerified) hasUserUsername() else {
+                    _progressMTVTextDecider.value = ""
+                    _progressADOpen.value = false
+
+                    isErrorADOpen(true)
+                }
+
+            } else {
                 _progressMTVTextDecider.value = ""
                 _progressADOpen.value = false
 
-                _logInSuccessful.value = false
-                _errorMessage.value = Event("Email is not verified")
+                _errorMessage.value = Event("")
             }
 
-        } else {
-            _progressMTVTextDecider.value = ""
-            _progressADOpen.value = false
-
-            _logInSuccessful.value = false
-            _errorMessage.value = Event("")
         }
 
     }
@@ -140,74 +216,40 @@ class LogInViewModel : ViewModel() {
     //########## Has user username
     private fun hasUserUsername() {
 
-        _progressMTVTextDecider.value = "load"
+        _progressMTVTextDecider.value = LOAD
 
-        val user = Firebase.auth.currentUser
+        with(Firebase.auth.currentUser) {
 
-        if (user != null) {
+            if (this != null) {
 
-            Firebase.firestore.collection("users").document(user.uid).get()
-                .addOnCompleteListener {
+                Firebase.firestore.collection("users").document(uid).get()
+                    .addOnCompleteListener {
 
-                    _progressMTVTextDecider.value = ""
-                    _progressADOpen.value = false
+                        _progressMTVTextDecider.value = ""
+                        _progressADOpen.value = false
 
-                    if (it.isSuccessful)
+                        if (it.isSuccessful)
+                            if (it.result != null)
+                                if (it.result!!.get("username") != null) _logInSuccessful.value =
+                                    true else _errorMessage.value = Event(USERNAME_NOT_FOUND)
+                            else _errorMessage.value = Event("")
+                        else _errorMessage.value = errorMessageDocument(it)
 
-                        if (it.result != null)
-
-                            if (it.result!!.get("username") != null) _logInSuccessful.value =
-                                true else {
-                                _logInSuccessful.value = false
-                                _errorMessage.value = Event("Username not found")
-                            }
-                        else {
-                            _logInSuccessful.value = false
-                            _errorMessage.value = Event("")
-                        }
-                    else {
-                        _logInSuccessful.value = false
-                        _errorMessage.value = errorMessageDocument(it)
                     }
 
-                }
+            } else {
+                _errorMessage.value = Event("")
+            }
 
-        } else {
-            _logInSuccessful.value = false
-            _errorMessage.value = Event("")
         }
 
     }
 
 
-    //########## Progress MaterialTextView text decider
-    private var _progressMTVTextDecider = MutableLiveData<String>()
-    val progressMTVTextDecider: LiveData<String>
-        get() = _progressMTVTextDecider
-
-
-    //########## Progress AlertDialog open
-    private var _progressADOpen = MutableLiveData<Boolean>()
-    val progressADOpen: LiveData<Boolean>
-        get() = _progressADOpen
-
-
-    //########## Log in successful
-    private var _logInSuccessful = MutableLiveData<Boolean>()
-    val logInSuccessful: LiveData<Boolean>
-        get() = _logInSuccessful
-
-
-    //########## Error message
-    private var _errorMessage = MutableLiveData<Event<String>>()
-    val errorMessage: LiveData<Event<String>>
-        get() = _errorMessage
-
-
     //########## Is username exists
     fun isUsernameExists() {
 
-        _progressMTVTextDecider.value = "check_username"
+        _progressMTVTextDecider.value = CHECK_USERNAME
         _progressADOpen.value = true
 
         Firebase.firestore.collection("users")
@@ -221,8 +263,7 @@ class LogInViewModel : ViewModel() {
                             _progressMTVTextDecider.value = ""
                             _progressADOpen.value = false
 
-                            _logInSuccessful.value = false
-                            _errorMessage.value = Event("no_account")
+                            _errorMessage.value = Event(INVALID_USER)
                         }
 
                     }
@@ -231,15 +272,13 @@ class LogInViewModel : ViewModel() {
                         _progressMTVTextDecider.value = ""
                         _progressADOpen.value = false
 
-                        _logInSuccessful.value = false
-                        _errorMessage.value = Event("no_account")
+                        _errorMessage.value = Event(INVALID_USER)
                     }
 
                 } else {
                     _progressMTVTextDecider.value = ""
                     _progressADOpen.value = false
 
-                    _logInSuccessful.value = false
                     _errorMessage.value = errorMessageQuery(it)
                 }
 
@@ -251,7 +290,7 @@ class LogInViewModel : ViewModel() {
     //########## Get user email
     private fun getUserEmail(uid: String) {
 
-        _progressMTVTextDecider.value = "load"
+        _progressMTVTextDecider.value = LOAD
 
         Firebase.firestore.collection("users").document(uid)
             .get().addOnCompleteListener {
@@ -260,27 +299,24 @@ class LogInViewModel : ViewModel() {
 
                     if (it.result != null)
 
-                        if (it.result != null) loginWithUsername(
+                        if (it.result != null) login(
                             it.result!!.get("email").toString()
                         ) else {
                             _progressMTVTextDecider.value = ""
                             _progressADOpen.value = false
 
-                            _logInSuccessful.value = false
                             _errorMessage.value = Event("")
                         }
                     else {
                         _progressMTVTextDecider.value = ""
                         _progressADOpen.value = false
 
-                        _logInSuccessful.value = false
                         _errorMessage.value = Event("")
                     }
                 else {
                     _progressMTVTextDecider.value = ""
                     _progressADOpen.value = false
 
-                    _logInSuccessful.value = false
                     _errorMessage.value = errorMessageDocument(it)
                 }
 
@@ -290,9 +326,9 @@ class LogInViewModel : ViewModel() {
 
 
     //########## Get user email
-    private fun loginWithUsername(email: String) {
+    private fun login(email: String) {
 
-        _progressMTVTextDecider.value = "login"
+        _progressMTVTextDecider.value = LOGIN
 
         Firebase.auth.signInWithEmailAndPassword(
             email,
@@ -303,55 +339,14 @@ class LogInViewModel : ViewModel() {
             _progressADOpen.value = false
 
             if (it.isSuccessful)
-
                 if (it.result != null)
-
-                    if (it.result!!.user != null) _logInSuccessful.value = true else {
-                        _logInSuccessful.value = false
-                        _errorMessage.value = Event("")
-                    }
-                else {
-                    _logInSuccessful.value = false
-                    _errorMessage.value = Event("")
-                }
-            else {
-                _logInSuccessful.value = false
-                _errorMessage.value = errorMessageAuth(it)
-            }
+                    if (it.result!!.user != null) _logInSuccessful.value =
+                        true else _errorMessage.value = Event("")
+                else _errorMessage.value = Event("")
+            else _errorMessage.value = errorMessageAuth(it)
 
         }
 
-    }
-
-
-    //########## Resend MaterialButton click
-    private var _resendMBTNClick = MutableLiveData<Event<Boolean>>()
-    val resendMBTNClick: LiveData<Event<Boolean>>
-        get() = _resendMBTNClick
-
-    fun onResendMBTNClick() {
-        _resendMBTNClick.value = Event(true)
-    }
-
-
-    //########## Okay MaterialButton click
-    private var _okayMBTNClick = MutableLiveData<Event<Boolean>>()
-    val okayMBTNClick: LiveData<Event<Boolean>>
-        get() = _okayMBTNClick
-
-    fun onOkayMBTNClick() {
-        _okayMBTNClick.value = Event(true)
-    }
-
-
-    //########## Error AlertDialog open
-    private var _errorADOpen = MutableLiveData<Boolean>()
-    val errorADOpen: LiveData<Boolean>
-        get() = _errorADOpen
-
-    fun isErrorADOpen(open: Boolean) {
-        if (!open) Firebase.auth.signOut()
-        _errorADOpen.value = open
     }
 
 
@@ -373,23 +368,22 @@ class LogInViewModel : ViewModel() {
                         _errorADIVGone.value = false
                         _errorADPBGone.value = true
 
-                        _resendSuccessful.value = Event(it.isSuccessful)
-                        if (!_resendSuccessful.value!!.peekContent()) _errorMessage.value =
-                            errorMessageVoid(it)
+                        if (it.isSuccessful) _resendSuccessful.value =
+                            Event(true) else _errorMessage.value = errorMessageVoid(it)
+
+                        isErrorADOpen(false)
                     }
 
                 } else {
                     _errorADIVGone.value = false
                     _errorADPBGone.value = true
 
-                    _resendSuccessful.value = Event(false)
-                    _errorMessage.value = Event("already_verified")
+                    _errorMessage.value = Event(EMAIL_ALREADY_VERIFIED)
                 }
             else {
                 _errorADIVGone.value = false
                 _errorADPBGone.value = true
 
-                _resendSuccessful.value = Event(false)
                 _errorMessage.value = Event("")
             }
 
@@ -397,33 +391,6 @@ class LogInViewModel : ViewModel() {
 
     }
 
-
-    //########## Resend successful
-    private var _resendSuccessful = MutableLiveData<Event<Boolean>>()
-    val resendSuccessful: LiveData<Event<Boolean>>
-        get() = _resendSuccessful
-
-
-    //########## Error AlertDialog ProgressBar gone
-    private var _errorADPBGone = MutableLiveData<Boolean>()
-    val errorADPBGone: LiveData<Boolean>
-        get() = _errorADPBGone
-
-
-    //########## Error AlertDialog ImageView gone
-    private var _errorADIVGone = MutableLiveData<Boolean>()
-    val errorADIVGone: LiveData<Boolean>
-        get() = _errorADIVGone
-
-
-    //########## Resend and okay MaterialButtons enable
-    private var _resendAndOkayMBTNSEnable = MutableLiveData<Boolean>()
-    val resendAndOkayMBTNSEnable: LiveData<Boolean>
-        get() = _resendAndOkayMBTNSEnable
-
-    fun isResendAndOkayMBTNSEnable(enable: Boolean) {
-        _resendAndOkayMBTNSEnable.value = enable
-    }
 
     init {
         _logInMBTNEnable.value = false

@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="searchViewModel"
+            name="viewModel"
             type="com.martiandeveloper.muvlex.viewmodel.feed.SearchViewModel" />
 
     </data>
@@ -16,34 +16,44 @@
         android:layout_height="match_parent"
         tools:context=".view.feed.SearchFragment">
 
-        <EditText
-            android:id="@+id/fragment_search_searchET"
-            style="@style/StyleRegularEditText"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:hint="@string/search"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:text="@={searchViewModel.searchETText}"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/fragment_search_backIV"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="Autofill,TextFields" />
-
         <ImageView
             android:id="@+id/fragment_search_backIV"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="8dp"
             android:contentDescription="@string/back"
-            android:onClick="@{()->searchViewModel.onBackIVClick()}"
+            android:onClick="@{()->viewModel.onBackIVClick()}"
             android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="@id/fragment_search_searchET"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/fragment_search_searchET" />
+
+        <EditText
+            android:id="@+id/fragment_search_searchET"
+            style="@style/StyleRegularEditText"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/search"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:text="@={viewModel.searchETText}"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@id/fragment_search_searchMTV"
+            app:layout_constraintStart_toEndOf="@id/fragment_search_backIV"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="Autofill" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/fragment_search_searchMTV"
+            style="@style/StyleRegularMaterialTextView"
+            android:layout_marginEnd="8dp"
+            android:onClick="@{()->viewModel.onSearchMTVClick()}"
+            android:text="@string/search"
+            android:textColor="@color/color_regular_action"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_search_searchET"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/fragment_search_searchET" />
 
         <com.google.android.material.tabs.TabLayout

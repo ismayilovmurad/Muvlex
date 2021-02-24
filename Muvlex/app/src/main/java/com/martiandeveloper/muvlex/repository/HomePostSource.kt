@@ -14,7 +14,7 @@ import timber.log.Timber
 
 class HomePostSource(
     private val firebaseFirestore: FirebaseFirestore,
-    private val friendList: ArrayList<String>
+    private val friendList: ArrayList<Any>
 ) : PagingSource<QuerySnapshot, HomePost>() {
 
     override suspend fun load(params: LoadParams<QuerySnapshot>): LoadResult<QuerySnapshot, HomePost> {

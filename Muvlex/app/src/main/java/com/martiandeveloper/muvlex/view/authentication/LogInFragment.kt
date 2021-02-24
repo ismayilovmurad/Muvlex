@@ -27,8 +27,8 @@ class LogInFragment : Fragment() {
 
     private var passwordVisible = false
 
-    private lateinit var progressDialog: AlertDialog
     private lateinit var errorDialog: AlertDialog
+    private lateinit var progressDialog: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,8 +50,8 @@ class LogInFragment : Fragment() {
         setPasswordToggle()
 
         with(requireContext()) {
-            progressDialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
             errorDialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
+            progressDialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
         }
 
         return binding.root
@@ -80,14 +80,12 @@ class LogInFragment : Fragment() {
 
             logInMBTNClick.observe(viewLifecycleOwner, EventObserver {
 
-                if (it) {
+                activity?.hideKeyboard()
 
-                    if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
-                        if (!Patterns.EMAIL_ADDRESS.matcher(emailOrUsernameACTText.value!!)
-                                .matches()
-                        ) isUsernameExists() else logIn()
-                    }
-
+                if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
+                    if (!Patterns.EMAIL_ADDRESS.matcher(emailOrUsernameACTText.value!!)
+                            .matches()
+                    ) isUsernameExists() else logInUser()
                 }
 
             })
@@ -96,45 +94,25 @@ class LogInFragment : Fragment() {
                 if (it) openProgressDialog() else progressDialog.dismiss()
             })
 
-            signUpMTVClick.observe(viewLifecycleOwner, EventObserver {
-                if (it) view.navigate(LogInFragmentDirections.actionLogInFragmentToSignUpFragment())
-            })
-
-            getHelpMTVClick.observe(viewLifecycleOwner, EventObserver {
-                if (it) view.navigate(LogInFragmentDirections.actionLogInFragmentToGetHelpLoggingInFragment())
-            })
-
-            logInSuccessful.observe(viewLifecycleOwner, {
-                if (it) view.navigate(LogInFragmentDirections.actionLogInFragmentToFeedFragment())
-            })
-
             errorMessage.observe(viewLifecycleOwner, EventObserver {
 
                 with(requireContext()) {
 
                     when (it) {
-                        "The email address is badly formatted." -> R.string.enter_a_valid_email_address.showToast(
+                        INVALID_EMAIL_FORMAT -> R.string.enter_a_valid_email_address.showToast(
                             this
                         )
-                        "The given password is invalid. [ Password should be at least 6 characters ]" -> R.string.password_should_be_at_least_6_characters.showToast(
+                        INVALID_USER -> R.string.we_couldnt_find_info_for_this_account.showToast(
                             this
                         )
-                        "The email address is already in use by another account." -> R.string.email_address_is_already_in_use_by_another_account.showToast(
+                        INVALID_PASSWORD -> R.string.password_should_be_at_least_6_characters.showToast(
                             this
                         )
-                        "Email is not verified" -> isErrorADOpen(true)
-
-                        "There is no user record corresponding to this identifier. The user may have been deleted." -> R.string.we_couldnt_find_info_for_this_account.showToast(
+                        WRONG_PASSWORD -> R.string.invalid_password.showToast(
                             this
                         )
-                        "The password is invalid or the user does not have a password." -> R.string.invalid_password.showToast(
-                            this
-                        )
-                        "Username not found" -> view.navigate(LogInFragmentDirections.actionLogInFragmentToSignUpUsernameFragment())
-                        "no_account" -> R.string.we_couldnt_find_info_for_this_account.showToast(
-                            this
-                        )
-                        "already_verified" -> R.string.email_address_is_already_verified.showToast(
+                        USERNAME_NOT_FOUND -> view.navigate(LogInFragmentDirections.actionLogInFragmentToSignUpUsernameFragment())
+                        EMAIL_ALREADY_VERIFIED -> R.string.email_address_is_already_verified.showToast(
                             this
                         )
                         else -> R.string.something_went_wrong_try_again_later.showToast(
@@ -148,47 +126,48 @@ class LogInFragment : Fragment() {
 
             progressMTVTextDecider.observe(viewLifecycleOwner, {
                 setProgressMTVText(
+                    getString(
 
-                    when (it) {
-                        "login" -> getString(R.string.logging_in)
-                        "load" -> getString(R.string.loading_user_data)
-                        "check_username" -> getString(R.string.checking_username)
-                        else -> ""
-                    }
+                        when (it) {
+                            CHECK_USERNAME -> R.string.checking_username
+                            LOAD -> R.string.loading_user_data
+                            LOGIN -> R.string.logging_in
+                            else -> R.string.blank_message
+                        }
 
+                    )
                 )
+            })
+
+            logInSuccessful.observe(viewLifecycleOwner, {
+                view.navigate(LogInFragmentDirections.actionLogInFragmentToFeedFragment())
             })
 
             errorADOpen.observe(viewLifecycleOwner, {
                 if (it) openErrorDialog() else errorDialog.dismiss()
             })
 
-            okayMBTNClick.observe(viewLifecycleOwner, EventObserver {
-                if (it) isErrorADOpen(false)
+            resendSuccessful.observe(viewLifecycleOwner, EventObserver {
+                isResendAndOkayMBTNSEnable(true)
+
+                R.string.check_your_email_to_verify_your_muvlex_account.showToast(requireContext())
             })
 
             resendMBTNClick.observe(viewLifecycleOwner, EventObserver {
 
-                if (it) {
-
-                    if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
-                        isResendAndOkayMBTNSEnable(false)
-                        resendEmailVerification()
-                    }
-
+                if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
+                    isResendAndOkayMBTNSEnable(false)
+                    resendEmailVerification()
                 }
 
             })
 
-            resendSuccessful.observe(viewLifecycleOwner, EventObserver {
+            signUpMTVClick.observe(viewLifecycleOwner, EventObserver {
+                view.navigate(LogInFragmentDirections.actionLogInFragmentToSignUpFragment())
+            })
 
-                isResendAndOkayMBTNSEnable(true)
-
-                if (it) {
-                    R.string.check_your_email_to_verify_your_muvlex_account.showToast(requireContext())
-                    isErrorADOpen(false)
-                }
-
+            getHelpMTVClick.observe(viewLifecycleOwner, EventObserver {
+                view.navigate(LogInFragmentDirections.actionLogInFragmentToGetHelpLoggingInFragment())
             })
 
         }
@@ -249,21 +228,17 @@ class LogInFragment : Fragment() {
             it.lifecycleOwner = viewLifecycleOwner
         }
 
-        with(viewModel) {
+        viewModel.resendAndOkayMBTNSEnable.observe(viewLifecycleOwner, {
 
-            resendAndOkayMBTNSEnable.observe(viewLifecycleOwner, {
+            with(binding.dialogEmailNotVerifiedResendMBTN) {
+                if (it) enable(requireContext()) else disable(requireContext())
+            }
 
-                with(binding.dialogEmailNotVerifiedResendMBTN) {
-                    if (it) enable(requireContext()) else disable(requireContext())
-                }
+            with(binding.dialogEmailNotVerifiedOkayMBTN) {
+                if (it) enable(requireContext()) else disable(requireContext())
+            }
 
-                with(binding.dialogEmailNotVerifiedOkayMBTN) {
-                    if (it) enable(requireContext()) else disable(requireContext())
-                }
-
-            })
-
-        }
+        })
 
         errorDialog.show(binding.root)
 

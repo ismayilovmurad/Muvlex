@@ -105,6 +105,16 @@
             app:popUpTo="@id/signUpUsernameFragment"
             app:popUpToInclusive="true" />
 
+        <action
+            android:id="@+id/action_signUpUsernameFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.martiandeveloper.muvlex.view.authentication.PrivacyPolicyFragment"
+        android:label="PrivacyPolicyFragment"
+        tools:layout="@layout/fragment_privacy_policy" />
 
 </navigation>

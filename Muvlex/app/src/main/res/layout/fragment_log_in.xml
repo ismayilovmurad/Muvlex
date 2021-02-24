@@ -32,7 +32,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleSupremeTextView"
+                    style="@style/StyleSupremeMaterialTextView"
                     android:text="@string/log_in" />
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
@@ -42,6 +42,7 @@
                     android:hint="@string/email_or_username"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
+                    android:longClickable="false"
                     android:singleLine="true"
                     android:text="@={viewModel.emailOrUsernameACTText}" />
 
@@ -60,7 +61,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/fragment_log_in_logInMBTN"
-                    style="@style/StyleSupremeButton"
+                    style="@style/StyleSupremeMaterialButton"
                     android:layout_marginTop="24dp"
                     android:onClick="@{()->viewModel.onLogInMBTNClick()}"
                     android:text="@string/log_in" />
@@ -68,17 +69,16 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center">
+                    android:layout_marginTop="8dp">
 
                     <com.google.android.material.textview.MaterialTextView
-                        style="@style/StyleRegularTextView"
+                        style="@style/StyleRegularMaterialTextView"
                         android:fontFamily="@font/rubik_light"
                         android:text="@string/forgot_password"
                         android:textSize="12sp" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        style="@style/StyleActionTextView"
+                        style="@style/StyleActionMaterialTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="@{()->viewModel.onGetHelpMTVClick()}"
@@ -98,13 +98,13 @@
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleRegularTextView"
+                    style="@style/StyleRegularMaterialTextView"
                     android:fontFamily="@font/rubik_light"
                     android:text="@string/don_t_have_an_account"
                     android:textSize="12sp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleActionTextView"
+                    style="@style/StyleActionMaterialTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{()->viewModel.onSignUpMTVClick()}"

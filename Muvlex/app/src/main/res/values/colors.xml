@@ -8,9 +8,9 @@
     <color name="color_supreme_action">#3D5089</color>
     <color name="color_regular_action">#E9585E</color>
     <color name="color_error">#ff0033</color>
+    <color name="color_link">#667BBB</color>
     <color name="color_success" tools:ignore="UnusedResources">#32C809</color>
 
     <color name="one" tools:ignore="UnusedResources">#3D5089</color>
     <color name="two" tools:ignore="UnusedResources">#5F70B2</color>
-    <color name="three" tools:ignore="UnusedResources">#667BBB</color>
 </resources>

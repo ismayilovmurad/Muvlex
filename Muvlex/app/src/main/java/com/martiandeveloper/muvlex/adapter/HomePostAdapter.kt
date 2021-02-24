@@ -66,7 +66,7 @@ class HomePostAdapter(private val itemCLickListener: ItemClickListener) :
 
                         it.title =
                             if (homePost.title != null) title else context.resources.getString(R.string.unknown)
-                        it.star = if (homePost.star != null) star!!.toFloat() else 1F
+                        it.rate = if (homePost.star != null) star!!.toFloat() else 1F
                         it.time = if (homePost.time != null) getPrettyTime(time!!) else "-"
                         it.review =
                             if (homePost.review != null) review else context.resources.getString(

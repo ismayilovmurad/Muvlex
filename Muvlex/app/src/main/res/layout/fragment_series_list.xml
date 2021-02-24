@@ -33,14 +33,14 @@
             <ProgressBar style="@style/StyleSupremeProgressbar" />
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/StyleRegularTextView"
+                style="@style/StyleRegularMaterialTextView"
                 android:layout_marginStart="4dp"
                 android:text="@{seriesListViewModel.searchingForMTVText}" />
 
         </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
-            style="@style/StyleRegularTextView"
+            style="@style/StyleRegularMaterialTextView"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/no_internet_connection"
@@ -49,7 +49,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
-            style="@style/StyleRegularTextView"
+            style="@style/StyleRegularMaterialTextView"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@{seriesListViewModel.noResultsFoundForMTVText}"
@@ -78,7 +78,7 @@
             <ProgressBar style="@style/StyleSupremeProgressbar" />
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/StyleRegularTextView"
+                style="@style/StyleRegularMaterialTextView"
                 android:layout_marginStart="4dp"
                 android:text="@{seriesListViewModel.searchingForMTVText}" />
 

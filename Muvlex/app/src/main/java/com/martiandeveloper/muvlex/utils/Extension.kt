@@ -1,10 +1,13 @@
 package com.martiandeveloper.muvlex.utils
 
+import android.app.Activity
 import android.content.Context
 import android.text.method.HideReturnsTransformationMethod
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AlertDialog
@@ -69,4 +72,23 @@ fun EditText.setCompoundDrawables(drawable: Int) {
     )
     transformationMethod =
         HideReturnsTransformationMethod.getInstance()
+}
+
+fun Context.showKeyboard(editText: EditText) {
+    (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(
+        editText,
+        InputMethodManager.SHOW_IMPLICIT
+    )
+}
+
+fun Activity.hideKeyboard() {
+    (getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+        (currentFocus ?: View(this)).windowToken, 0
+    )
+}
+
+fun TextView.setToggle(context: Context) {
+    setTextColor(
+        ContextCompat.getColorStateList(context, R.color.textview_toggle)
+    )
 }

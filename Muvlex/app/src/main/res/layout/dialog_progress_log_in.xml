@@ -16,7 +16,7 @@
         android:padding="24dp">
 
         <com.google.android.material.textview.MaterialTextView
-            style="@style/StyleRegularTextView"
+            style="@style/StyleRegularMaterialTextView"
             android:text="@{viewModel.progressMTVText}" />
 
         <ProgressBar

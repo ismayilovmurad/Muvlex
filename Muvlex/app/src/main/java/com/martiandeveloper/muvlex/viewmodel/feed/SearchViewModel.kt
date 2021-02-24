@@ -20,4 +20,14 @@ class SearchViewModel : ViewModel() {
         _backIVClick.value = Event(true)
     }
 
+
+    //########## Search MaterialTextView click
+    private var _searchMTVClick = MutableLiveData<Event<Boolean>>()
+    val searchMTVClick: LiveData<Event<Boolean>>
+        get() = _searchMTVClick
+
+    fun onSearchMTVClick() {
+        _searchMTVClick.value = Event(true)
+    }
+
 }

@@ -1,15 +1,10 @@
 package com.martiandeveloper.muvlex.view.feed
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.TextView.OnEditorActionListener
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -21,51 +16,40 @@ import com.martiandeveloper.muvlex.databinding.FragmentSearchBinding
 import com.martiandeveloper.muvlex.utils.*
 import com.martiandeveloper.muvlex.viewmodel.feed.SearchViewModel
 
-
 class SearchFragment : Fragment() {
 
-    private lateinit var searchViewModel: SearchViewModel
+    private lateinit var viewModel: SearchViewModel
 
-    private lateinit var fragmentSearchBinding: FragmentSearchBinding
+    private lateinit var binding: FragmentSearchBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        searchViewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
 
-        fragmentSearchBinding =
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
 
-        fragmentSearchBinding.let {
-            it.searchViewModel = searchViewModel
+        binding.let {
+            it.viewModel = viewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
 
         observe()
 
+        openKeyboardForSearchET = true
+
+        searchResult.value = ""
+
+        binding.fragmentSearchSearchMTV.setToggle(requireContext())
+
         setRemoveAllListenerToSearchET()
 
-        fragmentSearchBinding.fragmentSearchSearchET.setOnEditorActionListener(
-            OnEditorActionListener { v, actionId, event ->
-                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || (event.action == KeyEvent.ACTION_DOWN
-                            && event.keyCode == KeyEvent.KEYCODE_ENTER)
-                ) {
+        setDoneListenerToSearchET()
 
-                    val imm =
-                        requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
-                    imm!!.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
-
-                    if (!searchViewModel.searchETText.value.isNullOrEmpty()) searchResult.value =
-                        searchViewModel.searchETText.value
-
-                    return@OnEditorActionListener true
-                }
-                false
-            })
-
-        return fragmentSearchBinding.root
+        return binding.root
 
     }
 
@@ -73,68 +57,71 @@ class SearchFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-        val viewPager = fragmentSearchBinding.fragmentSearchMainVP
-        viewPager.adapter = ScreenSlidePagerAdapter(this)
+        with(binding) {
 
-        TabLayoutMediator(fragmentSearchBinding.fragmentSearchMainTL, viewPager) { tab, position ->
+            val viewPager = fragmentSearchMainVP
+            viewPager.adapter = ScreenSlidePagerAdapter()
 
-            tab.text = when (position) {
-                0 -> getString(R.string.movies)
-                1 -> getString(R.string.series)
-                else -> getString(R.string.users)
+            TabLayoutMediator(fragmentSearchMainTL, viewPager) { tab, position ->
+
+                tab.text = getString(
+
+                    when (position) {
+                        0 -> R.string.movies
+                        1 -> R.string.series
+                        else -> R.string.users
+                    }
+
+                )
+
+            }.attach()
+
+            if (openKeyboardForSearchET) {
+                fragmentSearchSearchET.requestFocus()
+                requireContext().showKeyboard(fragmentSearchSearchET)
             }
 
-        }.attach()
-
-        if (openKeyboardForSearchET) {
-            val fragmentSearchSearchET = fragmentSearchBinding.fragmentSearchSearchET
-            fragmentSearchSearchET.requestFocus()
-
-            (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(
-                fragmentSearchSearchET,
-                InputMethodManager.SHOW_IMPLICIT
-            )
         }
 
     }
 
     private fun observe() {
 
-        with(searchViewModel) {
+        with(viewModel) {
 
             searchETText.observe(viewLifecycleOwner, {
 
-                with(fragmentSearchBinding.fragmentSearchSearchET) {
-
-                    if (it.isNullOrEmpty()) {
-                        setCompoundDrawablesWithIntrinsicBounds(
-                            0, 0, 0, 0
-                        )
-
-                        searchResult.value = ""
-                    } else {
-                        setCompoundDrawablesWithIntrinsicBounds(
-                            0,
-                            0,
-                            R.drawable.ic_close,
-                            0
-                        )
-                    }
-
+                with(binding.fragmentSearchSearchET) {
+                    if (it.isNullOrEmpty()) setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        0,
+                        0
+                    ) else setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0)
                 }
 
             })
 
             backIVClick.observe(viewLifecycleOwner, EventObserver {
-                if (it) findNavController().navigateUp()
+                findNavController().navigateUp()
+            })
+
+            searchMTVClick.observe(viewLifecycleOwner, EventObserver {
+
+                activity?.hideKeyboard()
+
+                with(searchETText.value) {
+                    if (!isNullOrEmpty()) searchResult.value = this
+                }
+
             })
 
         }
 
     }
 
-    private inner class ScreenSlidePagerAdapter(fragment: Fragment) :
-        FragmentStateAdapter(fragment) {
+    private inner class ScreenSlidePagerAdapter :
+        FragmentStateAdapter(this@SearchFragment) {
 
         override fun getItemCount(): Int = VIEWPAGER_PAGES
 
@@ -153,22 +140,49 @@ class SearchFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun setRemoveAllListenerToSearchET() {
 
-        fragmentSearchBinding.fragmentSearchSearchET.setOnTouchListener(View.OnTouchListener { _, event ->
+        with(binding.fragmentSearchSearchET) {
 
-            if (event.action == MotionEvent.ACTION_UP)
-                if (fragmentSearchBinding.fragmentSearchSearchET.compoundDrawables[2] != null)
+            setOnTouchListener(View.OnTouchListener { _, event ->
 
-                    if (event.rawX >= fragmentSearchBinding.fragmentSearchSearchET.right - fragmentSearchBinding.fragmentSearchSearchET.compoundDrawables[2].bounds.width()
-                    ) {
-                        searchResult.value = ""
-                        fragmentSearchBinding.fragmentSearchSearchET.text.clear()
+                if (event.action == MotionEvent.ACTION_UP)
+                    if (compoundDrawables[2] != null)
 
-                        return@OnTouchListener true
+                        if (event.rawX >= right - compoundDrawables[2].bounds.width()
+                        ) {
+                            text.clear()
+                            return@OnTouchListener true
+                        }
+
+                false
+
+            })
+
+        }
+
+    }
+
+    private fun setDoneListenerToSearchET() {
+
+        binding.fragmentSearchSearchET.setOnEditorActionListener(
+            OnEditorActionListener { _, actionId, event ->
+
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || (event.action == KeyEvent.ACTION_DOWN
+                            && event.keyCode == KeyEvent.KEYCODE_ENTER)
+                ) {
+
+                    activity?.hideKeyboard()
+
+                    with(viewModel.searchETText.value) {
+                        if (!isNullOrEmpty()) searchResult.value = this
                     }
 
-            false
+                    return@OnEditorActionListener true
 
-        })
+                }
+
+                false
+
+            })
 
     }
 

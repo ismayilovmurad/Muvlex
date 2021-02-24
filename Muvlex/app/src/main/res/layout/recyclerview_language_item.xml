@@ -20,12 +20,12 @@
         android:padding="8dp">
 
         <com.google.android.material.textview.MaterialTextView
-            style="@style/StyleRegularTextView"
+            style="@style/StyleRegularMaterialTextView"
             android:text="@{primaryLanguage}"
             android:textSize="16sp" />
 
         <com.google.android.material.textview.MaterialTextView
-            style="@style/StyleRegularTextView"
+            style="@style/StyleRegularMaterialTextView"
             android:text="@{secondaryLanguage}" />
 
     </LinearLayout>

@@ -30,7 +30,7 @@
             android:visibility="@{viewModel.languageLLGone ? View.GONE : View.VISIBLE}">
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/StyleRegularTextView"
+                style="@style/StyleRegularMaterialTextView"
                 android:text="@string/active_language" />
 
             <ImageView

@@ -18,6 +18,7 @@ import com.martiandeveloper.muvlex.utils.networkAvailable
 import com.martiandeveloper.muvlex.utils.searchResult
 import com.martiandeveloper.muvlex.utils.showToast
 import com.martiandeveloper.muvlex.viewmodel.feed.MovieListViewModel
+import timber.log.Timber
 
 class MovieListFragment : Fragment(), MovieListAdapter.ItemClickListener {
 
@@ -63,7 +64,9 @@ class MovieListFragment : Fragment(), MovieListAdapter.ItemClickListener {
 
             searchResult.observe(viewLifecycleOwner, {
 
-                if (!it.isNullOrEmpty()) {
+                if (!it.isNullOrEmpty()) Timber.d("Search Result: $it")
+
+                /*if (!it.isNullOrEmpty()) {
 
                     isNoResultsFoundForMTVGone(true)
 
@@ -79,7 +82,7 @@ class MovieListFragment : Fragment(), MovieListAdapter.ItemClickListener {
                         isSearchingForLLGone(true)
                     }
 
-                } else isMovieRVGone(true)
+                } else isMovieRVGone(true)*/
 
             })
 

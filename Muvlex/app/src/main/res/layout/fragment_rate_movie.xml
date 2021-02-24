@@ -70,7 +70,7 @@
                             app:srcCompat="@drawable/ic_calendar" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            style="@style/StyleRegularTextView"
+                            style="@style/StyleRegularMaterialTextView"
                             android:layout_marginStart="8dp"
                             android:text="@{rateMovieViewModel.releaseDate}" />
 
@@ -89,7 +89,7 @@
                             app:srcCompat="@drawable/ic_vote_average" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            style="@style/StyleRegularTextView"
+                            style="@style/StyleRegularMaterialTextView"
                             android:layout_marginStart="8dp"
                             android:text="@{rateMovieViewModel.voteAverage}" />
 
@@ -112,13 +112,13 @@
                 android:padding="16dp">
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleRegularTextView"
+                    style="@style/StyleRegularMaterialTextView"
                     android:text="@string/rate_this_movie"
                     android:textColor="@color/color_supreme_text"
                     android:textSize="16sp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleRegularTextView"
+                    style="@style/StyleRegularMaterialTextView"
                     android:layout_marginTop="2dp"
                     android:text="@string/share_your_thoughts_with_other"
                     android:textSize="12sp" />
@@ -136,7 +136,7 @@
                     android:stepSize=".5" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleRegularTextView"
+                    style="@style/StyleRegularMaterialTextView"
                     android:layout_marginTop="8dp"
                     android:text="@string/write_a_review"
                     android:textColor="@color/color_regular_action" />
@@ -168,7 +168,7 @@
                         app:srcCompat="@drawable/ic_genre" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        style="@style/StyleRegularTextView"
+                        style="@style/StyleRegularMaterialTextView"
                         android:layout_marginStart="8dp"
                         android:text="@{rateMovieViewModel.genre}" />
 
@@ -187,21 +187,21 @@
                         app:srcCompat="@drawable/ic_language" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        style="@style/StyleRegularTextView"
+                        style="@style/StyleRegularMaterialTextView"
                         android:layout_marginStart="8dp"
                         android:text="@{rateMovieViewModel.language}" />
 
                 </LinearLayout>
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleRegularTextView"
+                    style="@style/StyleRegularMaterialTextView"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
                     android:text="@string/overview"
                     android:textColor="@color/color_supreme_text" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/StyleRegularTextView"
+                    style="@style/StyleRegularMaterialTextView"
                     android:layout_marginTop="8dp"
                     android:text="@{rateMovieViewModel.overview}"
                     android:textAlignment="center" />

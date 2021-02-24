@@ -23,8 +23,8 @@ class GetHelpFragment : Fragment() {
 
     private lateinit var binding: FragmentGetHelpBinding
 
-    private lateinit var progressDialog: AlertDialog
     private lateinit var successDialog: AlertDialog
+    private lateinit var progressDialog: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,12 +35,7 @@ class GetHelpFragment : Fragment() {
             ViewModelProviders.of(this).get(GetHelpViewModel::class.java)
 
         binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_get_help,
-                container,
-                false
-            )
+            DataBindingUtil.inflate(inflater, R.layout.fragment_get_help, container, false)
 
         binding.let {
             it.viewModel = viewModel
@@ -50,8 +45,8 @@ class GetHelpFragment : Fragment() {
         observe()
 
         with(requireContext()) {
-            progressDialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
             successDialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
+            progressDialog = MaterialAlertDialogBuilder(this, R.style.StyleDialog).create()
         }
 
         return binding.root
@@ -64,7 +59,7 @@ class GetHelpFragment : Fragment() {
 
             continueMBTNEnable.observe(viewLifecycleOwner, {
 
-                with(binding.fragmentGetHelpLoggingInContinueMBTN) {
+                with(binding.fragmentGetHelpContinueMBTN) {
                     if (it) enable(context) else disable(context)
                 }
 
@@ -76,73 +71,56 @@ class GetHelpFragment : Fragment() {
 
             continueMBTNClick.observe(viewLifecycleOwner, EventObserver {
 
-                if (it) {
+                activity?.hideKeyboard()
 
-                    if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
-
-                        activity?.let { it1 -> hideKeyboard(it1) }
-
-                        if (Patterns.EMAIL_ADDRESS.matcher(emailOrUsernameETText.value!!)
-                                .matches()
-                        ) sendPasswordResetEmail(null) else isUsernameExists()
-
-                    }
-
+                if (!networkAvailable) R.string.no_internet_connection.showToast(requireContext()) else {
+                    if (Patterns.EMAIL_ADDRESS.matcher(emailOrUsernameETText.value!!)
+                            .matches()
+                    ) sendPasswordResetEmail(null) else isUsernameExists()
                 }
 
             })
 
             progressADOpen.observe(viewLifecycleOwner, {
-                setProgress(it)
-            })
-
-            sendPasswordResetEmailSuccessful.observe(viewLifecycleOwner, {
-                isSuccessADOpen(true)
+                if (it) openProgressDialog() else progressDialog.dismiss()
             })
 
             errorMessage.observe(viewLifecycleOwner, EventObserver {
 
                 when (it) {
-                    "The email address is badly formatted." -> R.string.enter_a_valid_email_address
-                    "There is no user record corresponding to this identifier. The user may have been deleted." -> R.string.we_couldnt_find_info_for_this_account
-                    "no_account" -> R.string.we_couldnt_find_info_for_this_account
+                    INVALID_EMAIL_FORMAT -> R.string.enter_a_valid_email_address
+                    INVALID_USER -> R.string.we_couldnt_find_info_for_this_account
                     else -> R.string.something_went_wrong_try_again_later
                 }.showToast(requireContext())
 
             })
 
-            progressTVTextDecider.observe(viewLifecycleOwner, {
+            progressMTVTextDecider.observe(viewLifecycleOwner, {
                 setProgressMTVText(
+                    getString(
 
-                    when (it) {
-                        "send" -> getString(R.string.sending_password_reset_email)
-                        "load" -> getString(R.string.loading_user_data)
-                        "check_username" -> getString(R.string.checking_username)
-                        else -> ""
-                    }
+                        when (it) {
+                            CHECK_USERNAME -> R.string.checking_username
+                            LOAD -> R.string.loading_user_data
+                            SEND -> R.string.sending_password_reset_email
+                            else -> R.string.blank_message
+                        }
 
+                    )
                 )
-            })
-
-            okayMBTNClick.observe(viewLifecycleOwner, EventObserver {
-
-                if (it) {
-                    isSuccessADOpen(false)
-                    view.navigate(GetHelpFragmentDirections.actionGetHelpFragmentToLogInFragment())
-                }
-
             })
 
             successADOpen.observe(viewLifecycleOwner, {
                 if (it) openSuccessDialog() else successDialog.dismiss()
             })
 
+            okayMBTNClick.observe(viewLifecycleOwner, EventObserver {
+                isSuccessADOpen(false)
+                view.navigate(GetHelpFragmentDirections.actionGetHelpFragmentToLogInFragment())
+            })
+
         }
 
-    }
-
-    private fun setProgress(progress: Boolean) {
-        if (progress) openProgressDialog() else progressDialog.dismiss()
     }
 
     private fun openProgressDialog() {

@@ -8,10 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.adapter.HomePostAdapter
 import com.martiandeveloper.muvlex.databinding.FragmentHomeBinding
@@ -19,69 +15,58 @@ import com.martiandeveloper.muvlex.model.HomePost
 import com.martiandeveloper.muvlex.viewmodel.feed.HomeViewModel
 import timber.log.Timber
 
-
 class HomeFragment : Fragment(), HomePostAdapter.ItemClickListener {
 
+    private lateinit var viewModel: HomeViewModel
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var binding: FragmentHomeBinding
 
-    private lateinit var fragmentHomeItemBinding: FragmentHomeBinding
-
-    private lateinit var homePostAdapter: HomePostAdapter
-
-    private lateinit var friendList: ArrayList<String>
+    private lateinit var adapter: HomePostAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+    ): View {
 
-        fragmentHomeItemBinding =
+        viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        fragmentHomeItemBinding.lifecycleOwner = viewLifecycleOwner
+        binding.lifecycleOwner = viewLifecycleOwner
 
-        friendList = ArrayList()
+        observe()
 
-        Firebase.firestore.collection("users").document(Firebase.auth.currentUser!!.uid).get().addOnCompleteListener {
+        viewModel.getFollowingList()
 
-            val document: DocumentSnapshot = it.result!!
-            val group = document["following"] as List<String>?
-
-            if (group != null) {
-                for(i in group){
-                    friendList.add(i)
-                }
-            }
-
-
-
-            setUpRecyclerView(friendList)
-
-        }
-
-        return fragmentHomeItemBinding.root
+        return binding.root
 
     }
 
-    private fun setUpRecyclerView(friendList: ArrayList<String>) {
+    private fun observe() {
 
-        homePostAdapter = HomePostAdapter(this)
+        viewModel.followingList.observe(viewLifecycleOwner, {
+            setUpRecyclerView()
+        })
 
-        fragmentHomeItemBinding.fragmentHomeMainRV.let {
+    }
+
+    private fun setUpRecyclerView() {
+
+        adapter = HomePostAdapter(this)
+
+        binding.fragmentHomeMainRV.let {
             it.layoutManager = LinearLayoutManager(context)
-            it.adapter = homePostAdapter
+            it.adapter = adapter
             it.setHasFixedSize(true)
         }
 
-        homeViewModel.getData(homePostAdapter, friendList)
+        viewModel.getData(adapter)
 
     }
 
     override fun onItemClick(homePost: HomePost) {
-        TODO("Not yet implemented")
+        Timber.d(homePost.item_id)
     }
 
 }
-
