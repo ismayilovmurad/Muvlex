@@ -1,7 +1,10 @@
 package com.martiandeveloper.muvlex.model
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Series(
     @Json(name = "backdrop_path")
     val backdropPath: String?,
@@ -29,4 +32,4 @@ data class Series(
     val voteAverage: Float?,
     @Json(name = "vote_count")
     val voteCount: Int?
-)
+) : Parcelable

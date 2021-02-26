@@ -1,7 +1,10 @@
 package com.martiandeveloper.muvlex.model
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Movie(
     @Json(name = "adult")
     val adult: Boolean?,
@@ -31,4 +34,4 @@ data class Movie(
     val voteAverage: Float?,
     @Json(name = "vote_count")
     val voteCount: Int?
-)
+) : Parcelable

@@ -103,6 +103,7 @@ class SearchFragment : Fragment() {
             })
 
             backIVClick.observe(viewLifecycleOwner, EventObserver {
+                activity?.hideKeyboard()
                 findNavController().navigateUp()
             })
 

@@ -66,49 +66,8 @@
         tools:layout="@layout/fragment_rate_movie">
 
         <argument
-            android:name="genreIds"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="id"
-            android:defaultValue="0"
-            app:argType="integer" />
-
-        <argument
-            android:name="originalLanguage"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="originalTitle"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="overview"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="posterPath"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="releaseDate"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="title"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="voteAverage"
-            android:defaultValue="unknown"
-            app:argType="string" />
+            android:name="movie"
+            app:argType="com.martiandeveloper.muvlex.model.Movie" />
 
     </fragment>
 
@@ -119,49 +78,8 @@
         tools:layout="@layout/fragment_rate_series">
 
         <argument
-            android:name="genreIds"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="id"
-            android:defaultValue="0"
-            app:argType="integer" />
-
-        <argument
-            android:name="originalLanguage"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="originalName"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="overview"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="posterPath"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="firstAirDate"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="name"
-            android:defaultValue="unknown"
-            app:argType="string" />
-
-        <argument
-            android:name="voteAverage"
-            android:defaultValue="unknown"
-            app:argType="string" />
+            android:name="series"
+            app:argType="com.martiandeveloper.muvlex.model.Series" />
 
     </fragment>
 
@@ -172,8 +90,8 @@
         tools:layout="@layout/fragment_user">
 
         <argument
-            android:name="user_id"
-            android:defaultValue="none" />
+            android:name="user"
+            app:argType="com.martiandeveloper.muvlex.model.User" />
 
     </fragment>
 

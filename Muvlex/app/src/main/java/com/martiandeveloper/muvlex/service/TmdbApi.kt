@@ -9,13 +9,13 @@ import retrofit2.http.Query
 interface TmdbApi {
     @GET("search/movie")
     suspend fun getMovie(
-        @Query("query") movie: String,
+        @Query("query") query: String,
         @Query("page") page: Int
     ): Response<MovieResult>
 
     @GET("search/tv")
     suspend fun getSeries(
-        @Query("query") series: String,
+        @Query("query") query: String,
         @Query("page") page: Int
     ): Response<SeriesResult>
 }

@@ -9,6 +9,8 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     // Data binding
     id 'kotlin-kapt'
+    // Parcelize annotation
+    id 'kotlin-android-extensions'
 }
 
 android {

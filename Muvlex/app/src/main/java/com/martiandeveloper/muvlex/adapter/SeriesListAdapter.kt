@@ -63,18 +63,20 @@ class SeriesListAdapter(
 
                     with(series) {
 
-                        it.name =
-                            if (name.check()) name else context.resources.getString(
+                        it.name = if (name.check()) name else context.resources.getString(
+                            R.string.unknown
+                        )
+
+                        it.firstAirDate =
+                            if (firstAirDate.check()) firstAirDate!!.split("-")[0] else context.resources.getString(
                                 R.string.unknown
                             )
 
-                        it.firstAirDate =
-                            if (firstAirDate.check()) firstAirDate!!.split(
-                                "-"
-                            )[0] else context.resources.getString(R.string.unknown)
-
                         it.voteAverage =
-                            voteAverage?.toString() ?: context.resources.getString(R.string.unknown)
+                            if (voteAverage.toString().check()) voteAverage!!.toString()
+                                .split("-")[0] else context.resources.getString(
+                                R.string.unknown
+                            )
 
                         it.recyclerviewSeriesItemPosterIV.load(
                             context,
@@ -88,6 +90,7 @@ class SeriesListAdapter(
                     }
 
                     it.executePendingBindings()
+
                 }
 
         }

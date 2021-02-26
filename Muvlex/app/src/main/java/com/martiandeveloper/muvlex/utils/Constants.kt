@@ -40,4 +40,4 @@ const val AZERBAIJANI = "Azəricə"
 const val ENGLISH_CODE = "en"
 const val TURKISH_CODE = "tr"
 const val AZERBAIJANI_CODE = "az"
-const val PAGE_SIZE = 10
+const val PAGE_SIZE = 20

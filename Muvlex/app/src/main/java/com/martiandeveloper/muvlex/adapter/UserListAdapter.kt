@@ -10,14 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.RecyclerviewUserItemBinding
 import com.martiandeveloper.muvlex.model.User
+import com.martiandeveloper.muvlex.utils.check
+import com.martiandeveloper.muvlex.utils.load
 
-
-class UserPostAdapter(private val itemCLickListener: ItemClickListener) :
-    PagingDataAdapter<User, UserPostAdapter.UserListViewHolder>(UserListDiffCallback()) {
+class UserListAdapter(
+    private val itemCLickListener: ItemClickListener
+) : PagingDataAdapter<User, RecyclerView.ViewHolder>(UserDiffCallback()) {
 
     private lateinit var context: Context
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
 
         return UserListViewHolder(
@@ -30,14 +32,14 @@ class UserPostAdapter(private val itemCLickListener: ItemClickListener) :
         )
     }
 
-    override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {
-        holder.bind(context, getItem(position), itemCLickListener)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        (holder as UserListViewHolder).bind(context, getItem(position), itemCLickListener)
     }
 
-    class UserListDiffCallback : DiffUtil.ItemCallback<User>() {
+    class UserDiffCallback : DiffUtil.ItemCallback<User>() {
 
         override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
-            return oldItem.username == newItem.username
+            return oldItem.uid == newItem.uid
         }
 
         override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
@@ -58,18 +60,31 @@ class UserPostAdapter(private val itemCLickListener: ItemClickListener) :
 
                 binding.let {
 
-                    /*with(user) {
+                    with(user) {
 
-                        it.title =
-                            if (user.username != null) username else context.resources.getString(R.string.unknown)
+                        it.username =
+                            if (username.check()) username else context.resources.getString(
+                                R.string.unknown
+                            )
+
+                        it.bio =
+                            if (bio.check()) bio else context.resources.getString(
+                                R.string.unknown
+                            )
+
+                        it.recyclerviewMovieItemPosterIV.load(
+                            context,
+                            if (picture.check()) picture else null
+                        )
 
                         itemView.setOnClickListener {
                             itemClickListener.onItemClick(this)
                         }
 
-                    }*/
+                    }
 
                     it.executePendingBindings()
+
                 }
 
         }
@@ -77,7 +92,7 @@ class UserPostAdapter(private val itemCLickListener: ItemClickListener) :
     }
 
     interface ItemClickListener {
-        fun onItemClick(UserList: User)
+        fun onItemClick(user: User)
     }
 
 }

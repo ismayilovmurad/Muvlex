@@ -2,18 +2,14 @@ package com.martiandeveloper.muvlex.repository
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.ktx.Firebase
-import com.martiandeveloper.muvlex.model.ProfilePost
 import com.martiandeveloper.muvlex.model.User
-import com.martiandeveloper.muvlex.utils.searchResult
+import com.martiandeveloper.muvlex.utils.PAGE_SIZE
 import kotlinx.coroutines.tasks.await
 
 class UserDataSource(
-    private val firebaseFirestore: FirebaseFirestore
+    private val query: String, private val firebaseFirestore: FirebaseFirestore
 ) : PagingSource<QuerySnapshot, User>() {
 
     override suspend fun load(params: LoadParams<QuerySnapshot>): LoadResult<QuerySnapshot, User> {
@@ -21,8 +17,8 @@ class UserDataSource(
         return try {
             val currentPage =
                 params.key ?: firebaseFirestore.collection("users")
-                    .whereGreaterThanOrEqualTo("username", searchResult.value!!)
-                    .limit(10).get()
+                    .whereGreaterThanOrEqualTo("username", query)
+                    .limit(PAGE_SIZE.toLong()).get()
                     .await()
 
             val lastDocumentSnapshot = currentPage.documents[currentPage.size() - 1]
@@ -31,8 +27,8 @@ class UserDataSource(
                 data = currentPage.toObjects(User::class.java),
                 prevKey = null,
                 nextKey = firebaseFirestore.collection("users")
-                    .whereGreaterThanOrEqualTo("username", searchResult.value!!)
-                    .limit(10)
+                    .whereGreaterThanOrEqualTo("username", query)
+                    .limit(PAGE_SIZE.toLong())
                     .startAfter(lastDocumentSnapshot).get().await()
             )
         } catch (e: Exception) {
@@ -42,7 +38,7 @@ class UserDataSource(
     }
 
     override fun getRefreshKey(state: PagingState<QuerySnapshot, User>): QuerySnapshot? {
-        TODO("Not yet implemented")
+        return state.pages.last().nextKey
     }
 
 }

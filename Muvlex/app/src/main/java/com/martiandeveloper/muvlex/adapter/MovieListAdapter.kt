@@ -69,12 +69,15 @@ class MovieListAdapter(
                             )
 
                         it.releaseDate =
-                            if (releaseDate.check()) releaseDate!!.split(
-                                "-"
-                            )[0] else context.resources.getString(R.string.unknown)
+                            if (releaseDate.check()) releaseDate!!.split("-")[0] else context.resources.getString(
+                                R.string.unknown
+                            )
 
                         it.voteAverage =
-                            voteAverage?.toString() ?: context.resources.getString(R.string.unknown)
+                            if (voteAverage.toString().check()) voteAverage!!.toString()
+                                .split("-")[0] else context.resources.getString(
+                                R.string.unknown
+                            )
 
                         it.recyclerviewMovieItemPosterIV.load(
                             context,
@@ -88,6 +91,7 @@ class MovieListAdapter(
                     }
 
                     it.executePendingBindings()
+
                 }
 
         }

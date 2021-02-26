@@ -25,7 +25,7 @@ class UserFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_user, container, false)
 
-        view.findViewById<MaterialButton>(R.id.fragment_user_followBTN).setOnClickListener {
+        /*view.findViewById<MaterialButton>(R.id.fragment_user_followBTN).setOnClickListener {
 
             val userMap = hashMapOf(
                 "following" to arrayListOf(args.userId),
@@ -40,7 +40,7 @@ class UserFragment : Fragment() {
 
             Toast.makeText(context,args.userId,Toast.LENGTH_SHORT).show()
 
-        }
+        }*/
 
         return view
     }

@@ -121,8 +121,7 @@
     </string>
     <string name="information_collection_and_use">Information Collection and Use</string>
     <string name="information_collection_and_use_content">
-        For a better experience, while using our Service, I may require you to provide us with certain personally identifiable information, including but not limited to an email address, username, profile picture, user biography, the followers of a user, the users which a user follows, posts of a user, saved posts of a user, the posts which a user has liked, the posts which a user has commented, the comments of a user.
-         The information that I request will be retained on your device and is not collected by me in any way.
+        For a better experience, while using our service, I may require you to provide us with certain personally identifiable information, including but not limited to an email address, username, profile picture, user biography, the followers of a user, the users which a user follows, posts of a user, saved posts of a user, the posts which a user has liked, the posts which a user has commented, the comments of a user.
         \n\nThe app does use third-party services that may collect information used to identify you.
         \n\nLink to the privacy policy of third-party service providers used by the app
     </string>
@@ -132,7 +131,7 @@
     <string name="facebook">Facebook</string>
     <string name="log_data">Log Data</string>
     <string name="log_data_content">
-        I want to inform you that whenever you use my service, in case of an error in the app I collect data and information (through third-party products) on your phone called Log Data.
+        I want to inform you that whenever you use my service, in case of an error in the app I collect data and information (through third-party products) on your phone called log data.
          This log data may include information such as your device internet protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing my service, the time and date of your use of the service, and other statistics.
     </string>
     <string name="cookies">Cookies</string>

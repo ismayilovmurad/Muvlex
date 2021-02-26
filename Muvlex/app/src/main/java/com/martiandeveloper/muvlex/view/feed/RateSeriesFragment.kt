@@ -45,7 +45,7 @@ class RateSeriesFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
 
         setHasOptionsMenu(true)
 
-        setViewData()
+        //setViewData()
 
         setListeners()
 
@@ -68,7 +68,7 @@ class RateSeriesFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
 
     }
 
-    private fun setViewData() {
+    /*private fun setViewData() {
         if (args.id != 0)
 
             with(rateSeriesViewModel) {
@@ -90,14 +90,14 @@ class RateSeriesFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
                 setOverview(args.overview)
             }
         else R.string.something_went_wrong_try_again_later.showToast(requireContext())
-    }
+    }*/
 
     private fun setListeners() {
         fragmentRateSeriesBinding.fragmentRateSeriesMainRB.onRatingBarChangeListener = this
     }
 
     override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
-        if (rating > 0.0) startActivity(
+        /*if (rating > 0.0) startActivity(
             Intent(
                 context,
                 WriteSeriesReviewActivity::class.java
@@ -111,7 +111,7 @@ class RateSeriesFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
                 "name",
                 if (args.originalName != getString(R.string.unknown)) args.originalName else args.name
             ).putExtra("rating", rating)
-        )
+        )*/
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -1,10 +1,15 @@
 package com.martiandeveloper.muvlex.model
 
-import com.google.firebase.Timestamp
-import com.google.firebase.firestore.IgnoreExtraProperties
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-@IgnoreExtraProperties
+@Parcelize
 data class User(
-    var username: String? = null,
-    var user_id: String? = null,
-)
+    val bio: String? = null,
+    val email: String? = null,
+    val followers: List<String>? = null,
+    val following: List<String>? = null,
+    val picture: String? = null,
+    val uid: String? = null,
+    val username: String? = null
+) : Parcelable

@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.martiandeveloper.muvlex.model.Movie
 import com.martiandeveloper.muvlex.service.TmdbApi
 
-class MovieDataSource(private val movie: String, private val apiService: TmdbApi) :
+class MovieDataSource(private val query: String, private val api: TmdbApi) :
     PagingSource<Int, Movie>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
@@ -14,7 +14,7 @@ class MovieDataSource(private val movie: String, private val apiService: TmdbApi
             val currentLoadingPageKey = params.key ?: 1
             val responseData = mutableListOf<Movie>()
             responseData.addAll(
-                apiService.getMovie(movie, currentLoadingPageKey).body()?.results ?: emptyList()
+                api.getMovie(query, currentLoadingPageKey).body()?.results ?: emptyList()
             )
 
             LoadResult.Page(
@@ -29,7 +29,7 @@ class MovieDataSource(private val movie: String, private val apiService: TmdbApi
     }
 
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
-        TODO("Not yet implemented")
+        return state.anchorPosition
     }
 
 }

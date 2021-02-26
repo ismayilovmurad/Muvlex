@@ -160,11 +160,13 @@ class SignUpUsernameViewModel : ViewModel() {
                             if (this != null) {
 
                                 val map = hashMapOf(
+                                    "bio" to "",
+                                    "email" to email,
+                                    "followers" to arrayListOf<String>(),
+                                    "following" to arrayListOf<String>(),
+                                    "picture" to "",
                                     "uid" to uid,
                                     "username" to usernameETText.value,
-                                    "email" to email,
-                                    "following" to arrayListOf<String>(),
-                                    "followers" to arrayListOf<String>()
                                 )
 
                                 Firebase.firestore.collection("users").document(uid)

@@ -16,6 +16,8 @@
         <item name="android:windowBackground">@color/color_background</item>
         <item name="android:navigationBarColor">@color/color_background</item>
         <item name="colorControlNormal">@color/color_regular_text</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:screenOrientation">portrait</item>
     </style>
 
     <style name="StyleSupremeImageView">

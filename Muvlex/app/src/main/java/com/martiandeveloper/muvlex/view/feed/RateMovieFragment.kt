@@ -17,6 +17,7 @@ import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.FragmentRateMovieBinding
 import com.martiandeveloper.muvlex.utils.*
 import com.martiandeveloper.muvlex.viewmodel.feed.RateMovieViewModel
+import timber.log.Timber
 
 class RateMovieFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
 
@@ -45,9 +46,11 @@ class RateMovieFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
 
         setHasOptionsMenu(true)
 
-        setViewData()
+        //setViewData()
 
         setListeners()
+
+        Timber.d(args.movie.title)
 
         return fragmentRateMovieBinding.root
 
@@ -68,29 +71,29 @@ class RateMovieFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
 
     }
 
-    private fun setViewData() {
-        if (args.id != 0)
+    /*private fun setViewData() {
+        if (args.movie.id != 0)
 
             with(rateMovieViewModel) {
-                setTitle(if (args.originalTitle != getString(R.string.unknown)) args.originalTitle else args.title)
+                setTitle(if (args.movie.originalTitle!! != getString(R.string.unknown)) args.movie.originalTitle!! else args.movie.title!!)
 
                 fragmentRateMovieBinding.fragmentRateMoviePosterIV.load(
                     requireContext(),
-                    if (args.posterPath != getString(R.string.unknown)) "$BASE_URL_POSTER${args.posterPath}" else null
+                    if (args.movie.posterPath != getString(R.string.unknown)) "$BASE_URL_POSTER${args.movie.posterPath}" else null
                 )
 
-                setReleaseDate(args.releaseDate)
+                setReleaseDate(args.movie.releaseDate!!)
 
-                setVoteAverage(args.voteAverage)
+                setVoteAverage(args.movie.voteAverage.toString())
 
-                setGenre(if (args.genreIds != "") args.genreIds else resources.getString(R.string.unknown))
+                setGenre(if (args.movie.genreIds!! != "") args.movie.genreIds else resources.getString(R.string.unknown))
 
-                setLanguage(args.originalLanguage)
+                setLanguage(args.movie.originalLanguage)
 
-                setOverview(args.overview)
+                setOverview(args.movie.overview)
             }
         else R.string.something_went_wrong_try_again_later.showToast(requireContext())
-    }
+    }*/
 
     private fun setListeners() {
         fragmentRateMovieBinding.fragmentRateMovieMainRB.onRatingBarChangeListener = this
@@ -103,13 +106,13 @@ class RateMovieFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
                 WriteMovieReviewActivity::class.java
             ).putExtra(
                 "id",
-                if (args.id != 0) args.id.toString() else null
+                if (args.movie.id != 0) args.movie.id.toString() else null
             ).putExtra(
                 "poster",
-                if (args.posterPath != getString(R.string.unknown)) "$BASE_URL_POSTER${args.posterPath}" else null
+                if (args.movie.posterPath != getString(R.string.unknown)) "$BASE_URL_POSTER${args.movie.posterPath}" else null
             ).putExtra(
                 "title",
-                if (args.originalTitle != getString(R.string.unknown)) args.originalTitle else args.title
+                if (args.movie.originalTitle != getString(R.string.unknown)) args.movie.originalTitle else args.movie.title
             ).putExtra("rating", rating)
         )
     }
