@@ -41,3 +41,4 @@ const val ENGLISH_CODE = "en"
 const val TURKISH_CODE = "tr"
 const val AZERBAIJANI_CODE = "az"
 const val PAGE_SIZE = 20
+const val DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"

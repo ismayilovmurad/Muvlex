@@ -11,13 +11,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.adapter.ExplorePostAdapter
-import com.martiandeveloper.muvlex.adapter.ProfilePostAdapter
 import com.martiandeveloper.muvlex.databinding.FragmentExploreBinding
 import com.martiandeveloper.muvlex.model.ExplorePost
-import com.martiandeveloper.muvlex.model.ProfilePost
 import com.martiandeveloper.muvlex.utils.EventObserver
 import com.martiandeveloper.muvlex.utils.navigate
-import com.martiandeveloper.muvlex.utils.openKeyboardForSearchET
 import com.martiandeveloper.muvlex.viewmodel.feed.ExploreViewModel
 
 class ExploreFragment : Fragment(), ExplorePostAdapter.ItemClickListener {
@@ -54,7 +51,6 @@ class ExploreFragment : Fragment(), ExplorePostAdapter.ItemClickListener {
     private fun observe() {
 
         exploreViewModel.searchETClick.observe(viewLifecycleOwner, EventObserver {
-            openKeyboardForSearchET = it
             if (it) view.navigate(ExploreFragmentDirections.actionExploreFragmentToSearchFragment())
         })
 
@@ -75,7 +71,7 @@ class ExploreFragment : Fragment(), ExplorePostAdapter.ItemClickListener {
     }
 
     override fun onItemClick(profilePost: ExplorePost) {
-        Toast.makeText(context, profilePost.star, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, profilePost.rating, Toast.LENGTH_SHORT).show()
     }
 
 }

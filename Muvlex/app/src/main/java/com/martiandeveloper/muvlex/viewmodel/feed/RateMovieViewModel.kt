@@ -6,16 +6,6 @@ import androidx.lifecycle.ViewModel
 
 class RateMovieViewModel : ViewModel() {
 
-    //########## Title MaterialTextView text
-    private var _title = MutableLiveData<String>()
-    val title: LiveData<String>
-        get() = _title
-
-    fun setTitle(title: String) {
-        _title.value = title
-    }
-
-
     //########## Release date MaterialTextView text
     private var _releaseDate = MutableLiveData<String>()
     val releaseDate: LiveData<String>

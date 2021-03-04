@@ -1,5 +1,6 @@
 package com.martiandeveloper.muvlex.view.feed
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,6 @@ import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.adapter.UserListAdapter
 import com.martiandeveloper.muvlex.databinding.FragmentUserListBinding
 import com.martiandeveloper.muvlex.model.User
-import com.martiandeveloper.muvlex.utils.navigate
 import com.martiandeveloper.muvlex.utils.searchResult
 import com.martiandeveloper.muvlex.viewmodel.feed.UserListViewModel
 
@@ -60,7 +60,7 @@ class UserListFragment : Fragment(), UserListAdapter.ItemClickListener {
     }
 
     override fun onItemClick(user: User) {
-        view.navigate(SearchFragmentDirections.actionSearchFragmentToUserFragment(user))
+        startActivity(Intent(context, UserActivity::class.java).putExtra("user", user))
     }
 
 }

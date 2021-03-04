@@ -15,6 +15,7 @@ import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.FragmentSearchBinding
 import com.martiandeveloper.muvlex.utils.*
 import com.martiandeveloper.muvlex.viewmodel.feed.SearchViewModel
+import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment : Fragment() {
 
@@ -38,8 +39,6 @@ class SearchFragment : Fragment() {
         }
 
         observe()
-
-        openKeyboardForSearchET = true
 
         searchResult.value = ""
 
@@ -76,10 +75,8 @@ class SearchFragment : Fragment() {
 
             }.attach()
 
-            if (openKeyboardForSearchET) {
-                fragmentSearchSearchET.requestFocus()
-                requireContext().showKeyboard(fragmentSearchSearchET)
-            }
+            fragmentSearchSearchET.requestFocus()
+            requireContext().showKeyboard(fragmentSearchSearchET)
 
         }
 

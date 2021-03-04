@@ -1,8 +1,5 @@
 package com.martiandeveloper.muvlex.utils
 
-import android.app.Activity
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -12,7 +9,6 @@ import com.google.firebase.firestore.QuerySnapshot
 var networkAvailable = false
 var appLanguage = "en"
 var searchResult: MutableLiveData<String> = MutableLiveData()
-var openKeyboardForSearchET = false
 
 fun errorMessageDocument(task: Task<DocumentSnapshot>): Event<String> {
     return if (task.exception != null) if (task.exception!!.localizedMessage != null) Event(

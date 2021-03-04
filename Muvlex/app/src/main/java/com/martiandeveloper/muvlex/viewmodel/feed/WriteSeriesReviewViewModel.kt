@@ -6,17 +6,23 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.martiandeveloper.muvlex.model.Series
+import com.martiandeveloper.muvlex.utils.DATE_PATTERN
 import com.martiandeveloper.muvlex.utils.Event
+import com.martiandeveloper.muvlex.utils.check
 import com.martiandeveloper.muvlex.utils.errorMessageVoid
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class WriteSeriesReviewViewModel : ViewModel() {
 
-    //########## Title MaterialTextView text
+    //########## Name MaterialTextView text
     private var _name = MutableLiveData<String>()
     val name: LiveData<String>
         get() = _name
 
-    fun setTitle(name: String) {
+    fun setName(name: String) {
         _name.value = name
     }
 
@@ -36,19 +42,11 @@ class WriteSeriesReviewViewModel : ViewModel() {
     val postMTVGone: LiveData<Boolean>
         get() = _postMTVGone
 
-    private fun isPostMTVGone(gone: Boolean) {
-        _postMTVGone.value = gone
-    }
-
 
     //########## Post ProgressBar gone
     private var _postPBGone = MutableLiveData<Boolean>()
     val postPBGone: LiveData<Boolean>
         get() = _postPBGone
-
-    fun isPostPBGone(gone: Boolean) {
-        _postPBGone.value = gone
-    }
 
 
     //########## Post ProgressBar gone
@@ -56,18 +54,10 @@ class WriteSeriesReviewViewModel : ViewModel() {
     val noteCVGone: LiveData<Boolean>
         get() = _noteCVGone
 
-    fun isNoteCVGone(gone: Boolean) {
-        _noteCVGone.value = gone
-    }
-
 
     //########## Got it MaterialTextView click
-    private var _gotItMTVClick = MutableLiveData<Event<Boolean>>()
-    val gotItMTVClick: LiveData<Event<Boolean>>
-        get() = _gotItMTVClick
-
     fun onGotItMTVClick() {
-        _gotItMTVClick.value = Event(true)
+        _noteCVGone.value = true
     }
 
 
@@ -81,13 +71,13 @@ class WriteSeriesReviewViewModel : ViewModel() {
     }
 
 
-    //########## RatingBar star
-    private var _star = MutableLiveData<Float>()
-    val star: LiveData<Float>
-        get() = _star
+    //########## RatingBar rating value
+    private var _rating = MutableLiveData<Float>()
+    val rating: LiveData<Float>
+        get() = _rating
 
-    fun setStar(star: Float) {
-        _star.value = star
+    fun setRating(star: Float) {
+        _rating.value = star
     }
 
 
@@ -104,6 +94,7 @@ class WriteSeriesReviewViewModel : ViewModel() {
         _keepMTVClick.value = Event(true)
     }
 
+
     //########## Discard MaterialTextView click
     private var _discardMTVClick = MutableLiveData<Event<Boolean>>()
     val discardMTVClick: LiveData<Event<Boolean>>
@@ -115,42 +106,65 @@ class WriteSeriesReviewViewModel : ViewModel() {
 
 
     //########## Save rating and review
-    fun save(id: String) {
+    fun save(series: Series) {
 
-        isPostMTVGone(true)
-        isPostPBGone(false)
+        _postMTVGone.value = true
+        _postPBGone.value = false
 
-        val user = Firebase.auth.currentUser
+        with(Firebase.auth.currentUser) {
 
-        if (user != null) {
+            if (this != null) {
 
-            val usernameMap = hashMapOf(
-                "user_id" to user.uid,
-                "series_id" to id,
-                "rating" to _star.value.toString(),
-                "review" to if (!reviewETText.value.isNullOrEmpty()) {
-                    if (reviewETText.value.toString().trimStart().trimEnd()
-                            .isNotEmpty()
-                    ) reviewETText.value.toString().trimStart().trimEnd() else "no_review"
-                } else "no_review",
-                "time" to (System.currentTimeMillis() / 1000).toString()
-            )
+                val map = hashMapOf(
+                    "backdropPath" to if (series.backdropPath.check()) series.backdropPath else "null",
+                    "genreIds" to (series.genreIds ?: arrayListOf()),
+                    "id" to (series.id ?: 0),
+                    "originalLanguage" to if (series.originalLanguage.check()) series.originalLanguage else "null",
+                    "originalTitle" to if (series.originalName.check()) series.originalName else "null",
+                    "overview" to if (series.overview.check()) series.overview else "null",
+                    "popularity" to (series.popularity ?: 0.0),
+                    "posterPath" to if (series.posterPath.check()) series.posterPath else "null",
+                    "rating" to rating.value.toString(),
+                    "releaseDate" to if (series.firstAirDate.check()) series.firstAirDate else "null",
+                    "review" to if (!reviewETText.value.isNullOrEmpty()) {
+                        if (reviewETText.value.toString().trimStart().trimEnd()
+                                .isNotEmpty()
+                        ) reviewETText.value.toString().trimStart().trimEnd() else "No Review"
+                    } else "No Review",
+                    "time" to (getDateFromString(
+                        SimpleDateFormat(
+                            DATE_PATTERN,
+                            Locale.getDefault()
+                        ).format(Date())
+                    ) ?: "null"),
+                    "title" to if (series.name.check()) series.name else "null",
+                    "type" to "movie",
+                    "uid" to uid,
+                    "voteAverage" to (series.voteAverage ?: 0.0),
+                    "voteCount" to (series.voteCount ?: 0)
+                )
 
-            Firebase.firestore.collection("posts").document("${user.uid}_$id")
-                .set(usernameMap).addOnCompleteListener {
-                    isPostPBGone(true)
-                    isPostMTVGone(false)
+                Firebase.firestore.collection("posts").document("${uid}_${series.id}")
+                    .set(map).addOnCompleteListener {
+                        _postPBGone.value = true
+                        _postMTVGone.value = false
 
-                    _saveSuccessful.value = it.isSuccessful
+                        if (it.isSuccessful) _saveSuccessful.value = true else _errorMessage.value =
+                            errorMessageVoid(it)
+                    }
 
-                    if (!_saveSuccessful.value!!) _errorMessage.value = errorMessageVoid(it)
-                }
+            } else _errorMessage.value = Event("")
 
-        } else {
-            _saveSuccessful.value = false
-            _errorMessage.value = Event("")
         }
 
+    }
+
+    private fun getDateFromString(currentDate: String): Date? {
+        return try {
+            SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).parse(currentDate)
+        } catch (e: ParseException) {
+            null
+        }
     }
 
 
@@ -163,5 +177,10 @@ class WriteSeriesReviewViewModel : ViewModel() {
     private var _errorMessage = MutableLiveData<Event<String>>()
     val errorMessage: LiveData<Event<String>>
         get() = _errorMessage
+
+
+    init {
+        _postPBGone.value = true
+    }
 
 }

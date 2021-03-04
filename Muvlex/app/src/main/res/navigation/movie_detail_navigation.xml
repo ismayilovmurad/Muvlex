@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movie_detail_navigation"
+    app:startDestination="@id/rateMovieFragment">
+
+    <fragment
+        android:id="@+id/rateMovieFragment"
+        android:name="com.martiandeveloper.muvlex.view.feed.RateMovieFragment"
+        android:label="RateMovieFragment"
+        tools:layout="@layout/fragment_rate_movie">
+
+        <argument
+            android:name="movie"
+            app:argType="com.martiandeveloper.muvlex.model.Movie" />
+
+        <action
+            android:id="@+id/action_rateMovieFragment_to_writeMovieReviewFragment"
+            app:destination="@id/writeMovieReviewFragment"
+            app:popUpTo="@id/rateMovieFragment"
+            app:popUpToInclusive="true"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/writeMovieReviewFragment"
+        android:name="com.martiandeveloper.muvlex.view.feed.WriteMovieReviewFragment"
+        android:label="WriteMovieReviewFragment"
+        tools:layout="@layout/fragment_write_movie_review">
+
+        <argument
+            android:name="movie"
+            app:argType="com.martiandeveloper.muvlex.model.Movie" />
+
+        <argument
+            android:name="rating"
+            android:defaultValue=".5"
+            app:argType="float" />
+
+    </fragment>
+
+</navigation>

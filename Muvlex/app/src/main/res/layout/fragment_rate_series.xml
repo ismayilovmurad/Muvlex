@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="rateSeriesViewModel"
+            name="viewModel"
             type="com.martiandeveloper.muvlex.viewmodel.feed.RateSeriesViewModel" />
 
     </data>
@@ -15,21 +15,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
-        tools:context=".view.feed.RateSeriesFragment">
+        tools:context=".view.feed.RateMovieFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/fragment_rate_series_mainMTB"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:backgroundTint="@color/color_background"
-                android:elevation="0dp"
-                app:title="@{rateSeriesViewModel.name}"
-                app:titleTextColor="@color/color_supreme_text" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,8 +36,8 @@
 
                     <ImageView
                         android:id="@+id/fragment_rate_series_posterIV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:contentDescription="@string/poster" />
 
                 </androidx.cardview.widget.CardView>
@@ -71,8 +62,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/StyleRegularMaterialTextView"
+                            android:layout_width="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="@{rateSeriesViewModel.firstAirDate}" />
+                            android:text="@{viewModel.firstAirDate}" />
 
                     </LinearLayout>
 
@@ -91,7 +83,7 @@
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/StyleRegularMaterialTextView"
                             android:layout_marginStart="8dp"
-                            android:text="@{rateSeriesViewModel.voteAverage}" />
+                            android:text="@{viewModel.voteAverage}" />
 
                     </LinearLayout>
 
@@ -113,7 +105,7 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/StyleRegularMaterialTextView"
-                    android:text="@string/rate_this_series"
+                    android:text="@string/rate_this_movie"
                     android:textColor="@color/color_supreme_text"
                     android:textSize="16sp" />
 
@@ -125,15 +117,9 @@
 
                 <RatingBar
                     android:id="@+id/fragment_rate_series_mainRB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/StyleRegularRatingBar"
                     android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:numStars="5"
-                    android:progressBackgroundTint="@color/color_on_background"
-                    android:progressTint="@color/color_supreme_action"
-                    android:secondaryProgressTint="@color/color_on_background"
-                    android:stepSize=".5" />
+                    android:layout_marginTop="16dp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/StyleRegularMaterialTextView"
@@ -170,7 +156,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         style="@style/StyleRegularMaterialTextView"
                         android:layout_marginStart="8dp"
-                        android:text="@{rateSeriesViewModel.genre}" />
+                        android:text="@{viewModel.genre}" />
 
                 </LinearLayout>
 
@@ -189,7 +175,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         style="@style/StyleRegularMaterialTextView"
                         android:layout_marginStart="8dp"
-                        android:text="@{rateSeriesViewModel.language}" />
+                        android:text="@{viewModel.language}" />
 
                 </LinearLayout>
 
@@ -203,7 +189,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/StyleRegularMaterialTextView"
                     android:layout_marginTop="8dp"
-                    android:text="@{rateSeriesViewModel.overview}"
+                    android:text="@{viewModel.overview}"
                     android:textAlignment="center" />
 
             </LinearLayout>

@@ -18,9 +18,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Muvlex"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.feed.WriteSeriesReviewActivity" />
-        <activity android:name=".view.feed.WriteMovieReviewActivity" />
-        <activity android:name=".view.main.MainActivity">
+        <activity android:name=".view.feed.UserActivity"></activity>
+        <activity
+            android:name=".view.feed.SeriesDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".view.feed.MovieDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".view.main.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />

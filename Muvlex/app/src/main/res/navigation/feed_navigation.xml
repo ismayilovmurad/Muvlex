@@ -46,28 +46,12 @@
         tools:layout="@layout/fragment_search">
 
         <action
-            android:id="@+id/action_searchFragment_to_rateMovieFragment"
-            app:destination="@id/rateMovieFragment" />
-
-        <action
             android:id="@+id/action_searchFragment_to_rateSeriesFragment"
             app:destination="@id/rateSeriesFragment" />
 
         <action
             android:id="@+id/action_searchFragment_to_userFragment"
             app:destination="@id/userFragment" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/rateMovieFragment"
-        android:name="com.martiandeveloper.muvlex.view.feed.RateMovieFragment"
-        android:label="RateMovieFragment"
-        tools:layout="@layout/fragment_rate_movie">
-
-        <argument
-            android:name="movie"
-            app:argType="com.martiandeveloper.muvlex.model.Movie" />
 
     </fragment>
 

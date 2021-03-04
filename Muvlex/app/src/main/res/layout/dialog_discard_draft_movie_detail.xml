@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.martiandeveloper.muvlex.viewmodel.feed.WriteSeriesReviewViewModel" />
+            type="com.martiandeveloper.muvlex.viewmodel.feed.MovieDetailViewModel" />
 
     </data>
 

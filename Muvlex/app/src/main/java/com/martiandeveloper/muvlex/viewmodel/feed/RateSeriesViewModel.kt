@@ -6,22 +6,12 @@ import androidx.lifecycle.ViewModel
 
 class RateSeriesViewModel : ViewModel() {
 
-    //########## Title MaterialTextView text
-    private var _name = MutableLiveData<String>()
-    val name: LiveData<String>
-        get() = _name
-
-    fun setTitle(name: String) {
-        _name.value = name
-    }
-
-
-    //########## Release date MaterialTextView text
+    //########## First air date MaterialTextView text
     private var _firstAirDate = MutableLiveData<String>()
     val firstAirDate: LiveData<String>
         get() = _firstAirDate
 
-    fun setReleaseDate(firstAirDate: String) {
+    fun setFirstAirDate(firstAirDate: String) {
         _firstAirDate.value = firstAirDate
     }
 

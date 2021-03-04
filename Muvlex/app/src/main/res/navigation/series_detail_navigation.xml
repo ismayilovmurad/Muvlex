@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/series_detail_navigation"
+    app:startDestination="@id/rateSeriesFragment">
+
+    <fragment
+        android:id="@+id/rateSeriesFragment"
+        android:name="com.martiandeveloper.muvlex.view.feed.RateSeriesFragment"
+        android:label="RateSeriesFragment"
+        tools:layout="@layout/fragment_rate_series">
+
+        <argument
+            android:name="series"
+            app:argType="com.martiandeveloper.muvlex.model.Series" />
+
+        <action
+            android:id="@+id/action_rateSeriesFragment_to_writeSeriesReviewFragment"
+            app:destination="@id/writeSeriesReviewFragment"
+            app:popUpTo="@id/rateSeriesFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/writeSeriesReviewFragment"
+        android:name="com.martiandeveloper.muvlex.view.feed.WriteSeriesReviewFragment"
+        android:label="WriteSeriesReviewFragment"
+        tools:layout="@layout/fragment_write_series_review">
+
+        <argument
+            android:name="series"
+            app:argType="com.martiandeveloper.muvlex.model.Series" />
+
+        <argument
+            android:name="rating"
+            android:defaultValue=".5"
+            app:argType="float" />
+
+    </fragment>
+
+</navigation>

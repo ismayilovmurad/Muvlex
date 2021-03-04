@@ -1,5 +1,6 @@
 package com.martiandeveloper.muvlex.view.feed
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,6 @@ import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.adapter.MovieListAdapter
 import com.martiandeveloper.muvlex.databinding.FragmentMovieListBinding
 import com.martiandeveloper.muvlex.model.Movie
-import com.martiandeveloper.muvlex.utils.navigate
 import com.martiandeveloper.muvlex.utils.searchResult
 import com.martiandeveloper.muvlex.viewmodel.feed.MovieListViewModel
 
@@ -60,7 +60,7 @@ class MovieListFragment : Fragment(), MovieListAdapter.ItemClickListener {
     }
 
     override fun onItemClick(movie: Movie) {
-        view.navigate(SearchFragmentDirections.actionSearchFragmentToRateMovieFragment(movie))
+        startActivity(Intent(context, MovieDetailActivity::class.java).putExtra("movie", movie))
     }
 
 }

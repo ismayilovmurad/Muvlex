@@ -60,6 +60,11 @@
     <string name="keep">Saxla</string>
     <string name="discard">At</string>
     <string name="rate_this_series">Bu seriyala səs ver</string>
+    <string name="follow">İzlə</string>
+    <string name="unfollow">izləməyi burax</string>
+    <string name="posts">Paylaşım</string>
+    <string name="followers">İzləyici</string>
+    <string name="following">İzlədiyim</string>
 
     <!--Alert texts-->
     <string name="creating_user">İstifadəçi yaradılır</string>
@@ -104,6 +109,7 @@
     <string name="check_your_email_to_verify_your_muvlex_account">Muvlex hesabını təsdiqləmək üçün elektron poçtunu yoxla</string>
     <string name="email_address_is_already_verified">Elektron poçt ünvanı artıq təsdiqlənib</string>
     <string name="there_are_no_email_clients_installed">Qurulmuş bir e-poçt müştərisi yoxdur</string>
+    <string name="you_have_just_shared_a_new_review">Yeni bir rəy paylaşdın</string>
 
     <!--Privacy Policy and Terms & Conditions-->
     <string name="privacy_policy">Gizlilik Siyasəti</string>

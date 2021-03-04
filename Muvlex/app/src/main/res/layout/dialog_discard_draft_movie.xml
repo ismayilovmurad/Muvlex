@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
         <variable
-            name="writeMovieReviewViewModel"
+            name="viewModel"
             type="com.martiandeveloper.muvlex.viewmodel.feed.WriteMovieReviewViewModel" />
 
     </data>
@@ -14,12 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        tools:ignore="RtlSymmetry">
+        android:padding="8dp">
 
         <com.google.android.material.textview.MaterialTextView
             style="@style/StyleRegularMaterialTextView"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="@string/discard_draft"
             android:textSize="16sp" />
 
@@ -32,7 +31,7 @@
             <com.google.android.material.textview.MaterialTextView
                 style="@style/StyleRegularMaterialTextView"
                 android:background="?android:attr/selectableItemBackground"
-                android:onClick="@{()->writeMovieReviewViewModel.onKeepMTVClick()}"
+                android:onClick="@{()->viewModel.onKeepMTVClick()}"
                 android:padding="16dp"
                 android:text="@string/keep"
                 android:textColor="@color/color_regular_action"
@@ -41,7 +40,7 @@
             <com.google.android.material.textview.MaterialTextView
                 style="@style/StyleRegularMaterialTextView"
                 android:background="?android:attr/selectableItemBackground"
-                android:onClick="@{()->writeMovieReviewViewModel.onDiscardMTVClick()}"
+                android:onClick="@{()->viewModel.onDiscardMTVClick()}"
                 android:padding="16dp"
                 android:text="@string/discard"
                 android:textColor="@color/color_regular_action"

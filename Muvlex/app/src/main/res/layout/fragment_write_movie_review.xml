@@ -8,15 +8,15 @@
         <import type="android.view.View" />
 
         <variable
-            name="writeSeriesReviewViewModel"
-            type="com.martiandeveloper.muvlex.viewmodel.feed.WriteSeriesReviewViewModel" />
+            name="viewModel"
+            type="com.martiandeveloper.muvlex.viewmodel.feed.WriteMovieReviewViewModel" />
 
     </data>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="view.feed.WriteSeriesReviewActivity">
+        tools:context="view.feed.WriteMovieReviewFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:padding="8dp">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/activity_write_series_review_mainMTB"
+                android:id="@+id/fragment_write_movie_review_mainMTB"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:backgroundTint="@color/color_background">
@@ -36,7 +36,7 @@
                     android:gravity="center_vertical">
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/activity_write_series_review_posterCV"
+                        android:id="@+id/fragment_write_movie_review_posterCV"
                         android:layout_width="32dp"
                         android:layout_height="40dp"
                         app:cardBackgroundColor="@android:color/transparent"
@@ -47,9 +47,9 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:id="@+id/activity_write_series_review_posterIV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/fragment_write_movie_review_posterIV"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:contentDescription="@string/poster" />
 
                     </androidx.cardview.widget.CardView>
@@ -61,20 +61,21 @@
                         android:layout_marginEnd="16dp"
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/activity_write_series_review_postMTV"
-                        app:layout_constraintStart_toEndOf="@id/activity_write_series_review_posterCV"
+                        app:layout_constraintEnd_toStartOf="@+id/fragment_write_movie_review_postMTV"
+                        app:layout_constraintStart_toEndOf="@id/fragment_write_movie_review_posterCV"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/StyleRegularMaterialTextView"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:text="@{writeSeriesReviewViewModel.name}"
+                            android:text="@{viewModel.title}"
                             android:textColor="@color/color_supreme_text" />
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/StyleRegularMaterialTextView"
-                            android:text="@string/rate_this_series"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/rate_this_movie"
                             android:textSize="12sp" />
 
                     </LinearLayout>
@@ -84,24 +85,22 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="8dp"
-                        android:visibility="@{writeSeriesReviewViewModel.postPBGone ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{viewModel.postPBGone ? View.GONE : View.VISIBLE}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/activity_write_series_review_postMTV"
+                        android:id="@+id/fragment_write_movie_review_postMTV"
                         style="@style/StyleRegularMaterialTextView"
-                        android:onClick="@{()->writeSeriesReviewViewModel.onPostMTVClick()}"
-                        android:paddingStart="8dp"
-                        android:paddingTop="8dp"
-                        android:paddingEnd="8dp"
-                        android:paddingBottom="8dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:onClick="@{()->viewModel.onPostMTVClick()}"
+                        android:padding="8dp"
                         android:text="@string/post"
                         android:textAllCaps="true"
                         android:textColor="@color/color_supreme_action"
                         android:textStyle="bold"
-                        android:visibility="@{writeSeriesReviewViewModel.postMTVGone ? View.INVISIBLE : View.VISIBLE}"
+                        android:visibility="@{viewModel.postMTVGone ? View.INVISIBLE : View.VISIBLE}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -114,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:visibility="@{writeSeriesReviewViewModel.noteCVGone ? View.GONE : View.VISIBLE}"
+                android:visibility="@{viewModel.noteCVGone ? View.GONE : View.VISIBLE}"
                 app:cardBackgroundColor="@color/color_on_background">
 
                 <LinearLayout
@@ -141,7 +140,8 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/StyleRegularMaterialTextView"
-                            android:onClick="@{()->writeSeriesReviewViewModel.onGotItMTVClick()}"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:onClick="@{()->viewModel.onGotItMTVClick()}"
                             android:paddingStart="4dp"
                             android:paddingTop="8dp"
                             android:paddingEnd="4dp"
@@ -153,7 +153,8 @@
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/StyleRegularMaterialTextView"
                             android:layout_marginStart="16dp"
-                            android:onClick="@{()->writeSeriesReviewViewModel.onLearnMoreMTVClick()}"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:onClick="@{()->viewModel.onLearnMoreMTVClick()}"
                             android:paddingStart="4dp"
                             android:paddingTop="8dp"
                             android:paddingEnd="4dp"
@@ -169,17 +170,11 @@
             </androidx.cardview.widget.CardView>
 
             <RatingBar
-                android:id="@+id/activity_write_series_review_mainRB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/fragment_write_movie_review_mainRB"
+                style="@style/StyleRegularRatingBar"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:numStars="5"
-                android:progressBackgroundTint="@color/color_on_background"
-                android:progressTint="@color/color_supreme_action"
-                android:rating="@{writeSeriesReviewViewModel.star}"
-                android:secondaryProgressTint="@color/color_on_background"
-                android:stepSize=".5" />
+                android:rating="@{viewModel.rating}" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -193,7 +188,7 @@
                 app:hintEnabled="false">
 
                 <EditText
-                    android:id="@+id/activity_write_series_review_reviewET"
+                    android:id="@+id/fragment_write_movie_review_reviewET"
                     style="@style/StyleRegularEditText"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
@@ -202,10 +197,9 @@
                     android:hint="@string/describe_your_experience_optional"
                     android:imeOptions="actionDone"
                     android:inputType="textMultiLine"
-                    android:longClickable="false"
                     android:maxLength="500"
                     android:padding="16dp"
-                    android:text="@={writeSeriesReviewViewModel.reviewETText}"
+                    android:text="@={viewModel.reviewETText}"
                     tools:ignore="Autofill" />
 
             </com.google.android.material.textfield.TextInputLayout>

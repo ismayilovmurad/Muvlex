@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="rateMovieViewModel"
+            name="viewModel"
             type="com.martiandeveloper.muvlex.viewmodel.feed.RateMovieViewModel" />
 
     </data>
@@ -22,15 +22,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/fragment_rate_movie_mainMTB"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:backgroundTint="@color/color_background"
-                android:elevation="0dp"
-                app:title="@{rateMovieViewModel.title}"
-                app:titleTextColor="@color/color_supreme_text" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,8 +36,8 @@
 
                     <ImageView
                         android:id="@+id/fragment_rate_movie_posterIV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:contentDescription="@string/poster" />
 
                 </androidx.cardview.widget.CardView>
@@ -72,7 +63,7 @@
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/StyleRegularMaterialTextView"
                             android:layout_marginStart="8dp"
-                            android:text="@{rateMovieViewModel.releaseDate}" />
+                            android:text="@{viewModel.releaseDate}" />
 
                     </LinearLayout>
 
@@ -91,7 +82,7 @@
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/StyleRegularMaterialTextView"
                             android:layout_marginStart="8dp"
-                            android:text="@{rateMovieViewModel.voteAverage}" />
+                            android:text="@{viewModel.voteAverage}" />
 
                     </LinearLayout>
 
@@ -125,15 +116,9 @@
 
                 <RatingBar
                     android:id="@+id/fragment_rate_movie_mainRB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/StyleRegularRatingBar"
                     android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:numStars="5"
-                    android:progressBackgroundTint="@color/color_on_background"
-                    android:progressTint="@color/color_supreme_action"
-                    android:secondaryProgressTint="@color/color_on_background"
-                    android:stepSize=".5" />
+                    android:layout_marginTop="16dp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/StyleRegularMaterialTextView"
@@ -170,7 +155,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         style="@style/StyleRegularMaterialTextView"
                         android:layout_marginStart="8dp"
-                        android:text="@{rateMovieViewModel.genre}" />
+                        android:text="@{viewModel.genre}" />
 
                 </LinearLayout>
 
@@ -189,7 +174,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         style="@style/StyleRegularMaterialTextView"
                         android:layout_marginStart="8dp"
-                        android:text="@{rateMovieViewModel.language}" />
+                        android:text="@{viewModel.language}" />
 
                 </LinearLayout>
 
@@ -203,7 +188,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/StyleRegularMaterialTextView"
                     android:layout_marginTop="8dp"
-                    android:text="@{rateMovieViewModel.overview}"
+                    android:text="@{viewModel.overview}"
                     android:textAlignment="center" />
 
             </LinearLayout>

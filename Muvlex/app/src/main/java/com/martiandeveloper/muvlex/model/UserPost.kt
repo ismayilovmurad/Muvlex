@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
-data class ExplorePost(
+data class UserPost(
     var time: Timestamp? = null,
     var review: String? = null,
     var id: String? = null,

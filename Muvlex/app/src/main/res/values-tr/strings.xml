@@ -60,6 +60,11 @@
     <string name="keep">Tut</string>
     <string name="discard">Sil</string>
     <string name="rate_this_series">Bu diziye oy ver</string>
+    <string name="follow">Takip et</string>
+    <string name="unfollow">Takibi bırak</string>
+    <string name="posts">Gönderi</string>
+    <string name="followers">Takipçi</string>
+    <string name="following">Takip</string>
 
     <!--Alert texts-->
     <string name="creating_user">Kullanıcı oluşturuluyor</string>
@@ -104,6 +109,7 @@
     <string name="check_your_email_to_verify_your_muvlex_account">Muvlex hesabını doğrulamak için e-postanı kontrol et</string>
     <string name="email_address_is_already_verified">E-posta adresi zaten doğrulandı</string>
     <string name="there_are_no_email_clients_installed">Yüklü e-posta istemcisi yok</string>
+    <string name="you_have_just_shared_a_new_review">Az önce yeni bir yorum paylaştın</string>
 
     <!--Privacy Policy and Terms & Conditions-->
     <string name="privacy_policy">Gizlilik Politikası</string>

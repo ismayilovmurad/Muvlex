@@ -66,7 +66,7 @@ class ExplorePostAdapter(private val itemCLickListener: ItemClickListener) :
 
                         it.title =
                             if (explorePost.title != null) title else context.resources.getString(R.string.unknown)
-                        it.star = if (explorePost.star != null) star!!.toFloat() else 1F
+                        it.star = if (explorePost.rating != null) rating!!.toFloat() else 1F
                         it.time = if (explorePost.time != null) getPrettyTime(time!!) else "-"
                         it.review =
                             if (explorePost.review != null) review else context.resources.getString(

@@ -62,6 +62,11 @@
     <string name="discard">Discard</string>
     <string name="rate_this_series">Rate this series</string>
     <string name="blank_message" translatable="false"> </string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="posts">Posts</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
 
     <!--Alert texts-->
     <string name="creating_user">Creating user</string>
@@ -107,6 +112,7 @@
     <string name="check_your_email_to_verify_your_muvlex_account">Check your email to verify your Muvlex account</string>
     <string name="email_address_is_already_verified">Email address is already verified</string>
     <string name="there_are_no_email_clients_installed">There are no email clients installed</string>
+    <string name="you_have_just_shared_a_new_review">You\'ve just shared a new review</string>
 
     <!--Privacy Policy and Terms & Conditions-->
     <string name="privacy_policy">Privacy Policy</string>
@@ -238,5 +244,7 @@
         <item>Turkish</item>
         <item>Azerbaijani</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
