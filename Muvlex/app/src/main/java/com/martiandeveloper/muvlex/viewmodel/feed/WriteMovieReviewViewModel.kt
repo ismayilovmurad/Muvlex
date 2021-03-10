@@ -7,10 +7,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.martiandeveloper.muvlex.model.Movie
-import com.martiandeveloper.muvlex.utils.DATE_PATTERN
-import com.martiandeveloper.muvlex.utils.Event
-import com.martiandeveloper.muvlex.utils.check
-import com.martiandeveloper.muvlex.utils.errorMessageVoid
+import com.martiandeveloper.muvlex.utils.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -108,28 +105,27 @@ class WriteMovieReviewViewModel : ViewModel() {
     //########## Save rating and review
     fun save(movie: Movie) {
 
-        _postMTVGone.value = true
-        _postPBGone.value = false
-
         with(Firebase.auth.currentUser) {
 
             if (this != null) {
 
+                _postMTVGone.value = true
+                _postPBGone.value = false
+
                 val map = hashMapOf(
-                    "backdropPath" to if (movie.backdropPath.check()) movie.backdropPath else "null",
                     "genreIds" to (movie.genreIds ?: arrayListOf()),
                     "id" to (movie.id ?: 0),
                     "originalLanguage" to if (movie.originalLanguage.check()) movie.originalLanguage else "null",
                     "originalTitle" to if (movie.originalTitle.check()) movie.originalTitle else "null",
                     "overview" to if (movie.overview.check()) movie.overview else "null",
-                    "popularity" to (movie.popularity ?: 0.0),
                     "posterPath" to if (movie.posterPath.check()) movie.posterPath else "null",
                     "rating" to rating.value.toString(),
                     "releaseDate" to if (movie.releaseDate.check()) movie.releaseDate else "null",
                     "review" to if (!reviewETText.value.isNullOrEmpty()) {
                         if (reviewETText.value.toString().trimStart().trimEnd()
                                 .isNotEmpty()
-                        ) reviewETText.value.toString().trimStart().trimEnd() else "No Review"
+                        ) reviewETText.value.toString().trimStart()
+                            .trimEnd() else "No Review"
                     } else "No Review",
                     "time" to (getDateFromString(
                         SimpleDateFormat(
@@ -139,19 +135,20 @@ class WriteMovieReviewViewModel : ViewModel() {
                     ) ?: "null"),
                     "title" to if (movie.title.check()) movie.title else "null",
                     "type" to "movie",
-                    "uid" to uid,
-                    "video" to (movie.video ?: false),
-                    "voteAverage" to (movie.voteAverage ?: 0.0),
-                    "voteCount" to (movie.voteCount ?: 0)
+                    "uid" to this.uid,
+                    "user" to Firebase.firestore.document("users/${this.uid}"),
+                    "voteAverage" to (if (movie.voteAverage != null) movie.voteAverage.toString() else "0.0")
                 )
 
-                Firebase.firestore.collection("posts").document("${uid}_${movie.id}")
-                    .set(map).addOnCompleteListener {
+                Firebase.firestore.collection("posts")
+                    .document("${uid}_${movie.id}")
+                    .set(map).addOnCompleteListener { it1 ->
                         _postPBGone.value = true
                         _postMTVGone.value = false
 
-                        if (it.isSuccessful) _saveSuccessful.value = true else _errorMessage.value =
-                            errorMessageVoid(it)
+                        if (it1.isSuccessful) _saveSuccessful.value =
+                            true else _errorMessage.value =
+                            errorMessageVoid(it1)
                     }
 
             } else _errorMessage.value = Event("")

@@ -11,13 +11,25 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.martiandeveloper.muvlex.adapter.HomePostAdapter
-import com.martiandeveloper.muvlex.repository.HomePostSource
+import com.martiandeveloper.muvlex.adapter.PostAdapter
+import com.martiandeveloper.muvlex.repository.ExplorePostDataSource
+import com.martiandeveloper.muvlex.repository.HomePostDataSource
+import com.martiandeveloper.muvlex.utils.Event
 import com.martiandeveloper.muvlex.utils.PAGE_SIZE
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
+
+    //########## Posts will appear here LinearLayout gone
+    private var _postsWillAppearHereLLGone = MutableLiveData<Boolean>()
+    val postsWillAppearHereLLGone: LiveData<Boolean>
+        get() = _postsWillAppearHereLLGone
+
+    fun isPostsWillAppearHereLLGone(gone: Boolean) {
+        _postsWillAppearHereLLGone.value = gone
+    }
+
 
     //########## Following list
     private var _followingList = MutableLiveData<ArrayList<Any>>()
@@ -55,22 +67,21 @@ class HomeViewModel : ViewModel() {
 
 
     //########## Get data
-    fun getData(homePostAdapter: HomePostAdapter) {
+    fun getData(adapter: PostAdapter) {
 
         val listData = Pager(PagingConfig(pageSize = PAGE_SIZE)) {
-            HomePostSource(FirebaseFirestore.getInstance(), _followingList.value!!)
+            HomePostDataSource(_followingList.value!!, FirebaseFirestore.getInstance())
         }.flow.cachedIn(viewModelScope)
 
         viewModelScope.launch {
 
             listData.collect {
-                homePostAdapter.submitData(it)
+                adapter.submitData(it)
             }
 
         }
 
     }
-
 
     init {
         _followingList.value = ArrayList()

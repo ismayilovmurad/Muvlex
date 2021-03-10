@@ -65,6 +65,14 @@
     <string name="posts">Gönderi</string>
     <string name="followers">Takipçi</string>
     <string name="following">Takip</string>
+    <string name="search_result_will_appear_here">Arama sonucu burada görünecek</string>
+    <string name="users_posts_will_appear_here">Kullanıcının gönderileri burada görünecek</string>
+    <string name="edit_profile">Profili Düzenle</string>
+    <string name="your_posts_will_appear_here">Gönderilerin burada görünecek</string>
+    <string name="sign_out">Oturumu kapat</string>
+    <string name="posts_will_appear_here">Gönderiler burada görünecek</string>
+    <string name="save">Kaydet</string>
+    <string name="bio">Bio</string>
 
     <!--Alert texts-->
     <string name="creating_user">Kullanıcı oluşturuluyor</string>
@@ -227,6 +235,87 @@
     <string name="changes_to_this_terms_and_conditions">Bu Şartlar ve Koşullardaki Değişiklikler</string>
     <string name="changes_to_this_terms_and_conditions_content">Zaman zaman şartlar ve koşullarımızı güncelleyebilirim. Bu nedenle, herhangi bir değişiklik için bu sayfayı periyodik olarak gözden geçirmeniz önerilir. Yeni şartlar ve koşulları bu sayfada yayınlayarak her türlü değişikliği size bildireceğim.</string>
     <string name="this_terms_and_conditions_page_was_generated_by">Bu şartlar ve koşullar sayfası şu adres tarafından oluşturulmuştur</string>
+
+    <!--Ratings & review policy-->
+    <string name="ratings_and_review_on_the_muvlex">Muvlex\'te puanlar ve yorumlar</string>
+    <string name="ratings_and_review_on_the_muvlex_content">
+        Bu sayfada, Muvlex\'in yorum yapma politikaları hakkında bilgi bulabilirsiniz.
+        \nİzlediğiniz her şey için yorum yazabilirsiniz.
+         Yorumlar, başkalarına deneyiminizden bahsederek ne izleyeceklerine karar vermelerinde yardımcı olmanın harika bir yoludur.
+         Muvlex, Muvlex\'teki içeriği puanlamak veya yorumlamak için kimseye ödeme yapmaz ve gözden geçirenlerin dürüst ve tarafsız olmasını bekleriz.
+    </string>
+    <string name="ratings_and_reviews_posting_policies">Puanlar ve yorumlar yayınlama politikaları</string>
+    <string name="ratings_and_reviews_posting_policies_content">
+        Puanlar ve yorumların yararlı ve güvenilir olması amaçlanmıştır.
+         Muvlex\'teki içeriği yorumlamak, yararlı geri bildirimleri paylaşmanın ve diğer Muvlex kullanıcılarına harika içerik, film ve diziler bulmalarında yardımcı olmanın harika bir yoludur.
+        \nİyi bir yorum yazmak için yönergeler
+        \n* Yorumlarınızı yararlı ve bilgilendirici yapın.
+        \n* Hem olumlu hem de olumsuz yanları dahil etmeye çalışın.
+        \n* Okunabilir olmasını sağlayın; dilbilgisi ve yazımı kontrol edin ve aşırı büyük harf ve noktalama işareti kullanmayın.
+        \n* Başkalarına karşı nazik olun.
+        \nMuvlex\'in puanlama ve yorumlamaya ilişkin politikaları aşağıdadır.
+         Bu politikalara uymayan yorumlar kaldırılacak ve bunları defalarca veya ciddi şekilde ihlal eden kişiler Muvlex\'te yorum yayınlama olanağını kaybedebilir.
+    </string>
+    <string name="spam_and_fake_reviews">Spam ve sahte yorumlar</string>
+    <string name="spam_and_fake_reviews_content">
+        Yorumlarınız, yorumladığınız içerik, film ve dizilerle ilgili yaşadığınız deneyimleri yansıtmalıdır.
+        \n* Sahte veya yanlış yorumlar yayınlamayın.
+        \n* Aynı yorumu birden çok kez yayınlamayın.
+        \n* Aynı içerik için birden fazla hesaptan yorum yayınlamayın.
+        \n* Diğer kullanıcıları yanıltmak veya puanı değiştirmek için yorum yayınlamayın.
+        \n* Başkaları adına yorum yayınlamayın.
+        \n* Kimliğinizi veya Yorumlamakta olduğunuz içerikle bağlantınızı yanlış beyan etmeyin.
+    </string>
+    <string name="off_topic_reviews">Off-topic reviews</string>
+    <string name="off_topic_reviews_content">
+        Yorumları konuyla ilgili ve yorumladığınız içerik, hizmet veya deneyimle alakalı tutun.
+        \n* Yorumlamakta olduğunuz içerik, hizmet veya deneyimle ilgisi olmayan talepler, politik veya sosyal yorumlar veya başka herhangi bir şey yayınlamayın.
+    </string>
+    <string name="advertising">Reklam</string>
+    <string name="advertising_content">
+        Yorumların yararlı olmasını isteriz ve yorumlamakta olduğunuz içerik veya hizmet dışında bir şeyi tanıtıyorlarsa yararlı olmazlar.
+        \n* Bağlı kuruluş veya yönlendirmeye dayalı promosyonlar dahil olmak üzere herhangi bir ürün veya hizmet için promosyon veya ticari içerik yayınlamayın.
+        \n* Telefon numaralarını, e-posta adreslerini veya diğer web sitelerine bağlantı yayınlamayın.
+    </string>
+    <string name="conflict_of_interest">Çıkar çatışması</string>
+    <string name="conflict_of_interest_content">
+        Yorumlar, orijinal ve tarafsız olduklarında en değerlidir.
+         Finansal kazançla motive edilmeyen insanlar tarafından yazılmalıdır.
+        \n* Yorum yayınlama karşılığında para, ürün veya hizmet teklif etmeyin veya kabul etmeyin.
+        \n* İçeriği, filmleri, dizileri veya deneyimleri, onu oluşturan işletmenin sahibiyseniz veya onlar için çalışıyorsanız yorumlamayın.
+    </string>
+    <string name="copyrighted_content">Telif hakkıyla korunan içerik</string>
+    <string name="copyrighted_content_content">
+        Yorumlar size ait olmalı ve kişisel fikirlerinizi yansıtmalıdır.
+        \n* Telif hakkı dahil olmak üzere başkalarının fikri mülkiyet haklarını ihlal eden yorumlar yayınlamayın.
+    </string>
+    <string name="personal_and_confidential_information">Kişisel ve gizli bilgiler</string>
+    <string name="personal_and_confidential_information_content">
+        Yorumlar, deneyimleri paylaşmak içindir ve hassas kişisel bilgileri ifşa etmeden bir şey hakkında ne hissettiğinizi ifade edebilirsiniz.
+        \n* Fiziksel adres veya ehliyet numarası gibi kişisel veya gizli bilgileri yayınlamayın.
+    </string>
+    <string name="illegal_content">Yasadışı içerik</string>
+    <string name="illegal_content_content">
+        Yorumlarınız yasaya ve kabul ettiğiniz tüm şartlara veya yasal anlaşmalara uygun olmalıdır.
+        \n* Yasadışı içerik barındıran veya bu içeriğe bağlantı veren yorumlar yayınlamayın.
+    </string>
+    <string name="sexually_explicit_content">Müstehcen içerik</string>
+    <string name="sexually_explicit_content_content">
+        Muvlex geniş bir kitleye yöneliktir ve yorumlar bunu yansıtmalıdır.
+        \n* Müstehcen içerik barındıran, teşvik eden veya teşvik eden yorumlar yayınlamayın.
+        \n* Çocukları cinsel durumlarda tasvir eden veya onları cinsel bir şekilde ele alan yorumlar yayınlamayın.
+    </string>
+    <string name="hate_speech">Nefret söylemi</string>
+    <string name="hate_speech_content">
+        Muvlex tüm insanlara yöneliktir ve yorumlar bunu yansıtmalıdır.
+        \n* Irkı, milliyeti, etnik kökeni, dini, cinsiyeti, cinsel kimliği, cinsel yönelimi, yaşı, engelliliği, gazilik durumu veya başka herhangi bir özelliği nedeniyle bir kişiye veya gruba karşı şiddeti teşvik etmeyin, şiddete göz yummayın veya nefreti teşvik etmeyin, sistemik ayrımcılık veya ötekileştirme ile ilişkilidir.
+    </string>
+    <string name="offensive_reviews">Rahatsız edici yorumlar</string>
+    <string name="offensive_reviews_content">
+        Muvlex saldırmak ve rahatsız etmek değil eğlendirmek ve bilgilendirmek içindir.
+        \n* Müstehcen, küfürlü veya rahatsız edici bir dilde yorum yayınlamayın.
+        \n* Başkalarını taciz eden, zorbalıkta bulunan veya saldıran yorumlar yayınlamayın.
+    </string>
 
     <string-array name="secondaryLanguage">
         <item>İngilizce</item>

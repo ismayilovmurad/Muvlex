@@ -1,7 +1,6 @@
 package com.martiandeveloper.muvlex.view.feed
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -19,6 +18,7 @@ import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.DialogDiscardDraftMovieBinding
 import com.martiandeveloper.muvlex.databinding.FragmentWriteMovieReviewBinding
 import com.martiandeveloper.muvlex.utils.*
+import com.martiandeveloper.muvlex.view.main.RatingsAndReviewPolicyActivity
 import com.martiandeveloper.muvlex.viewmodel.feed.WriteMovieReviewViewModel
 
 class WriteMovieReviewFragment : Fragment(), RatingBar.OnRatingBarChangeListener {
@@ -104,15 +104,17 @@ class WriteMovieReviewFragment : Fragment(), RatingBar.OnRatingBarChangeListener
                 activity?.hideKeyboard()
 
                 with(args.movie) {
-                    if (networkAvailable) if (rating.value!! >= .5F) save(this) else R.string.no_internet_connection.showToast(
-                        requireContext()
-                    )
+
+                    if (networkAvailable) {
+                        if (rating.value!! >= .5F) save(this)
+                    } else R.string.no_internet_connection.showToast(requireContext())
+
                 }
 
             })
 
             learnMoreMTVClick.observe(viewLifecycleOwner, EventObserver {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(RATINGS_AND_REVIEW_POLICY_URL)))
+                startActivity(Intent(context, RatingsAndReviewPolicyActivity::class.java))
             })
 
             keepMTVClick.observe(viewLifecycleOwner, EventObserver {

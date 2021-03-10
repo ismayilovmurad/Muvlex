@@ -2,6 +2,7 @@ package com.martiandeveloper.muvlex.utils
 
 import android.app.Activity
 import android.content.Context
+import android.net.Uri
 import android.text.method.HideReturnsTransformationMethod
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -25,6 +26,19 @@ fun ImageView.load(
 ) {
     Glide.with(context)
         .load(posterPath ?: R.drawable.muvlex_original_logo)
+        .placeholder(R.drawable.muvlex_original_logo)
+        .error(R.drawable.muvlex_original_logo)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .centerCrop()
+        .into(this)
+}
+
+fun ImageView.loadWithUri(
+    context: Context,
+    imageUri: Uri?,
+) {
+    Glide.with(context)
+        .load(imageUri ?: R.drawable.muvlex_original_logo)
         .placeholder(R.drawable.muvlex_original_logo)
         .error(R.drawable.muvlex_original_logo)
         .diskCacheStrategy(DiskCacheStrategy.ALL)

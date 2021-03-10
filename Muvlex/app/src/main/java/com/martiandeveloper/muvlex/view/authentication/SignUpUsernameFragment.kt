@@ -1,5 +1,6 @@
 package com.martiandeveloper.muvlex.view.authentication
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.DialogProgressSignUpUsernameBinding
 import com.martiandeveloper.muvlex.databinding.FragmentSignUpUsernameBinding
 import com.martiandeveloper.muvlex.utils.*
+import com.martiandeveloper.muvlex.view.main.PrivacyPolicyActivity
 import com.martiandeveloper.muvlex.viewmodel.authentication.SignUpUsernameViewModel
 import java.util.regex.Pattern
 
@@ -128,7 +130,7 @@ class SignUpUsernameFragment : Fragment() {
             })
 
             privacyPolicyMTVClick.observe(viewLifecycleOwner, EventObserver {
-                view.navigate(SignUpUsernameFragmentDirections.actionSignUpUsernameFragmentToPrivacyPolicyFragment())
+                startActivity(Intent(context, PrivacyPolicyActivity::class.java))
             })
 
         }

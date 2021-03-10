@@ -164,7 +164,6 @@ class SignUpUsernameViewModel : ViewModel() {
                                     "email" to email,
                                     "followers" to arrayListOf<String>(),
                                     "following" to arrayListOf<String>(),
-                                    "picture" to "",
                                     "uid" to uid,
                                     "username" to usernameETText.value,
                                 )

@@ -1,11 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_user_list_mainRV"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.martiandeveloper.muvlex.viewmodel.feed.UserListViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.feed.UserListFragment" />
+        tools:context=".view.feed.UserListFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_user_list_mainRV"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_user_list_mainLL" />
+
+        <LinearLayout
+            android:id="@+id/fragment_user_list_mainLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_background"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:visibility="@{viewModel.progressLLGone ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar style="@style/StyleSupremeProgressbar" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/StyleRegularMaterialTextView"
+                android:layout_marginStart="8dp"
+                android:text="@{viewModel.progressMTVText}" />
+
+        </LinearLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/StyleRegularMaterialTextView"
+            android:text="@string/search_result_will_appear_here"
+            android:visibility="@{viewModel.searchResultWillAppearHereMTVGone ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

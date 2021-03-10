@@ -10,73 +10,77 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
 import com.martiandeveloper.muvlex.R
-import com.martiandeveloper.muvlex.databinding.RecyclerviewUserPostItemBinding
-import com.martiandeveloper.muvlex.model.UserPost
+import com.martiandeveloper.muvlex.databinding.RecyclerviewPostItemBinding
+import com.martiandeveloper.muvlex.model.Post
+import com.martiandeveloper.muvlex.utils.BASE_URL_POSTER
+import com.martiandeveloper.muvlex.utils.check
 import com.martiandeveloper.muvlex.utils.load
-import timber.log.Timber
 import java.text.ParseException
 
-
-class UserPostAdapter(private val itemCLickListener: ItemClickListener) :
-    PagingDataAdapter<UserPost, UserPostAdapter.UserPostViewHolder>(UserPostDiffCallback()) {
+class UserPostAdapter(
+    private val itemCLickListener: ItemClickListener
+) : PagingDataAdapter<Post, RecyclerView.ViewHolder>(PostDiffCallback()) {
 
     private lateinit var context: Context
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserPostViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
 
-        return UserPostViewHolder(
+        return PostViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(context),
-                R.layout.recyclerview_user_post_item,
+                R.layout.recyclerview_post_item,
                 parent,
                 false
             )
         )
     }
 
-    override fun onBindViewHolder(holder: UserPostViewHolder, position: Int) {
-        holder.bind(context, getItem(position), itemCLickListener)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        (holder as PostViewHolder).bind(context, getItem(position), itemCLickListener)
     }
 
-    class UserPostDiffCallback : DiffUtil.ItemCallback<UserPost>() {
+    class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
 
-        override fun areItemsTheSame(oldItem: UserPost, newItem: UserPost): Boolean {
-            return oldItem.time == newItem.time
+        override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: UserPost, newItem: UserPost): Boolean {
+        override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
             return oldItem == newItem
         }
 
     }
 
-    class UserPostViewHolder(private val binding: RecyclerviewUserPostItemBinding) :
+    class PostViewHolder(private val binding: RecyclerviewPostItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
             context: Context,
-            userPost: UserPost?,
+            post: Post?,
             itemClickListener: ItemClickListener
         ) {
-            if (userPost != null)
+            if (post != null)
 
                 binding.let {
 
-                    with(userPost) {
-
-                        Timber.d("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww: ${userPost.review}")
+                    with(post) {
 
                         it.title =
-                            if (userPost.title != null) title else context.resources.getString(R.string.unknown)
-                        it.rating = if (userPost.rating != null) rating!!.toFloat() else 1F
-                        it.time = if (userPost.time != null) getPrettyTime(time!!) else "-"
-                        it.review =
-                            if (userPost.review != null) review else context.resources.getString(
-                                R.string.unknown
-                            )
+                            if (title.check()) title else context.resources.getString(R.string.unknown)
 
-                        binding.recyclerviewUserPostItemPosterIV.load(context, posterPath)
+                        it.rating = if (rating.check()) rating!!.toFloat() else 0.0F
+
+                        it.time =
+                            if (time != null) getPrettyTime(time) else context.resources.getString(R.string.unknown)
+
+                        it.review =
+                            if (review.check()) review else context.resources.getString(R.string.unknown)
+
+                        binding.recyclerviewPostItemPosterIV.load(
+                            context,
+                            if (posterPath.check()) BASE_URL_POSTER + posterPath else null
+                        )
 
                         itemView.setOnClickListener {
                             itemClickListener.onItemClick(this)
@@ -85,6 +89,7 @@ class UserPostAdapter(private val itemCLickListener: ItemClickListener) :
                     }
 
                     it.executePendingBindings()
+
                 }
 
         }
@@ -108,7 +113,7 @@ class UserPostAdapter(private val itemCLickListener: ItemClickListener) :
     }
 
     interface ItemClickListener {
-        fun onItemClick(UserPost: UserPost)
+        fun onItemClick(post: Post)
     }
 
 }

@@ -4,20 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.LoadState
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.google.firebase.firestore.FirebaseFirestore
-import com.martiandeveloper.muvlex.adapter.ExplorePostAdapter
-import com.martiandeveloper.muvlex.adapter.ProfilePostAdapter
-import com.martiandeveloper.muvlex.repository.ExplorePostSource
-import com.martiandeveloper.muvlex.repository.ProfilePostSource
+import com.martiandeveloper.muvlex.adapter.PostAdapter
+import com.martiandeveloper.muvlex.repository.ExplorePostDataSource
 import com.martiandeveloper.muvlex.utils.Event
+import com.martiandeveloper.muvlex.utils.PAGE_SIZE
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class ExploreViewModel : ViewModel() {
 
@@ -31,25 +27,27 @@ class ExploreViewModel : ViewModel() {
     }
 
 
-    //########## Get data
-    fun getData(explorePostAdapter: ExplorePostAdapter) {
+    //########## Posts will appear here LinearLayout gone
+    private var _postsWillAppearHereLLGone = MutableLiveData<Boolean>()
+    val postsWillAppearHereLLGone: LiveData<Boolean>
+        get() = _postsWillAppearHereLLGone
 
-        val listData = Pager(PagingConfig(pageSize = 10)) {
-            ExplorePostSource(FirebaseFirestore.getInstance())
+    fun isPostsWillAppearHereLLGone(gone: Boolean) {
+        _postsWillAppearHereLLGone.value = gone
+    }
+
+
+    //########## Get data
+    fun getData(adapter: PostAdapter) {
+
+        val listData = Pager(PagingConfig(pageSize = PAGE_SIZE)) {
+            ExplorePostDataSource(FirebaseFirestore.getInstance())
         }.flow.cachedIn(viewModelScope)
 
         viewModelScope.launch {
 
             listData.collect {
-                explorePostAdapter.submitData(it)
-            }
-
-            explorePostAdapter.loadStateFlow.collectLatest {
-
-                if (it.append is LoadState.Loading) {
-                    Timber.d("Loading")
-                }
-
+                adapter.submitData(it)
             }
 
         }

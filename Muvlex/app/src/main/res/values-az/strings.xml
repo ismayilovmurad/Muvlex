@@ -65,6 +65,14 @@
     <string name="posts">Paylaşım</string>
     <string name="followers">İzləyici</string>
     <string name="following">İzlədiyim</string>
+    <string name="search_result_will_appear_here">Axtarış nəticəsi burada görünəcək</string>
+    <string name="users_posts_will_appear_here">İstifadəçinin paylaşımları burada görünəcək</string>
+    <string name="edit_profile">Profilə düzəliş et</string>
+    <string name="your_posts_will_appear_here">Paylaşımların burada görünəcək</string>
+    <string name="sign_out">Çıxış</string>
+    <string name="posts_will_appear_here">Paylaşımlar burada görünəcək</string>
+    <string name="save">Saxla</string>
+    <string name="bio">Bio</string>
 
     <!--Alert texts-->
     <string name="creating_user">İstifadəçi yaradılır</string>
@@ -116,117 +124,198 @@
     <string name="privacy_policy_content">
         Murad İsmayılov, Muvlex tətbiqetməsini reklam dəstəkli bir tətbiq olaraq hazırladı.
          Bu xidmət Murad İsmayılov tərəfindən pulsuz olaraq təqdim olunur və olduğu kimi istifadə üçün nəzərdə tutulub.
-        \n\nBu səyfə, hərhansı bir şəxs xidmətimdən istifadə edərsə şəxsi məlumatların toplanması, istifadəsi və yayması ilə bağlı siyasətlərim haqqında ziyarətçiləri məlumatlandirmaq üçün istifadə olunur.
+        \n\nBu səyfə, hərhansı bir şəxs xidmətimdən istifadə edərsə şəxsi məlumatların toplanması, istifadəsi və yayması ilə bağlı siyasətlərim haqqında ziyarətçiləri məlumatlandırmaq üçün istifadə olunur.
         \n\Əgər xidmətimdən istifadə etməyi seçsəniz, bu siyasətlə bağlı məlumatların toplanmasını və istifadəsini qəbul etmiş olursunuz.
          Topladığım şəxsi məlumatlar, xidməti təmin etmək və inkişaf etdirmək üçün istifadə edilir.
-         Məlumatlarınızı bu gizlilik siyasətində açıqlananlar xaricində istifadə etmeyeceyem veya heç kimlə paylaşmayacağam.
-        \n\nBu gizlilik siyasətində istifadə olunan şərtlər, bu gizlilik siyasətinde aksi belirtilmedikçe Muvlex\'də erişilebilen şərtlar ve qaydalarımızla aynı anlamlara sahiptir.
+         məlumatlarınızı bu gizlilik siyasətində açıqlananlar xaricində istifadə etməyəcəyəm vəya heç kimlə paylaşmayacağam.
+        \n\nBu gizlilik siyasətində istifadə olunan şərtlər, bu gizlilik siyasətinde əksi göstərilmədiyi təqdirdə Muvlex\'də əlçatan şərtlər və qaydalarımızla eyni mənalara sahibdir.
     </string>
-    <string name="information_collection_and_use">Melumat Toplanmasi ve istifadəsi</string>
+    <string name="information_collection_and_use">Məlumat Toplanması və istifadəsi</string>
     <string name="information_collection_and_use_content">
-        Daha iyi bir deneyim üçün, xidmətimizi istifadə ederken, bir e-posta adresi, istifadəci adı, profil resmi, istifadəci biyografisi, bir istifadəcinin takipçileri, bir istifadəcinin takip ettiği istifadəciler, bir istifadəcinin gönderileri, bir istifadəcinin kaydettiği gönderiler, bir istifadəcinin beğendiği gönderiler, bir istifadəcinin yorum yaptığı gönderiler, bir istifadəcinin yorumları dahil ancak bunlarla sınırlı olmamak üzere belirli şəxsi olarak tanımlanabilir məlumatlari sağlamanızı isteyebilirim.
-        \n\nUygulama, sizi tanımlamak üçün istifadə olunan məlumatlari toplayabilecek üçüncü taraf xidmətlerini istifadə edir.
-        \n\nUygulama tarafından isitfade olunan üçüncü taraf xidmət sağlayıcılarının gizlilik siyasətine bağlantı
+        Daha yaxşı bir təcrübə üçün, xidmətimizi istifadə edərkən, bir elektron poçt ünvanı, istifadəçi adı, profil rəsmi, istifadəçi tərcümeyi-halı, bir istifadəçinin izləyiciləri, bir istifadəçinin izlədiyi istifadəçilər, bir istifadəçinin paylaşımları, bir istifadəçinin qeyd etdiyi paylaşımlar, bir istifadəçinin bəyəndiyi paylaşımlar, bir istifadəçinin rəy yazdığı paylaşımlar, bir istifadəçinin rəyləri də daxil olmaqla ancaq bunlarla mehdudlaşmamaqla spesifik şəxsi olarak tərif edilə bilən məlumatları təmin etməyinizi istəyə bilərik.
+        \n\nTətbiq, sizi müəyyənləşdirmək üçün istifadə olunan məlumatları toplaya bilən üçüncü tərəf xidmətlər istifadə edir.
+        \n\nTətbiq tərəfindən istifadə olunan üçüncü tərəf xidmət provayderlərin gizlilik siyasətine bağlantı
     </string>
     <string name="google_play_services">Google Play xidmətleri</string>
     <string name="google_analytics_for_firebase">Firebase üçün Google Analytics</string>
     <string name="firebase_crashlytics">Firebase Crashlytics</string>
     <string name="facebook">Facebook</string>
-    <string name="log_data">Günlük Verileri</string>
+    <string name="log_data">Giriş məlumatları</string>
     <string name="log_data_content">
-        xidmətimi her istifadə ettiyinizde, uygulamada bir hata olması durumunda, telefonunuzda günlük verileri adı verilen veri ve məlumatlari (üçüncü taraf ürünler aracılığıyla) topladığımı size bildirmek isterim.
-         Bu günlük verileri, cihazınızın internet protokolü ("IP") adresi, cihaz adı, işletim sistemi sürümü, xidmətimi istifadə ederken uygulamanın yapılandırması, xidməti istifadənizin saati ve tarihi ve diğer istatistikler gibi məlumatlari içerebilir.
+        Xidmətimi hər istifadə ettiyinizdə, tətbiqdə bir xəta olduqda, telefonunuzda giriş məlumatları adı verilən məlumatları (üçüncü tərəf məhsullar vasitəsilə) topladığımı sizə bildirmək istəyirəm.
+         Bu giriş məlumatları, cihazınızın internet protokolu ("IP") adresi, cihaz adı, əməliyyat sistemi versiyası, xidmətimi istifadə edərkən tətbiqin konfiqurasiyası, xidmətdən istifadə etdiyiniz saat və tarixi və digər statistikalar kimi məlumatları ehtiva edə bilər.
     </string>
-    <string name="cookies">Çerezler</string>
+    <string name="cookies">Çərəzlər</string>
     <string name="cookies_content">
-        Çerezler, genellikle anonim benzersiz tanımlayıcılar olarak istifadə olunan az miktarda veri içeren dosyalardır.
-         Bunlar, ziyaret ettiğiniz web sitelerinden tarayıcınıza gönderilir ve cihazınızın dahili belleğinde saklanır.
-        \n\nBu xidmət, bu "çerezleri" açıkça istifadə etmez.
-         Ancak uygulama, məlumat toplamak ve xidmətlerini iyileştirmek üçün "çerezler" istifadə eden üçüncü taraf kod ve kitaplıkları istifadə ede biler.
+        Çərəzlər, əsasən anonim bənzərsiz təsvir edənlər olaraq istifadə olunan az miqtarda məlumat ehtiva edən fayllardır.
+         Bunlar, ziyarət ettiyiniz web saytlardan brauzerinizə göndərilir və cihazınızın daxili yaddaşında saxlanılır.
+        \n\nBu xidmət, bu "çərəzləri" açıqca istifadə etməz.
+         Ancak tətbiq, məlumat toplamaq və xidmətlerini yaxşılaşdırmaq üçün "çərəzlər" istifadə edən üçüncü tərəf kod və kitabxanaları istifadə edə bilər.
     </string>
-    <string name="service_providers">Servis Sağlayıcıları</string>
+    <string name="service_providers">Xidmət təminatçıları</string>
     <string name="service_providers_content">
-        Aşağıdaki nedenlerle üçüncü taraf şirketleri ve kişileri istihdam edebilirim:
-        \n\n* xidmətimizi kolaylaştırmak üçün;
-        \n* xidməti bizim adımızdan vermek;
-        \n* Servisle ilgili xidmətleri gerçekleştirmek üçün; veya
-        \n* xidmətimizin nasıl istifadə olundugunu analiz etmemize yardımcı olmak üçün.
-        \n\nBu xidmətin istifadəcilerini, bu üçüncü tarafların şəxsi məlumatlarina erişimi olduğu konusunda məlumatlardirmaq istiyorum.
-         Bunun nedeni, kendilerine verilen görevleri bizim adımıza yerine getirmektir.
-         Ancak, məlumatlari başka bir amaçla ifşa etmemek veya istifadə etmemekle yükümlüdürler.
+        Aşağıdakı səbəblərlə üçüncü tərəf şirkətləri istifadə edə bilərəm:
+        \n\n* Xidmətimizi asanlaşdırmaq üçün;
+        \n* Xidməti bizim adımızdan vermək üçün;
+        \n* Servisle bağlı xidmətləri gerçəkləştirmək üçün; vəya
+        \n* Xidmətimizin necə istifadə olunduğunu analiz etməmizə kömək etmək üçün.
+        \n\nBu xidmətin istifadəçilərini, bu üçüncü tərəflərin şəxsi məlumatlarına əlaqəsi olduğuyla bağlı məlumatlardırmaq istəyirəm.
+         Bunun səbəbi, onlara verilen vəzifələri bizim adımıza yerinə yetirməkdir.
+         Ancaq, məlumatları başqa bir meqsedle yaymamaq veya istifadə etmemekle borcludurlar.
     </string>
-    <string name="security">Güvenlik</string>
+    <string name="security">Təhlükəsizlik</string>
     <string name="security_content">
-        Bize şəxsi məlumatlarınızi sağlama konusundaki güveninize değer veriyorum, bu nedenle bunları korumak üçün ticari olarak kabul edilebilir yöntemler istifadə etmeye çalışıyorum.
-         Ancak internet üzerinden heçbir aktarım yönteminin veya elektronik depolama yönteminin 100% güvenli ve güvenilir olmadığını ve mutlak güvenliğini garanti edemeyeceğimi unutmayın.
+        Şəxsi fikirlərinizi bizə təqdim etməyinizə inamımı qiymətləndirirəm, buna görə onları qorumaq üçün ticarət baxımından məqbul metodlardan istifadə etməyə çalışıram.
+         Ancaq nəzərə alın ki, internet üzərindən ötürülmə üsulu və ya elektron saxlama üsulu 100% təhlükəsiz və etibarlı deyil və mütləq təhlükəsizliyinə zəmanət verə bilmərəm.
     </string>
-    <string name="links_to_other_sites">Diğer Sitelere Bağlantılar</string>
+    <string name="links_to_other_sites">Digər saytlara bağlantılar</string>
     <string name="links_to_other_sites_content">
-        Bu xidmət diğer sitelere bağlantılar içerebilir.
-         Üçüncü taraf bir bağlantıya tıklarsanız, o siteye yönlendirileceksiniz.
-         Bu harici sitelerin benim tarafımdan işletilmediğini unutmayın.
-         Bu nedenle, bu web sitelerinin gizlilik siyasətini gözden geçirmenizi şiddetle tavsiye ediyorum.
-         Üçüncü taraf sitelerin veya xidmətlerin içeriği, gizlilik siyasətleri veya uygulamaları üzerinde heçbir kontrole sahip değilim ve sorumluluk üstlenmiyorum.
+        Bu xidmətdə digər saytlara keçid ola bilər.
+         Üçüncü bir tərəfin bağlantısını tıklasanız, həmin sayta yönəldiləcəksiniz.
+         Qeyd edək ki, bu xarici saytlar mənim tərəfimdən idarə olunmur.
+         Buna görə də, bu veb saytların məxfilik siyasətini nəzərdən keçirməyinizi qətiyyətlə tövsiyə edirəm.
+         Üçüncü şəxslərin saytlarının və ya xidmətlərinin məzmunu, məxfilik qaydaları və ya Tətbiqi üzərində heç bir nəzarətim yoxdur və heç bir məsuliyyət daşımıram.
     </string>
-    <string name="children_s_privacy">Çocukların Gizliliği</string>
+    <string name="children_s_privacy">Uşaqların məxfiliyi</string>
     <string name="children_s_privacy_content">
-        Bu xidmətler 13 yaşın altındaki heç kimseye hitap etmemektedir.
-         13 yaşın altındaki çocuklardan şəxsi olarak tanımlanabilecek məlumatlari bilerek toplamıyorum.
-         13 yaşın altındaki bir çocuğun bana şəxsi məlumat verdiğini fark edersem, bunu derhal sunucularımızdan silerim.
-         Bir ebeveyn veya veli iseniz ve çocuğunuzun bize şəxsi məlumatlar verdiğinin farkındaysanız, lütfen gerekli işlemleri yapabilmem üçün benimle iletişime geçin.
+        Bu xidmətlər 13 yaşınadək heç kimə müraciət etmir.
+         13 yaşınadək uşaqlardan məlumatları bilərəkdən toplamıram.
+         13 yaşınadək bir uşağın məlumat verdiyini başa düşsəm, dərhal serverlərimizdən siləcəyəm.
+         Bir valideyn və ya qəyyumsınızsa və övladınızın bizə məlumat verdiyini bilirsinizsə, xahiş edirəm mənimlə əlaqə qurun ki, lazımi tədbirləri görüm.
     </string>
-    <string name="changes_to_this_privacy_policy">Bu Gizlilik Politikasındaki Değişiklikler</string>
+    <string name="changes_to_this_privacy_policy">Bu Məxfilik Siyasətində Dəyişikliklər</string>
     <string name="changes_to_this_privacy_policy_content" tools:ignore="Typos">
-        Gizlilik siyasətimizi zaman zaman güncelleyebilirim.
-         Bu nedenle, herhangi bir değişiklik üçün bu sayfayı periyodik olarak gözden geçirmeniz önerilir.
-         Yeni gizlilik siyasətini bu sayfada yayınlayarak herhangi bir değişikliği size bildireceğim.
+        Gizlilik siyasətimizi zaman-zaman yeniləyə bilərəm.
+         Bu səbəbdən, hər hansı bir dəyişiklik üçün bu səhifəni vaxtaşırı nəzərdən keçirməyiniz tövsiyə olunur.
+         Bu səhifədə yeni məxfilik siyasətini yerləşdirərək dəyişikliklər barədə məlumat verəcəyəm.
     </string>
-    <string name="this_policy_is_effective_as_of">Bu siyasət, şu tarihten itibaren geçerlidir:</string>
+    <string name="this_policy_is_effective_as_of">Bu siyasət aşağıdakı tarixdən etibarən etibarlıdır:</string>
     <string name="effective_date">2021–02–23</string>
-    <string name="contact_us">Bize Ulaşın</string>
-    <string name="contact_us_content">Gizlilik siyasətimle ilgili herhangi bir sorunuz veya öneriniz varsa, şu adresten benimle iletişime geçmekten çekinmeyin:</string>
+    <string name="contact_us">Bizimlə əlaqə saxlayın</string>
+    <string name="contact_us_content">Məxfilik siyasətimlə bağlı hər hansı bir sualınız və ya təklifiniz varsa, bu adresdən əlaqə saxlamaqdan çəkinməyin:</string>
     <string name="muvlexapp_gmail_com">muvlexapp@gmail.com</string>
-    <string name="this_privacy_policy_page_was_created_at">Bu gizlilik siyasəti sayfası şu adreste oluşturulmuştur:</string>
+    <string name="this_privacy_policy_page_was_created_at">Bu gizlilik siyasəti səyfəsi bu adresdə yaradılmışdır:</string>
     <string name="privacypolicytemplate_net">privacypolicytemplate.net</string>
-    <string name="and_modified_generated_by">ve şu adres tarafından değiştirildi/oluşturuldu</string>
+    <string name="and_modified_generated_by">və bu adres tərəfindən dəyişdirildi/yaradıldı</string>
     <string name="app_privacy_policy_generator">App Privacy Policy Generator</string>
-    <string name="terms_and_conditions">Şartlar ve qaydalar</string>
+    <string name="terms_and_conditions">Şərtlər və qaydalar</string>
     <string name="terms_and_conditions_content_0">
-        Uygulamayı indirdiğinizde veya istifadə ettiyinizde, bu şərtlar sizin üçün otomatik olarak geçerli olacaktır - bu nedenle, uygulamayı istifadə etmeden önce bunları dikkatlice okuduğunuzdan emin olmalısınız.
-         Uygulamayı, uygulamanın herhangi bir bölümünü veya ticari markalarımızı heçbir şekilde kopyalamanıza veya değiştirmenize izin verilmez.
-         Uygulamanın kaynak kodunu çıkarmaya çalışmanıza izin verilmez ve ayrıca uygulamayı başka dillere çevirmeye veya türev sürümler oluşturmaya çalışmamalısınız.
-         Uygulamanın kendisi ve onunla ilgili tüm ticari markalar, telif hakkı, veritabanı hakları ve diğer fikri mülkiyet hakları hala Murad İsmayilov\'a aittir.
-        \n\nMurad Ismayilov, uygulamanın olabildiğince istifadəye yararli ve verimli olmasını sağlamaya kararlıdır.
-         Bu nedenle, herhangi bir zamanda ve herhangi bir nedenle uygulamada değişiklik yapma veya xidmətleri üçün ücret alma hakkını saklı tutarız.
-         Tam olarak ne üçün ödediğinizi size çok açık bir şekilde belirtmeden uygulama veya xidmətleri üçün sizden asla ücret almayacağız.
-        \n\nMuvlex uygulaması, xidmətimi təmin etmək üçün bize sağladığınız şəxsi verileri depolar ve işler.
-         Telefonunuzu ve uygulamaya erişiminizi güvende tutmak sizin sorumluluğunuzdadır.
-         Bu nedenle, cihazınızın resmi işletim sistemi tarafından getirilen yazılım kısıtlamalarını ve sınırlamalarını kaldırma işlemi olan telefonunuzu jailbreak veya root işlemi yapmamanızı öneririz.
-         Telefonunuzu kötü amaçlı yazılımlara / virüslere / kötü amaçlı programlara açık hale getirebilir, telefonunuzun güvenlik özelliklerini tehlikeye atabilir ve Muvlex uygulamasının düzgün çalışmayacağı veya heç çalışmayacağı anlamına gelebilir.
-        \n\nUygulama, şərtlar ve qaydalarını beyan eden üçüncü taraf xidmətlerini istifadə edir.
-        \n\nUygulama tarafından istifadə olunan üçüncü taraf xidmət sağlayıcılarının şərtlar ve qaydalarına bağlantı
+        Tətbiqi endirdiyinizdə vəya istifadə ettiyinizdə, bu şərtlər sizin üçün avtomatik olaraq etibarlı olacaqdır - bu səbəblə, tətbiqi istifadə etmeden öncə bunları diqqətlə oxuduğunuzdan əmin olmalısınız.
+         Tətbiqin hərhansı bir bölümünü vəya ticarət nişanlarımızı heçbir şəkildə kopyalamanıza vəya dəyişdirmənizə icazə verilmir.
+         Tətbiqin mənbə kodunu çıxarmağa çalışmanıza icazə verilmir və həmdə tətbiqi başqa dillərə çevirməyə vəya törəmə versiyaları formalaşdırmağa çalışmamalısınız.
+         Tətbiqin özü və onunla bağlı bütün ticarət nişanları, müəllif hüquqları, verilənlər bazası hüquqları və digər fikri mülkiyyət hüquqları hələ də Murad İsmayılova məxsusdur.
+        \n\nMurad İsmayılov tətbiqi mümkün qədər faydalı və təsirli hala gətirməkdə qərarlıdır.
+         Bu səbəbdən tətbiqdə dəyişiklik etmək və ya istənilən vaxt və hər hansı bir səbəbdən xidmətləri üçün ödəniş etmək hüququmuzu özümüzdə saxlayırıq.
+         Nə ödəməli olduğunuzu sizə dəqiq göstərmədən tətbiqləri və ya xidmətlərinə görə sizdən heç vaxt pul tələb etməyəcəyik.
+        \n\nMuvlex tətbiqi xidmətimi təmin etmək üçün bizə təqdim etdiyiniz şəxsi məlumatları saxlayır və işləyir.
+         Telefonunuzu və tətbiqə girişinizi təhlükəsiz saxlamaq sizin məsuliyyətinizdir.
+         Buna görə, cihazınızın rəsmi əməliyyat sistemi tərəfindən tətbiq olunan proqram məhdudiyyətlərinin və məhdudiyyətlərinin aradan qaldırılması prosesi olan telefonunuzu jailbreak və kök salmamağınızı məsləhət görürük.
+         Telefonunuzu zərərli proqramlara / viruslara / zərərli proqramlara məruz qoya bilər, telefonunuzun təhlükəsizlik xüsusiyyətlərini pozur və Muvlex tətbiqinin düzgün işləməyəcəyi və ya ümumiyyətlə işləməyəcəyi mənasını verir.
+        \n\nTətbiq şərt və şərtlərini göndərən üçüncü tərəf xidmətlərindən istifadə edir.
+        \n\nTətbiq tərəfindən istifadə edilən üçüncü tərəf xidmət təminatçılarının şərtlərinə keçid
     </string>
     <string name="terms_and_conditions_content_1">
-        Murad İsmayilov\'un sorumluluk almayacağı bazı şeyler olduğunu bilmelisiniz.
-         Uygulamanın bazı işlevleri, uygulamanın aktif bir internet bağlantısına sahip olmasını gerektirir.
-         Bağlantı Wi-Fi olabilir veya mobil ağ sağlayıcınız tarafından sağlanabilir, ancak Murad Ismayilov, Wi-Fi erişiminiz yoksa ve heçbir bağlantınız yoksa uygulamanın tam işlevsellikte çalışmaması üçün sorumluluk alamaz.
-        \n\nUygulamayı Wi-Fi bulunan bir alan dışında istifadə edirsinizse, mobil ağ sağlayıcınızla yaptığınız sözleşme şərtlarının yine de geçerli olacağını unutmamalısınız.
-         Sonuç olarak, mobil sağlayıcınız, uygulamaya erişirken bağlantı süresi boyunca veri maliyeti veya diğer üçüncü taraf ücretleri üçün ücretlendirilebilir.
-         Uygulamayı istifadə ederken, uygulamayı veri dolaşımını kapatmadan kendi bölgeniz (yani bölge veya ülke) dışında istifadə ederseniz, dolaşım veri ücretleri dahil olmak üzere bu tür ücretlerin sorumluluğunu kabul etmiş olursunuz.
-         Uygulamayı istifadə ettiyiniz cihazın faturasını ödeyen siz değilseniz, uygulamayı istifadə etmek üçün faturayı ödeyen kişiden izin aldığınızı varsaydığımızı lütfen unutmayın.
-        \n\nAynı doğrultuda, Murad Ismayilov, uygulamayı istifadə şeklinizle ilgili her zaman sorumluluk alamaz.
-         Cihazınızın şarjının dolu olduğundan emin olmanız gerekir - pili biterse ve xidmətten yararlanmak üçün cihazı açamazsanız Murad İsmayilov sorumluluk kabul edemez.
-        \n\nMurad İsmayilov\'un uygulamayı istifadənizle ilgili sorumluluğu ile ilgili olarak, uygulamayı istifadə ederken, uygulamanın her zaman güncellenmesini ve doğru olmasını təmin etmək üçün çaba sarf etmemize rağmen, sizin üçün istifadəye yararli hale getirebilmemiz üçün bize məlumat təmin etmək üçün üçüncü taraflara güvendiğimizi akılda tutmak önemlidir.
-         Murad Ismayilov, tamamen uygulamanın bu işlevselliğine güvenmenizden kaynaklanan doğrudan veya dolaylı herhangi bir kayıp üçün sorumluluk kabul etmez.
-        \n\nBir noktada uygulamayı güncellemek isteyebiliriz.
-         Uygulama şu anda Android\'de mevcuttur - sistem gereksinimleri (ve uygulamanın istifadəsini genişletmeye karar verdiğimiz herhangi bir ek sistem üçün) değişebilir ve uygulamayı istifadə etmeye devam etmek istiyorsanız güncellemeleri indirmeniz gerekir.
-         Murad Ismayilov, uygulamayı her zaman size uygun olacak ve / veya cihazınıza yüklediğiniz Android sürümü ile çalışacak şekilde güncelleyeceğine söz vermemektedir.
-         Bununla birlikte, size teklif edildiğinde uygulamadaki güncellemeleri her zaman kabul edeceğinizi taahhüt edersiniz, ayrıca uygulamayı sağlamayı durdurabiliriz ve size fesih bildirimi vermeden herhangi bir zamanda uygulamanın istifadəsini sonlandırabiliriz.
-         Size aksini söylemedikçe, herhangi bir fesih durumunda, (a) bu şərtlarda size verilen haklar ve lisanslar sona erecektir; (b) uygulamayı istifadə etmeyi bırakmanız ve (gerekirse) cihazınızdan silmeniz gerekir.
+        Bilməlisiniz ki, Murad İsmayılovun məsuliyyət daşımayacağı bəzi şeylər var.
+         Tətbiqin bəzi funksiyaları tətbiqetmənin aktiv bir internet bağlantısı tələb edir.
+         Bağlantı Wi-Fi ola bilər və ya mobil şəbəkə təminatçınız tərəfindən təmin edilə bilər, ancaq Murad İsmayılov, Wi-Fi bağlantınız olmadıqda və bağlantınız olmadığı təqdirdə tətbiqin tam işlək vəziyyətdə olmamasına görə məsuliyyəti öz üzərinə götürə bilməz.
+        \n\nTətbiqdən Wi-Fi olan bir ərazinin xaricində istifadə edirsinizsə, mobil şəbəkə təminatçınızla müqavilənizin şərtlərinin hələ də qüvvədə olacağını bilməlisiniz.
+         Nəticədə, mobil provayderiniz tətbiqə daxil olarkən əlaqə müddəti üçün məlumat dəyəri və ya digər üçüncü tərəf haqları üçün ödəniş tələb edə bilər.
+         Tətbiqdən istifadə edərkən, tətbiqi bölgənizin (yəni bölgənizin və ya ölkənizin) xaricində məlumat rouminqini söndürmədən istifadə edirsinizsə, gəziş məlumatı xərcləri də daxil olmaqla bu cür xərclərə görə məsuliyyət daşıyırsınız.
+         Xahiş edirəm unutmayın ki, tətbiqetmədən istifadə etdiyiniz cihaz üçün hesabı ödəyən siz deyilsinizsə, hesabı ödəyən şəxsdən tətbiqdən istifadə etmək üçün icazəniz olduğunu düşündüyümüzü unutmayın.
+        \n\nEyni xətlər boyunca Murad İsmayılov daim tətbiqetmədən istifadə qaydanıza görə məsuliyyət götürə bilməz.
+         Cihazınızın tam doldurulduğundan əmin olmalısınız - Murad İsmayılov, batareya tükənirsə məsuliyyəti qəbul edə bilməz və xidmətdən yararlanmaq üçün cihazı aça bilməzsiniz.
+        \n\nMurad İsmayılovun tətbiqi istifadə etməyinizlə bağlı məsuliyyətinə gəldikdə, tətbiqetmədən istifadə edərkən, məlumatları sizə təqdim edə biləcəyimiz üçün üçüncü tərəflərə etibar etdiyimizi unutmamalıyıq, səy göstərsək də tətbiqin daima yenilənməsini və dəqiqliyini təmin etmək.
+         Murad İsmayılov, tətbiqetmənin bu funksionallığına tam etibar etdiyiniz üçün birbaşa və ya dolayı itkiyə görə heç bir məsuliyyət daşımır.
+        \n\nBir nöqtədə tətbiqi yeniləmək istəyə bilərik.
+         Tətbiq hazırda Android-də mövcuddur - sistem tələbləri (və tətbiqin mövcudluğunu genişləndirməyə qərar verdiyimiz hər hansı bir əlavə sistem üçün) dəyişə bilər və tətbiqdən istifadə etməyə davam etmək istəyirsinizsə yeniləmələri yükləməlisiniz.
+         Murad İsmayılov tətbiqi həmişə sizə uyğun və / və ya cihazınıza quraşdırdığınız Android versiyası ilə işləyəcəyinizi vəd etmir.
+         Bununla birlikdə, sizə təklif edildiyi zaman tətbiqetmənin yeniləmələrini hər zaman qəbul etməyi öhdəsinə götürürsünüz, tətbiqetməni dayandırdığımız və tətbiqetmənin istifadəsini istənilən vaxt sizə xitam vermədikdə ləğv edə bilərik.
+         Sizə başqa bir şey söyləmədikcə, hər hansı bir xitam verildikdə, (a) bu şərtlərdə sizə verilən hüquq və lisenziyalar sona çatacaq; (b) tətbiqdən istifadəni dayandırmalı və (lazım gələrsə) cihazınızdan silməlisiniz.
     </string>
-    <string name="changes_to_this_terms_and_conditions">Bu Şartlar ve Koşullardaki Değişiklikler</string>
-    <string name="changes_to_this_terms_and_conditions_content">Zaman zaman şərtlar ve qaydalarımızı güncelleyebilirim. Bu nedenle, herhangi bir değişiklik üçün bu sayfayı periyodik olarak gözden geçirmeniz önerilir. Yeni şərtlar ve qaydaları bu sayfada yayınlayarak her türlü değişikliği size bildireceğim.</string>
-    <string name="this_terms_and_conditions_page_was_generated_by">Bu şərtlar ve qaydalar sayfası şu adres tarafından oluşturulmuştur</string>
+    <string name="changes_to_this_terms_and_conditions">Bu Qaydalar və Şərtlərdə dəyişikliklər</string>
+    <string name="changes_to_this_terms_and_conditions_content">Şərtlərimizi vaxtaşırı yeniləyə bilərəm. Bu səbəbdən, hər hansı bir dəyişiklik üçün bu səhifəni vaxtaşırı nəzərdən keçirməyiniz tövsiyə olunur. Dəyişikliklər barədə bu səhifəyə yeni şərt və qaydaları göndərərək xəbərdar edəcəyəm.</string>
+    <string name="this_terms_and_conditions_page_was_generated_by">Bu şərtlər səhifəsi tərəfindən hazırlanmışdır</string>
+
+    <!--Ratings & review policy-->
+    <string name="ratings_and_review_on_the_muvlex">Muvlex ilə əlaqəli reytinqlər və şərhlər</string>
+    <string name="ratings_and_review_on_the_muvlex_content">
+        Bu səhifədə Muvlex-in şərh qaydaları haqqında məlumat tapa bilərsiniz.
+        \nİzlədiyiniz hər şey üçün şərh yaza bilərsiniz.
+         Şərhlər başqalarına təcrübənizi izah etmək və nələrə baxacaqlarına qərar vermələrinə kömək etmək üçün əla bir yoldur.
+         Muvlex, Muvlex-də məzmunu qiymətləndirmək və ya nəzərdən keçirmək üçün heç kimə pul ödəmir və rəyçilərin dürüst və qərəzsiz olmasını gözləyirik.
+    </string>
+    <string name="ratings_and_reviews_posting_policies">Reytinqlər və icmallar göndərmə qaydaları</string>
+    <string name="ratings_and_reviews_posting_policies_content">
+        Reytinq və rəylərin faydalı və etibarlı olması nəzərdə tutulur.
+         Muvlex-də məzmuna şərh vermək faydalı rəyləri bölüşmək və digər Muvlex istifadəçilərinin əla məzmun, filmlər və TV şouları tapmasına kömək etmək üçün əla bir yoldur.
+        \nYaxşı bir icmal yazmaq üçün təlimatlar
+        \n* Şərhlərinizi faydalı və məlumatlı edin.
+        \n* Həm müsbət, həm də mənfi tərəfləri daxil etməyə çalışın.
+        \n* Oxunaqlı olun; Qrammatika və orfoqrafiyanı yoxlayın və həddindən artıq böyük hərflərdən və durğu işarələrindən istifadə etməyin.
+        \n* Başqalarına qarşı mehriban olun.
+        \nMuvlex’in bal toplama və şərh etmə siyasətləri aşağıdadır.
+         Bu qaydalara uyğun olmayan rəylər silinəcək və onları dəfələrlə və ya ciddi şəkildə pozan hər kəs Muvlex-də şərh yazmaq qabiliyyətini itirə bilər.
+    </string>
+    <string name="spam_and_fake_reviews">Spam və saxta şərhlər</string>
+    <string name="spam_and_fake_reviews_content">
+        Şərhləriniz, şərh etdiyiniz məzmun, filmlər və TV şouları ilə bağlı təcrübələrinizi əks etdirməlidir.
+        \n* Saxta və ya yalan rəylər yazmayın.
+        \n* Eyni rəyi bir neçə dəfə göndərməyin.
+        \n* Eyni məzmuna görə birdən çox hesabdan rəy göndərməyin.
+        \n* Digər istifadəçiləri aldatmaq və ya hesabı dəyişdirmək üçün şərhlər göndərinayın.
+        \n* Başqaları adına şərh yazmayın.
+        \n* Şəxsiyyətinizi və şərh etdiyiniz məzmuna keçidinizi təhrif etməyin.
+    </string>
+    <string name="off_topic_reviews">Mövzudan kənar icmallar</string>
+    <string name="off_topic_reviews_content">
+        Şərhlərinizi şərh etdiyiniz məzmuna, xidmətə və ya təcrübəyə uyğun və uyğun tutun.
+        \n* İstəklər, siyasi və sosial şərhlər və ya şərh etdiyiniz məzmun, xidmət və ya təcrübə ilə əlaqəsi olmayan başqa bir şey göndərməyin.
+    </string>
+    <string name="advertising">Reklam</string>
+    <string name="advertising_content">
+        Rəylərin faydalı olmasını istəyirik və şərh etdiyiniz məzmun və ya xidmətdən başqa bir şey təbliğ etsələr faydalı olmayacaqlar.
+        \n* Hər hansı bir məhsul və ya xidmət üçün ortaq və ya yönləndirmə əsaslı promosyonlar daxil olmaqla promosyon və ya ticarət məzmunu yerləşdirməyin.
+        \n* Telefon nömrələrini, e-poçt adreslərini və ya digər veb saytlara keçid göndərməyin.
+    </string>
+    <string name="conflict_of_interest">Maraqların toqquşması</string>
+    <string name="conflict_of_interest_content">
+        Rəylər orijinal və bitərəf olduqda ən dəyərlidir.
+         Maddi qazancla motivasiya olunmayan insanlar tərəfindən yazılmalıdır.
+        \n* Rəy göndərmək müqabilində pul, məhsul və ya xidmət təklif etmə və ya qəbul etmə.
+        \n* Məzmunu, filmləri, televiziya şoularını və ya təcrübəsini yaradan bir şirkətə sahibsinizsə və ya işləyirsinizsə, şərh verməyin.
+    </string>
+    <string name="copyrighted_content">Müəllif hüquqları ilə qorunan məzmun</string>
+    <string name="copyrighted_content_content">
+        Şərhlər özünüz olmalıdır və şəxsi fikrinizi əks etdirməlidir.
+        \n* Müəllif hüquqları da daxil olmaqla başqalarının intellektual mülkiyyət hüquqlarını pozan şərhlər yazmayın.
+    </string>
+    <string name="personal_and_confidential_information">Şəxsi və məxfi məlumatlar</string>
+    <string name="personal_and_confidential_information_content">
+        Şərhlər təcrübə mübadiləsi üçündür və həssas şəxsi məlumatları açıqlamadan bir şey barədə düşündüyünüzü ifadə edə bilərsiniz.
+        \n* Fiziki bir ünvan və ya sürücülük vəsiqəsi nömrəsi kimi şəxsi və ya gizli məlumatları yerləşdirməyin.
+    </string>
+    <string name="illegal_content">Qanunsuz məzmun</string>
+    <string name="illegal_content_content">
+        Şərhləriniz qanuna və qəbul etdiyiniz şərtlərə və ya qanuni müqavilələrə uyğun olmalıdır.
+        \n* Qanunsuz məzmunu ehtiva edən və ya əlaqələndirən şərh göndərməyin.
+    </string>
+    <string name="sexually_explicit_content">Cinsi xarakterli məzmun</string>
+    <string name="sexually_explicit_content_content">
+        Muvlex geniş bir auditoriya üçün nəzərdə tutulmuşdur və təhlillər bunu əks etdirməlidir.
+        \n* Cinsi xarakterli məzmunu ehtiva edən, təşviq edən və ya təşviq edən şərhlər göndərməyin.
+        \n* Cinsi vəziyyətlərdə olan uşaqları təsvir edən və ya onlara cinsi şəkildə müraciət edən şərhlər yazmayın.
+    </string>
+        <string name="hate_speech">Nifrət nitqi</string>
+    <string name="hate_speech_content">
+       Muvlex bütün insanlar üçündür və rəylər bunu əks etdirməlidir.
+        \n* Bir insana və ya bir qrupa mənsub olduğu irqi, milliyəti, etnik mənşəyi, dini, cinsi, cinsi kimliyi, cinsi oriyentasiyası, yaşı, əlilliyi, qazi statusu və ya digər hər hansı bir xarakterik, sistemli ayrıseçkilik və ya kənarda qalma səbəbi ilə nifrəti təşviq etməyin, bağışlamayın və ya nifrəti təhrik etməyin. ilə əlaqələndirilir.
+    </string>
+    <string name="offensive_reviews">Təhqiramiz şərhlər</string>
+    <string name="offensive_reviews_content">
+        Muvlex, əyləndirmək və məlumat vermək, hücum etməmək və ya narahat etmək üçündür.
+        \n* Əxlaqsız, təhqiramiz və təhqiramiz ifadələrlə şərhlər yazmayın.
+        \n* Başqalarına sataşan, sataşan və ya hücum edən şərhlər yazmayın.
+    </string>
 
     <string-array name="secondaryLanguage">
         <item>İngiliscə</item>

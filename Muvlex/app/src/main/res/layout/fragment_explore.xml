@@ -5,8 +5,10 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
-            name="exploreViewModel"
+            name="viewModel"
             type="com.martiandeveloper.muvlex.viewmodel.feed.ExploreViewModel" />
 
     </data>
@@ -28,7 +30,7 @@
             android:focusable="false"
             android:hint="@string/search"
             android:longClickable="false"
-            android:onClick="@{()->exploreViewModel.onSearchETClick()}"
+            android:onClick="@{()->viewModel.onSearchETClick()}"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,9 +41,31 @@
             android:id="@+id/fragment_explore_mainRV"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_explore_mainET" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_explore_mainET" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.postsWillAppearHereLLGone ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/poster"
+                android:src="@drawable/ic_posts" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/StyleRegularMaterialTextView"
+                android:text="@string/posts_will_appear_here" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

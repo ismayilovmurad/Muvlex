@@ -182,7 +182,7 @@
                 android:layout_marginTop="32dp"
                 app:boxBackgroundMode="none"
                 app:counterEnabled="true"
-                app:counterMaxLength="500"
+                app:counterMaxLength="1000"
                 app:counterTextColor="@color/color_regular_text"
                 app:errorEnabled="false"
                 app:hintEnabled="false">
@@ -197,7 +197,7 @@
                     android:hint="@string/describe_your_experience_optional"
                     android:imeOptions="actionDone"
                     android:inputType="textMultiLine"
-                    android:maxLength="500"
+                    android:maxLength="1000"
                     android:padding="16dp"
                     android:text="@={viewModel.reviewETText}"
                     tools:ignore="Autofill" />

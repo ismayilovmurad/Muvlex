@@ -16,7 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.FragmentPrivacyPolicyBinding
 import com.martiandeveloper.muvlex.utils.*
-import com.martiandeveloper.muvlex.viewmodel.authentication.PrivacyPolicyViewModel
+import com.martiandeveloper.muvlex.viewmodel.main.PrivacyPolicyViewModel
 
 
 class PrivacyPolicyFragment : Fragment() {

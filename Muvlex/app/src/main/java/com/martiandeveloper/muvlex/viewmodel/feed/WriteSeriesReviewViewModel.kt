@@ -108,28 +108,27 @@ class WriteSeriesReviewViewModel : ViewModel() {
     //########## Save rating and review
     fun save(series: Series) {
 
-        _postMTVGone.value = true
-        _postPBGone.value = false
-
         with(Firebase.auth.currentUser) {
 
             if (this != null) {
 
+                _postMTVGone.value = true
+                _postPBGone.value = false
+
                 val map = hashMapOf(
-                    "backdropPath" to if (series.backdropPath.check()) series.backdropPath else "null",
                     "genreIds" to (series.genreIds ?: arrayListOf()),
                     "id" to (series.id ?: 0),
                     "originalLanguage" to if (series.originalLanguage.check()) series.originalLanguage else "null",
                     "originalTitle" to if (series.originalName.check()) series.originalName else "null",
                     "overview" to if (series.overview.check()) series.overview else "null",
-                    "popularity" to (series.popularity ?: 0.0),
                     "posterPath" to if (series.posterPath.check()) series.posterPath else "null",
                     "rating" to rating.value.toString(),
                     "releaseDate" to if (series.firstAirDate.check()) series.firstAirDate else "null",
                     "review" to if (!reviewETText.value.isNullOrEmpty()) {
                         if (reviewETText.value.toString().trimStart().trimEnd()
                                 .isNotEmpty()
-                        ) reviewETText.value.toString().trimStart().trimEnd() else "No Review"
+                        ) reviewETText.value.toString().trimStart()
+                            .trimEnd() else "No Review"
                     } else "No Review",
                     "time" to (getDateFromString(
                         SimpleDateFormat(
@@ -138,19 +137,21 @@ class WriteSeriesReviewViewModel : ViewModel() {
                         ).format(Date())
                     ) ?: "null"),
                     "title" to if (series.name.check()) series.name else "null",
-                    "type" to "movie",
-                    "uid" to uid,
-                    "voteAverage" to (series.voteAverage ?: 0.0),
-                    "voteCount" to (series.voteCount ?: 0)
+                    "type" to "series",
+                    "uid" to this.uid,
+                    "user" to Firebase.firestore.document("users/${this.uid}"),
+                    "voteAverage" to (if (series.voteAverage != null) series.voteAverage.toString() else "0.0")
                 )
 
-                Firebase.firestore.collection("posts").document("${uid}_${series.id}")
-                    .set(map).addOnCompleteListener {
+                Firebase.firestore.collection("posts")
+                    .document("${uid}_${series.id}")
+                    .set(map).addOnCompleteListener { it1 ->
                         _postPBGone.value = true
                         _postMTVGone.value = false
 
-                        if (it.isSuccessful) _saveSuccessful.value = true else _errorMessage.value =
-                            errorMessageVoid(it)
+                        if (it1.isSuccessful) _saveSuccessful.value =
+                            true else _errorMessage.value =
+                            errorMessageVoid(it1)
                     }
 
             } else _errorMessage.value = Event("")

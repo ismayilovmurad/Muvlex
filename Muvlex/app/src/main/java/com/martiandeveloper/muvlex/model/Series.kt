@@ -29,7 +29,7 @@ data class Series(
     @Json(name = "poster_path")
     val posterPath: String?,
     @Json(name = "vote_average")
-    val voteAverage: Float?,
+    val voteAverage: Double?,
     @Json(name = "vote_count")
     val voteCount: Int?
 ) : Parcelable

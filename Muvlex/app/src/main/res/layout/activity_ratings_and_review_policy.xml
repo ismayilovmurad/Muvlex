@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".view.main.RatingsAndReviewPolicyActivity">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/activity_ratings_and_review_policy_mainMTB"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:backgroundTint="@color/color_background"
+            android:elevation="0dp"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/color_supreme_text" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:text="@string/ratings_and_review_on_the_muvlex"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/ratings_and_review_on_the_muvlex_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/ratings_and_reviews_posting_policies"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/ratings_and_reviews_posting_policies_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/spam_and_fake_reviews"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/spam_and_fake_reviews_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/off_topic_reviews"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/off_topic_reviews_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/advertising"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/advertising_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/conflict_of_interest"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/conflict_of_interest_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/copyrighted_content"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/copyrighted_content_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/personal_and_confidential_information"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/personal_and_confidential_information_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/illegal_content"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/illegal_content_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/sexually_explicit_content"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/sexually_explicit_content_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/hate_speech"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/hate_speech_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/offensive_reviews"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/offensive_reviews_content" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</layout>

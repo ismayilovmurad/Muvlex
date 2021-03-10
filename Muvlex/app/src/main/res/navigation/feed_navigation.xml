@@ -37,7 +37,16 @@
         android:id="@+id/profileFragment"
         android:name="com.martiandeveloper.muvlex.view.feed.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_profileFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/searchFragment"
@@ -48,10 +57,6 @@
         <action
             android:id="@+id/action_searchFragment_to_rateSeriesFragment"
             app:destination="@id/rateSeriesFragment" />
-
-        <action
-            android:id="@+id/action_searchFragment_to_userFragment"
-            app:destination="@id/userFragment" />
 
     </fragment>
 
@@ -68,15 +73,15 @@
     </fragment>
 
     <fragment
-        android:id="@+id/userFragment"
-        android:name="com.martiandeveloper.muvlex.view.feed.UserFragment"
-        android:label="UserFragment"
-        tools:layout="@layout/fragment_user">
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.martiandeveloper.muvlex.view.authentication.PrivacyPolicyFragment"
+        android:label="PrivacyPolicyFragment"
+        tools:layout="@layout/fragment_privacy_policy" />
 
-        <argument
-            android:name="user"
-            app:argType="com.martiandeveloper.muvlex.model.User" />
-
-    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.martiandeveloper.muvlex.view.feed.EditProfileFragment"
+        android:label="EditProfileFragment"
+        tools:layout="@layout/fragment_edit_profile" />
 
 </navigation>

@@ -31,7 +31,7 @@ data class Movie(
     @Json(name = "video")
     val video: Boolean?,
     @Json(name = "vote_average")
-    val voteAverage: Float?,
+    val voteAverage: Double?,
     @Json(name = "vote_count")
     val voteCount: Int?
 ) : Parcelable

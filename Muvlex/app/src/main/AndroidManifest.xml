@@ -18,7 +18,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Muvlex"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.feed.UserActivity"></activity>
+        <activity
+            android:name=".view.feed.EditProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".view.main.RatingsAndReviewPolicyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".view.main.PrivacyPolicyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".view.feed.UserDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.feed.SeriesDetailActivity"
             android:screenOrientation="portrait"
@@ -38,6 +53,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3036948542324685~3011361865" />
     </application>
 
 </manifest>

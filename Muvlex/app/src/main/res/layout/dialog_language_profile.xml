@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.martiandeveloper.muvlex.viewmodel.feed.ProfileViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/StyleRegularMaterialTextView"
+            android:text="@string/select_language"
+            android:textAllCaps="true"
+            android:textStyle="bold" />
+
+        <View
+            style="@style/StyleSeparatorView"
+            android:layout_marginTop="8dp" />
+
+        <EditText
+            android:id="@+id/dialog_language_profile_mainET"
+            style="@style/StyleRegularEditText"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="8dp"
+            android:hint="@string/search"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:longClickable="false"
+            android:text="@={viewModel.searchETText}"
+            android:textSize="14sp"
+            tools:ignore="Autofill" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dialog_language_profile_mainRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+</layout>

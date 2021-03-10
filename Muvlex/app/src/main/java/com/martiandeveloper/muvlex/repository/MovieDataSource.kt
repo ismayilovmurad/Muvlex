@@ -16,7 +16,7 @@ class MovieDataSource(private val query: String, private val api: TmdbApi) :
             responseData.addAll(
                 api.getMovie(query, currentLoadingPageKey).body()?.results ?: emptyList()
             )
-
+            
             LoadResult.Page(
                 data = responseData,
                 prevKey = if (currentLoadingPageKey == 1) null else currentLoadingPageKey - 1,

@@ -1,5 +1,6 @@
 package com.martiandeveloper.muvlex.viewmodel.feed
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,8 +17,38 @@ import kotlinx.coroutines.launch
 
 class MovieListViewModel : ViewModel() {
 
-    //########## Movie API
+    //########## TMDB API
     private val api: MutableLiveData<TmdbApi> by lazy { MutableLiveData<TmdbApi>() }
+
+
+    //########## Progress MaterialTextView text
+    private var _progressMTVText = MutableLiveData<String>()
+    val progressMTVText: LiveData<String>
+        get() = _progressMTVText
+
+    fun setProgressMTVText(text: String) {
+        _progressMTVText.value = text
+    }
+
+
+    //########## Progress LinearLayout gone
+    private var _progressLLGone = MutableLiveData<Boolean>()
+    val progressLLGone: LiveData<Boolean>
+        get() = _progressLLGone
+
+    fun isProgressLLGone(gone: Boolean) {
+        _progressLLGone.value = gone
+    }
+
+
+    //########## Search result will appear here MaterialTextView gone
+    private var _searchResultWillAppearHereMTVGone = MutableLiveData<Boolean>()
+    val searchResultWillAppearHereMTVGone: LiveData<Boolean>
+        get() = _searchResultWillAppearHereMTVGone
+
+    fun isSearchResultWillAppearHereMTVGone(gone: Boolean) {
+        _searchResultWillAppearHereMTVGone.value = gone
+    }
 
 
     //########## Get data
@@ -39,7 +70,11 @@ class MovieListViewModel : ViewModel() {
 
 
     init {
-        api.value = TmdbService.getClient()
+
+        viewModelScope.launch {
+            api.value = TmdbService.getClient()
+        }
+
     }
 
 }

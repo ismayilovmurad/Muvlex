@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.martiandeveloper.muvlex.viewmodel.main.PrivacyPolicyViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".view.main.PrivacyPolicyActivity">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/activity_privacy_policy_mainMTB"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:backgroundTint="@color/color_background"
+            android:elevation="0dp"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/color_supreme_text" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:text="@string/privacy_policy"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/privacy_policy_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/information_collection_and_use"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/information_collection_and_use_content" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/StyleRegularMaterialTextView"
+                        android:onClick="@{()->viewModel.onGooglePlayServicesMTVClick()}"
+                        android:padding="8dp"
+                        android:text="@string/google_play_services"
+                        android:textColor="@color/color_link"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/StyleRegularMaterialTextView"
+                        android:onClick="@{()->viewModel.onGoogleAnalyticsForFirebaseMTVClick()}"
+                        android:padding="8dp"
+                        android:text="@string/google_analytics_for_firebase"
+                        android:textColor="@color/color_link"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/StyleRegularMaterialTextView"
+                        android:onClick="@{()->viewModel.onFirebaseCrashlyticsMTVClick()}"
+                        android:padding="8dp"
+                        android:text="@string/firebase_crashlytics"
+                        android:textColor="@color/color_link"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/StyleRegularMaterialTextView"
+                        android:onClick="@{()->viewModel.onFacebookMTVClick()}"
+                        android:padding="8dp"
+                        android:text="@string/facebook"
+                        android:textColor="@color/color_link"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/log_data"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/log_data_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/cookies"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/cookies_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/service_providers"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/service_providers_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/security"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/security_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/links_to_other_sites"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/links_to_other_sites_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/children_s_privacy"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/children_s_privacy_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/changes_to_this_privacy_policy"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/changes_to_this_privacy_policy_content" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/StyleRegularMaterialTextView"
+                        android:text="@string/this_policy_is_effective_as_of" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/StyleRegularMaterialTextView"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/effective_date"
+                        android:textColor="@color/color_regular_action"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/contact_us"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/contact_us_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:onClick="@{()->viewModel.onMuvlexGmailMTVClick()}"
+                    android:padding="8dp"
+                    android:text="@string/muvlexapp_gmail_com"
+                    android:textColor="@color/color_link" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/this_privacy_policy_page_was_created_at" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:onClick="@{()->viewModel.onPrivacyPolicyTemplateMTVClick()}"
+                    android:padding="8dp"
+                    android:text="@string/privacypolicytemplate_net"
+                    android:textColor="@color/color_link" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/and_modified_generated_by" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:onClick="@{()->viewModel.onAppPrivacyPolicyGeneratorMTVClick()}"
+                    android:padding="8dp"
+                    android:text="@string/app_privacy_policy_generator"
+                    android:textColor="@color/color_link" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/terms_and_conditions"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/terms_and_conditions_content_0" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/StyleRegularMaterialTextView"
+                        android:onClick="@{()->viewModel.onGooglePlayServicesMTVClick()}"
+                        android:padding="8dp"
+                        android:text="@string/google_play_services"
+                        android:textColor="@color/color_link"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/StyleRegularMaterialTextView"
+                        android:onClick="@{()->viewModel.onGoogleAnalyticsForFirebaseMTVClick()}"
+                        android:padding="8dp"
+                        android:text="@string/google_analytics_for_firebase"
+                        android:textColor="@color/color_link"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/StyleRegularMaterialTextView"
+                        android:onClick="@{()->viewModel.onFirebaseCrashlyticsMTVClick()}"
+                        android:padding="8dp"
+                        android:text="@string/firebase_crashlytics"
+                        android:textColor="@color/color_link"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/StyleRegularMaterialTextView"
+                        android:onClick="@{()->viewModel.onFacebookMTVClick()}"
+                        android:padding="8dp"
+                        android:text="@string/facebook"
+                        android:textColor="@color/color_link"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/terms_and_conditions_content_1" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/changes_to_this_terms_and_conditions"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/changes_to_this_terms_and_conditions_content" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/StyleRegularMaterialTextView"
+                        android:text="@string/this_policy_is_effective_as_of" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/StyleRegularMaterialTextView"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/effective_date"
+                        android:textColor="@color/color_regular_action"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleSupremeMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/contact_us"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/contact_us_content" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:onClick="@{()->viewModel.onMuvlexGmailMTVClick()}"
+                    android:padding="8dp"
+                    android:text="@string/muvlexapp_gmail_com"
+                    android:textColor="@color/color_link" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/this_terms_and_conditions_page_was_generated_by" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/StyleRegularMaterialTextView"
+                    android:onClick="@{()->viewModel.onAppPrivacyPolicyGeneratorMTVClick()}"
+                    android:padding="8dp"
+                    android:text="@string/app_privacy_policy_generator"
+                    android:textColor="@color/color_link" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</layout>

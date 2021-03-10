@@ -7,11 +7,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.martiandeveloper.muvlex.R
 import com.martiandeveloper.muvlex.databinding.RecyclerviewUserItemBinding
 import com.martiandeveloper.muvlex.model.User
 import com.martiandeveloper.muvlex.utils.check
 import com.martiandeveloper.muvlex.utils.load
+import com.martiandeveloper.muvlex.utils.loadWithUri
 
 class UserListAdapter(
     private val itemCLickListener: ItemClickListener
@@ -72,10 +77,13 @@ class UserListAdapter(
                                 R.string.unknown
                             )
 
-                        it.recyclerviewMovieItemPosterIV.load(
-                            context,
-                            if (picture.check()) picture else null
-                        )
+                        if (uid.check())
+                            FirebaseStorage.getInstance().reference.child("user_profile_picture")
+                                .child(uid!!).downloadUrl.addOnSuccessListener { it1 ->
+                                    it.recyclerviewMovieItemPosterIV.loadWithUri(context, it1)
+                                }.addOnFailureListener { _ ->
+                                    it.recyclerviewMovieItemPosterIV.load(context, null)
+                                }
 
                         itemView.setOnClickListener {
                             itemClickListener.onItemClick(this)
